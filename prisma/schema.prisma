@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Opportunity {
+  id                String   @id @default(cuid())
+  company           String
+  role              String
+  stage             String   @default("inbox")
+  salaryMin         Int?
+  salaryMax         Int?
+  totalCompMin      Int?
+  totalCompMax      Int?
+  fitScore          Int?
+  fitScoreOverride  Int?
+  classification    String?
+  recommendedAction String?
+  resumeVariant     String?
+  applyUrl          String?
+  coverLetterUrl    String?
+  source            String?
+  sourceCompanySlug String?
+  jdText            String?
+  analysisJson      Json?
+  notes             String?
+  lastActivity      DateTime?
+  followUpDue       DateTime?
+  appliedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  contacts          Contact[]
+  outreachLogs      OutreachLog[]
+  offer             Offer?
+}
+
+model TargetCompany {
+  id          String   @id @default(cuid())
+  name        String
+  website     String?
+  industry    String?
+  size        String?
+  techStack   String[]
+  atsType     String?
+  atsSlug     String?
+  warmth      String   @default("cold")
+  notes       String?
+  watchlist   Boolean  @default(true)
+  lastPolled  DateTime?
+  createdAt   DateTime @default(now())
+  contacts    Contact[]
+}
+
+model Contact {
+  id            String         @id @default(cuid())
+  name          String
+  email         String?
+  linkedin      String?
+  role          String?
+  company       TargetCompany? @relation(fields: [companyId], references: [id])
+  companyId     String?
+  opportunity   Opportunity?   @relation(fields: [opportunityId], references: [id])
+  opportunityId String?
+  lastContact   DateTime?
+  warmth        String         @default("cold")
+  notes         String?
+  createdAt     DateTime       @default(now())
+}
+
+model OutreachLog {
+  id            String      @id @default(cuid())
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+  opportunityId String
+  type          String
+  direction     String
+  subject       String?
+  body          String?
+  sentAt        DateTime?
+  openedAt      DateTime?
+  clickedAt     DateTime?
+  repliedAt     DateTime?
+  followUpDue   DateTime?
+  status        String      @default("draft")
+}
+
+model RssFeed {
+  id           String   @id @default(cuid())
+  name         String
+  url          String   @unique
+  source       String
+  active       Boolean  @default(true)
+  lastPolled   DateTime?
+  lastItemDate DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Offer {
+  id                   String      @id @default(cuid())
+  opportunity          Opportunity @relation(fields: [opportunityId], references: [id])
+  opportunityId        String      @unique
+  offerDate            DateTime?
+  expirationDate       DateTime?
+  baseSalary           Int?
+  signingBonus         Int?
+  annualBonus          Int?
+  equityShares         Int?
+  equityType           String?
+  strikePrice          Float?
+  vestingSchedule      String?
+  cliffMonths          Int?
+  estimatedEquityValue Float?
+  totalYearOneComp     Int?
+  benefitsJson         Json?
+  status               String      @default("pending")
+  notes                String?
+  createdAt            DateTime    @default(now())
+}
+
+model Contract {
+  id                String     @id @default(cuid())
+  client            String
+  projectName       String
+  rateType          String
+  rate              Int
+  hoursPerWeek      Int?
+  totalValue        Int?
+  startDate         DateTime?
+  endDate           DateTime?
+  autoRenew         Boolean    @default(false)
+  renewalNoticeDays Int?
+  status            String     @default("proposed")
+  sowUrl            String?
+  notes             String?
+  createdAt         DateTime   @default(now())
+  milestones        Milestone[]
+  invoices          Invoice[]
+}
+
+model Milestone {
+  id         String    @id @default(cuid())
+  contract   Contract  @relation(fields: [contractId], references: [id])
+  contractId String
+  name       String
+  dueDate    DateTime?
+  value      Int?
+  status     String    @default("pending")
+}
+
+model Invoice {
+  id              String    @id @default(cuid())
+  invoiceNumber   String    @unique
+  contract        Contract? @relation(fields: [contractId], references: [id])
+  contractId      String?
+  client          String
+  lineItems       Json
+  subtotal        Int
+  taxRate         Float     @default(0)
+  taxAmount       Int       @default(0)
+  total           Int
+  dueDate         DateTime?
+  sentAt          DateTime?
+  viewedAt        DateTime?
+  paidAt          DateTime?
+  paymentMethod   String?
+  stripePaymentId String?
+  status          String    @default("draft")
+  notes           String?
+  createdAt       DateTime  @default(now())
+}
+
+model TimeLog {
+  id          String   @id @default(cuid())
+  contractId  String
+  date        DateTime
+  hours       Float
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model BriefingCache {
+  id          String   @id @default(cuid())
+  briefing    String
+  vitals      Json
+  generatedAt DateTime @default(now())
+}
