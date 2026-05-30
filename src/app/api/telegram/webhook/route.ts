@@ -7,6 +7,7 @@ import {
   tgBold, tgCode, tgItalic, tgLink, applyButtons, confirmApplyButtons,
 } from '@/lib/telegram';
 import { buildCoverLetterHtml } from '@/lib/cover-letter';
+import { draftFollowUpEmail } from '@/workers/follow-up-scheduler';
 import { generateCoverLetterPdf } from '@/lib/generate-pdf';
 
 const CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
@@ -179,6 +180,25 @@ Return ONLY the email body text, no subject line, no JSON.` }],
   }
 }
 
+async function handleFollowUp(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Drafting follow-up…');
+  await editTelegramMessage(messageId, '⏳ Drafting follow-up email…', []);
+  const draft = await draftFollowUpEmail(oppId);
+  const opp   = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
+  if (!draft) { await editTelegramMessage(messageId, '❌ Draft failed.'); return; }
+  await editTelegramMessage(messageId, `✍️ Follow-up drafted — ${tgBold(opp?.company ?? '')}`);
+  await sendTelegram(
+    `📧 ${tgBold('Follow-up Draft')}\n${opp?.company ?? ''} — ${opp?.role ?? ''}\n\n${draft}\n\n${tgItalic('Copy this and send from max-ev-holdings.com/email')}`
+  );
+}
+
+async function handleSkipFollowUp(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Snoozed 7d');
+  await prisma.opportunity.update({ where: { id: oppId }, data: { followUpDue: new Date(Date.now() + 7 * 86400000) } });
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true } });
+  await editTelegramMessage(messageId, `⏭ Follow-up skipped — ${opp?.company ?? ''} (snoozed 7d)`);
+}
+
 async function handleCancel(oppId: string, callbackQueryId: string, messageId: number) {
   await answerCallbackQuery(callbackQueryId, 'Cancelled');
   const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
@@ -320,8 +340,11 @@ export async function POST(req: NextRequest) {
       else if (action === 'later')         await handleLater(oppId, cq.id, messageId);
       else if (action === 'confirm_apply') await handleConfirmApply(oppId, cq.id, messageId);
       else if (action === 'cancel')        await handleCancel(oppId, cq.id, messageId);
-      else if (action === 'respond')       await handleRespond(oppId, cq.id, messageId);
-      else                                 await answerCallbackQuery(cq.id, 'Unknown action');
+      else if (action === 'respond')        await handleRespond(oppId, cq.id, messageId);
+      else if (action === 'followup')       await handleFollowUp(oppId, cq.id, messageId);
+      else if (action === 'skip_followup')  await handleSkipFollowUp(oppId, cq.id, messageId);
+      else if (action === 'open_pipeline')  { await answerCallbackQuery(cq.id); await sendTelegram(`Pipeline → ${BASE_URL}/pipeline`); }
+      else                                  await answerCallbackQuery(cq.id, 'Unknown action');
 
       return NextResponse.json({ ok: true });
     }
