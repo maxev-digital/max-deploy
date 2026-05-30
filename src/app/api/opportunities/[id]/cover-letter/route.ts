@@ -93,11 +93,16 @@ Return ONLY valid JSON, no other text:
       showFdeFramework: isFde,
     });
 
-    // Generate PDF server-side (Chromium headless)
-    const pdfPath = await generateCoverLetterPdf(html, id);
-
-    // Save to opportunity record
+    // Save HTML first so the /api/render/[id] endpoint can serve it
     const existing = (opp.analysisJson as Record<string, unknown>) ?? {};
+    await prisma.opportunity.update({
+      where: { id },
+      data: { analysisJson: { ...existing, coverLetterHtml: html, coverLetterConfig: cfg } },
+    });
+
+    // Generate PDF via localhost (so Chromium can load Google Fonts correctly)
+    const pdfPath = await generateCoverLetterPdf(id);
+
     await prisma.opportunity.update({
       where: { id },
       data: {

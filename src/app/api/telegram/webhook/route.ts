@@ -42,10 +42,16 @@ async function handleApply(oppId: string, callbackQueryId: string, messageId: nu
     const cfg = JSON.parse(raw.replace(/^```json\n?/, '').replace(/\n?```$/, ''));
     const html = buildCoverLetterHtml({ company: opp.company, role: opp.role, showFdeFramework: isFde, ...cfg });
 
-    // Generate PDF server-side
-    const pdfPath = await generateCoverLetterPdf(html, oppId);
-
+    // Save HTML first so /api/render/[id] can serve it for Chromium
     const existing = (opp.analysisJson as Record<string, unknown>) ?? {};
+    await prisma.opportunity.update({
+      where: { id: oppId },
+      data: { analysisJson: { ...existing, coverLetterHtml: html, coverLetterConfig: cfg } },
+    });
+
+    // Generate PDF via localhost so Google Fonts load correctly
+    const pdfPath = await generateCoverLetterPdf(oppId);
+
     await prisma.opportunity.update({
       where: { id: oppId },
       data: {
