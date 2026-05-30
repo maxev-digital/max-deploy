@@ -18,9 +18,8 @@ export async function pollRssFeeds() {
         const exists = await prisma.opportunity.findFirst({ where: { applyUrl: item.link } });
         if (exists) continue;
 
-        // Extract company from feed title or item content
-        const company = extractCompany(item, feed.source);
-        const role    = item.title.replace(/\s*at\s+.*$/i, '').trim();
+        // Extract company and clean role per source format
+        const { company, role } = extractCompanyAndRole(item, feed.source);
 
         await prisma.opportunity.create({
           data: {
@@ -47,13 +46,25 @@ export async function pollRssFeeds() {
   console.log(`[rss] Created ${created} new opportunities from ${feeds.length} feeds.`);
 }
 
-function extractCompany(item: Parser.Item, source: string): string {
-  // Indeed: "Job Title at Company Name"
-  const atMatch = item.title?.match(/\s+at\s+(.+)$/i);
-  if (atMatch) return atMatch[1].trim();
-  // Try feed author or content
-  if (item.creator) return item.creator;
-  // Source-specific heuristics
-  if (source === 'hn') return 'HN Who\'s Hiring';
-  return '';
+function extractCompanyAndRole(item: Parser.Item, source: string): { company: string; role: string } {
+  const title = item.title ?? '';
+
+  // WWR / Remotive: "Company: Job Title (location extras)"
+  const colonIdx = title.indexOf(':');
+  if ((source === 'wwr' || source === 'remotive') && colonIdx > 0) {
+    const company = title.slice(0, colonIdx).trim();
+    const role    = title.slice(colonIdx + 1).replace(/\s*\(.*?\)\s*$/, '').trim();
+    return { company, role };
+  }
+
+  // Indeed / generic: "Job Title at Company Name"
+  const atMatch = title.match(/^(.+?)\s+at\s+(.+)$/i);
+  if (atMatch) return { company: atMatch[2].trim(), role: atMatch[1].trim() };
+
+  // dc:creator field (Remotive, some HN)
+  if (item.creator) return { company: item.creator.trim(), role: title };
+
+  if (source === 'hn') return { company: 'HN Who\'s Hiring', role: title };
+
+  return { company: '', role: title };
 }

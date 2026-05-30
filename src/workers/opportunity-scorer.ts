@@ -20,7 +20,7 @@ Work type: Full-time, contract, or both simultaneously
 Deal breakers: On-site 5 days/week, less than $100K, no AI component
 `.trim();
 
-export async function scorePendingOpportunities(limit = 10) {
+export async function scorePendingOpportunities(limit = 25) {
   const opps = await prisma.opportunity.findMany({
     where: { fitScore: null, jdText: { not: null }, stage: { not: 'dead' } },
     take: limit,
