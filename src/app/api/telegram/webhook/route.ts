@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { prisma } from '@/lib/prisma';
 import {
-  sendTelegram, sendTelegramButtons, editTelegramMessage, answerCallbackQuery,
+  sendTelegram, sendTelegramButtons, sendTelegramDocument,
+  editTelegramMessage, answerCallbackQuery,
   tgBold, tgCode, tgItalic, tgLink, applyButtons, confirmApplyButtons,
 } from '@/lib/telegram';
 import { buildCoverLetterHtml } from '@/lib/cover-letter';
@@ -60,26 +61,41 @@ async function handleApply(oppId: string, callbackQueryId: string, messageId: nu
       },
     });
 
-    const salaryStr = opp.salaryMin ? `$${Math.round(opp.salaryMin/1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax/1000)}k` : '+'}` : 'salary undisclosed';
-
-    // Pick resume based on classification
+    const salaryStr     = opp.salaryMin ? `$${Math.round(opp.salaryMin/1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax/1000)}k` : '+'}` : 'salary undisclosed';
     const resumeVariant = (opp.classification ?? '').includes('Marketing') ? 'slingshot' : 'fde';
     const resumeLabel   = resumeVariant === 'slingshot' ? 'Slingshot Resume' : 'FDE Resume';
 
     await editTelegramMessage(messageId, `✅ Docs ready — ${tgBold(opp.company)}`);
 
+    // Send cover letter as a Telegram document — iOS: tap → Share → upload directly to ATS
+    if (pdfPath) {
+      const { join } = await import('path');
+      const localPdf = join(process.cwd(), 'public', pdfPath);
+      await sendTelegramDocument(
+        localPdf,
+        `will-austin-cover-letter-${opp.company.toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`,
+        `📄 Cover Letter — ${opp.company}\n${tgItalic('Tap → Share → upload to ATS')}`,
+      );
+    }
+
+    // Send resume as a Telegram document
+    const { join } = await import('path');
+    const resumePath = join(process.cwd(), 'public', 'resumes', `${resumeVariant}.pdf`);
+    await sendTelegramDocument(
+      resumePath,
+      `will-austin-${resumeVariant}-resume.pdf`,
+      `📎 ${resumeLabel}\n${tgItalic('Tap → Share → upload to ATS')}`,
+    );
+
+    // Final message with apply URL + confirm buttons
     const lines = [
-      `📋 ${tgBold('Application Kit')}`,
+      `📋 ${tgBold('Application Kit Ready')}`,
       `${tgBold(opp.company)} — ${opp.role}`,
       salaryStr,
       '',
-      pdfPath
-        ? tgLink('📄 Cover Letter PDF', `${BASE_URL}${pdfPath}`)
-        : tgLink('📄 Cover Letter (HTML)', `${BASE_URL}/cover-letter/${oppId}`),
-      tgLink(`📎 ${resumeLabel}`, `${BASE_URL}/resumes/${resumeVariant}.pdf`),
-      opp.applyUrl ? tgLink('🔗 Open Application', opp.applyUrl) : '',
+      opp.applyUrl ? tgLink('🔗 Open Application Form', opp.applyUrl) : '',
       '',
-      tgItalic('Open PDF links, review, then tap Mark Applied.'),
+      tgItalic('Review docs above, open form, upload both PDFs, then tap Mark Applied.'),
     ].filter(Boolean).join('\n');
 
     await sendTelegramButtons(lines, confirmApplyButtons(oppId));

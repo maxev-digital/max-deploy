@@ -86,6 +86,32 @@ export async function answerCallbackQuery(
   } catch { return false; }
 }
 
+// Send a file as a Telegram document — iOS users can tap → Share → upload directly to ATS
+export async function sendTelegramDocument(
+  filePath: string,
+  filename:  string,
+  caption?:  string,
+  buttons?:  KeyboardRow[]
+): Promise<number | null> {
+  if (!TOKEN || !CHAT_ID) return null;
+  try {
+    const { readFileSync } = await import('fs');
+    const fileData = readFileSync(filePath);
+    const blob     = new Blob([fileData], { type: 'application/pdf' });
+
+    const form = new FormData();
+    form.append('chat_id',    String(CHAT_ID));
+    form.append('document',   blob, filename);
+    form.append('parse_mode', 'HTML');
+    if (caption) form.append('caption', caption);
+    if (buttons) form.append('reply_markup', JSON.stringify({ inline_keyboard: buttons }));
+
+    const res  = await fetch(`https://api.telegram.org/bot${TOKEN}/sendDocument`, { method: 'POST', body: form });
+    const data = await res.json() as { ok: boolean; result?: { message_id: number } };
+    return data.ok ? (data.result?.message_id ?? null) : null;
+  } catch { return null; }
+}
+
 // ─── Formatters ───────────────────────────────────────────────────────────────
 
 export function tgBold(s: string)   { return `<b>${s}</b>`; }
