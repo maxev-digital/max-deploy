@@ -2,13 +2,18 @@ import { prisma } from '../lib/prisma';
 
 interface AtsJob { id: string; title: string; absolute_url?: string; content?: string; }
 
-// Keywords that indicate non-engineering roles — skip to avoid scoring noise
+// Skip roles that are definitively out of scope — keep broad since salary floor is now $50K+
+// NOTE: CSM, Marketing Director, Solutions, Technical Account, Director ARE in scope — do NOT filter them
 const NON_ENG_KEYWORDS = [
-  'recruiter', 'sourcer', 'talent acquisition', 'marketing', 'designer', ' ux ',
-  'finance', 'accountant', 'legal', 'compliance', 'account executive',
-  'business development', ' sdr', 'executive assistant', 'copywriter',
-  'customer support', 'people ops', 'people partner', ' hr ', 'human resources',
-  'brand manager', 'graphic', 'illustrat', 'office manager', 'content writer',
+  'recruiter', 'sourcer', 'talent acquisition',
+  'accountant', 'accounts payable', 'accounts receivable', 'bookkeeper',
+  'legal counsel', 'paralegal', 'compliance officer',
+  ' sdr ', 'sales development rep', 'business development rep',
+  'executive assistant', 'office manager', 'administrative assistant',
+  'graphic designer', 'illustrator', 'motion designer',
+  'customer support representative', 'customer service rep', 'call center',
+  'people ops', 'people partner', ' hr ', 'human resources',
+  'janitor', 'facility', 'warehouse',
 ];
 
 function isEngineering(title: string): boolean {

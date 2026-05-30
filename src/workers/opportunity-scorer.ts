@@ -9,15 +9,30 @@ const PROFILE = `
 Name: Will Austin
 Skills: Next.js, TypeScript, Python, PostgreSQL, Prisma, Claude/Anthropic API, MCP protocol,
         multi-model routing, agentic system design, REST API design, Docker, VPS deployment,
-        Twilio, ElevenLabs, Stripe Connect, IMAP email clients, BullMQ/Redis
-Experience: Solo full-stack builder, technical product owner, 6 FDE engagements across 8 industries,
-            14 production AI endpoints, 13 production platforms
-Background: Former GM/GC (P&L ownership), self-taught, no CS degree
-Preferred roles: FDE, Applied AI Engineer, AI Platform Engineer, Solutions Engineer, Head of AI
-Salary floor: $120K full-time / $85/hr contract
-Geography: Remote preferred, TX remote acceptable, Dallas area possible
-Work type: Full-time, contract, or both simultaneously
-Deal breakers: On-site 5 days/week, less than $100K, no AI component
+        Twilio, ElevenLabs, Stripe Connect, IMAP email clients, BullMQ/Redis, HubSpot CRM,
+        digital marketing strategy, client discovery & scoping, proposal & pricing,
+        stakeholder management, team leadership (40-80 staff), P&L ownership
+Experience: 6 FDE client engagements across 8 industries, 14 production AI endpoints,
+            13 production platforms, 4 external client deliveries, 12 years GM/GC operations,
+            HubSpot certified (Sales, Marketing, CRM, Inbound), self-taught engineer
+Background: Former General Manager + General Contractor, self-taught full-stack, no CS degree.
+            Bridges technical execution and business leadership fluently.
+
+Target roles IN PRIORITY ORDER — score accordingly:
+  Tier 1 (score 75-100): FDE / Forward Deployed Engineer / Applied AI Engineer / AI Platform Engineer /
+    Agentic AI Engineer / Solutions Engineer / Technical Implementation Engineer / Staff AI Engineer
+  Tier 2 (score 65-85): Solutions Consultant / Technical Account Executive / Customer Success Manager (SaaS/AI) /
+    Senior Full Stack Engineer (AI-native company) / AI Adoption Manager / Engineering Manager /
+    Head of Technology / Director of AI / Sr Analyst AI Transformation / MLOps Engineer
+  Tier 3 (score 55-75): Marketing Director / Digital Marketing Manager / Marketing Operations /
+    VP Marketing / Social Media Manager (strategic) / Director of Communications /
+    Senior Paid Media Manager / Content Strategy (brand/AI company)
+
+Salary floor: $50,000/yr minimum (full-time, contract, part-time, or freelance)
+Geography: Remote (anywhere USA) preferred. DFW hybrid (Dallas/Plano/Frisco/Southlake/
+           Addison/Grapevine/Irving/Allen) fully acceptable. On-site outside DFW = deal breaker.
+Work type: Full-time, part-time, contract, or freelance — all acceptable simultaneously
+Deal breakers: On-site 5 days/week outside DFW metro, under $50K/yr, purely manual/non-digital role
 `.trim();
 
 export async function scorePendingOpportunities(limit = 25) {
@@ -44,10 +59,21 @@ ${opp.salaryMin ? `Salary: $${opp.salaryMin.toLocaleString()}${opp.salaryMax ? `
 Description:
 ${(opp.jdText ?? '').slice(0, 3000)}
 
+Classify the role using these values:
+- FDE = Forward Deployed Engineer / Applied AI Engineer / Agentic AI Engineer
+- AI_Engineer = AI/ML/MLOps engineer, Staff AI, platform engineering
+- Solutions = Solutions Engineer, Technical Account Exec, Implementation Consultant
+- CSM = Customer Success Manager, AI Adoption Manager
+- Director = Director/VP/Head of Technology/AI, Engineering Manager
+- Marketing = Marketing Director, Digital Marketing, Marketing Ops, Social Media (strategic)
+- FullStack = Senior/Staff Software Engineer (not FDE/AI-specific)
+- Contract = freelance, short-term, 1099 engagement
+- Skip = under $50K, pure on-site outside DFW, non-digital manual role, entry-level admin
+
 Return ONLY valid JSON, no other text:
 {
   "fitScore": <0-100>,
-  "classification": "<FDE|AI_Engineer|CSM|Director|Contract|Skip>",
+  "classification": "<FDE|AI_Engineer|Solutions|CSM|Director|Marketing|FullStack|Contract|Skip>",
   "salaryAssessment": "<brief salary note>",
   "matchStrengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
   "gaps": ["<gap 1>", "<gap 2>"],
