@@ -1,0 +1,24 @@
+{
+  "company": "X-Team",
+  "role": "Staff Software Engineer AI",
+  "slug": "x-team-staff-ai",
+  "headerTitle": "Staff Software Engineer &nbsp;&middot;&nbsp; AI Systems &nbsp;&middot;&nbsp; X-Team &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Staff Software Engineer AI &mdash; X-Team (Remote) &middot; $170K&ndash;$175K",
+  "intro": "X-Team staffs senior remote engineers into Microsoft, GitHub, Riot Games, and Coinbase because vetting, retention, and culture overhead is real. The Staff AI Engineer role means owning AI feature work inside a product team at that quality bar. I've shipped 14 production AI endpoints across 13 platforms — that's the same staff-level ownership model, just on my own client roster.",
+  "bullets": [
+    "<strong>Staff-level AI engineering shipped &mdash;</strong> 14 live AI endpoints using multi-model routing (Claude Haiku/Sonnet/Opus, GPT-4o, Gemini 2.0 Flash), MCP protocol, tool use, Zod-validated structured output, and human-in-the-loop confirm-before-execute gates. Production reliability under real user load — not prototypes.",
+    "<strong>Full-stack TypeScript/Next.js 15/Node.js/PostgreSQL &mdash;</strong> exact enterprise-grade stack X-Team clients run. 100+ API routes, BullMQ + Redis queues, Prisma ORM, Docker/PM2/Nginx. Remote-first, async-first work pattern across 13 simultaneous platform builds — I've never been in an office for any of it.",
+    "<strong>Owns the whole problem &mdash;</strong> scoping, architecture, implementation, deployment, monitoring, and client support — no PM layer, no eng manager to absorb questions. That's the exact independent senior contributor model X-Team embeds into client teams."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based, US Central). US citizen.",
+  "radarAxes": ["AI Engineering", "Full-Stack TypeScript", "Remote / Async", "Production Deploy", "Staff Ownership", "Multi-Model Routing"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.91, 0.93, 0.92, 0.91, 0.88, 0.88] },
+    { "label": "Technical Depth", "values": [0.90, 0.92, 0.88, 0.87, 0.86, 0.89] },
+    { "label": "Domain Fit",      "values": [0.87, 0.89, 0.94, 0.88, 0.90, 0.86] }
+  ],
+  "jobType": "engineering",
+  "matchScore": 72,
+  "matchNotes": "X-Team embeds senior remote engineers into top tech companies. Staff AI Engineer matches Will's profile: full-stack TS, production AI, fully remote operator. Main uncertainty is which client and what domain. Salary $170-175K is strong for remote.",
+  "salaryRange": "$170K–$175K"
+}

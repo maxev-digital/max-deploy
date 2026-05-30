@@ -1,0 +1,22 @@
+{
+  "company": "Slingshot Aerospace",
+  "role": "Senior AI Engineer, Agentic Evaluation & V&V",
+  "slug": "slingshot-aerospace-agentic-eval",
+  "headerTitle": "AI Engineer — Agentic Evaluation & Production V&V",
+  "subjectText": "Senior AI Engineer, Agentic Evaluation & V&V — Will Austin",
+  "intro": "I design and operate the evaluation and validation infrastructure that makes agentic AI systems trustworthy in production — not as a layer added after the system works, but as the foundation it's built on. Fourteen live AI endpoints across 13 platforms, each with its own evaluation harness: cross-model validation, benchmark success criteria defined before a line of agentic code is written, observability on every output, and regression detection from live usage logs. The evaluation system is the engineering discipline. Everything else runs on top of it.",
+  "bullets": [
+    "Designed and operate production evaluation infrastructure across 14 live agentic endpoints: cross-model validation, disagreement-triggered HITL review, per-request observability (model ID, prompt version, latency, raw output, HITL outcome, user correction signals), and regression detection from production logs — reusable patterns applied consistently across every endpoint",
+    "Evaluation-first build discipline: before writing agentic code, define the benchmark scenario, the success criteria, the acceptable failure rate per task class, and the scoring logic. Enforced through structured context architecture (CLAUDE.md per engagement with business rules, integration constraints, and evaluation targets) and reusable Zod-validated output schemas that make output correctness machine-checkable at runtime",
+    "Built reusable V&V patterns for agentic systems: MCP protocol with full tool-use tracing, HITL guardrails on all destructive or irreversible operations, multi-model routing by task complexity and risk profile, and feedback loops that surface prompt degradation and model drift in production before they compound into systemic failures",
+    "Structured domain translation as an explicit engineering step — every engagement starts with a context architecture session to convert business rules, integration constraints, and domain-specific edge cases into executable evaluation scenarios, each with defined success criteria and acceptable failure rates",
+    "Python-based agentic pipeline engineering in production: data pipelines, batch processing, property data APIs, web scraping, AI output validation, and evaluation tooling — reusable SDK-style patterns across projects, not one-off scripts"
+  ],
+  "closingLine": "My experience designing evaluation loops, observability tooling, benchmark scenarios, and success metrics for high-stakes agentic systems maps directly to extending Slingshot's V&V SDK and building simulation-backed benchmarks for mission planning agents. I'd welcome a conversation to explore Slingshot's current evaluation gaps and how my patterns could strengthen them.",
+  "resumePdf": "will-austin-slingshot-resume.pdf",
+  "jobType": 4,
+  "matchScore": 82,
+  "matchNotes": "Strong on eval infrastructure design, cross-model V&V, HITL guardrails, observability tooling, benchmark-first discipline, domain translation as engineering step, reusable patterns, Python pipelines. Gap: formal safety-critical V&V frameworks, astrodynamics domain knowledge. Security clearance eligibility not a blocker.",
+  "salaryRange": "$150K-$250K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=006dfb1c5806ba2a"
+}

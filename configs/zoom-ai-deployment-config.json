@@ -1,0 +1,61 @@
+{
+  "company": "Zoom",
+  "role": "AI Deployment Engineer",
+  "slug": "zoom-ai-deployment",
+  "headerTitle": "AI Deployment Engineer &nbsp;&middot;&nbsp; Conversational AI &nbsp;&middot;&nbsp; Professional Services &nbsp;&middot;&nbsp; Customer Discovery to Go-Live",
+  "subjectText": "AI Deployment Engineer &mdash; Zoom Professional Services (Remote) &middot; $65K&ndash;$158K",
+  "intro": "Zoom&rsquo;s AI Deployment Engineer runs discovery workshops, translates business goals into AI use cases, builds solutions, and guides customers to go-live. Six FDE engagements follow exactly that arc across eight industries.",
+  "bullets": [
+    "<strong>Discovery to go-live &mdash;</strong> six times over: conducted operational discovery, mapped workflows, validated AI automation opportunities, built and configured, ran UAT, drove adoption. Zoom PS runs this exact engagement model.",
+    "<strong>Conversational AI and voice design in production &mdash;</strong> Twilio IVR custom audio flows, AI phone agent integration, ElevenLabs TTS custom voice persona, and AI coaching loops. Intents, conversation flows, knowledge bases, and escalation processes defined and deployed against live customer volume.",
+    "<strong>AI use case identification from real operational data &mdash;</strong> translated business challenges into scoped, implementable AI applications across six deployments: automated lead intake (IVR pipeline), AI coaching loop with session feedback, multi-model document processing and routing."
+  ],
+  "closingLine": "Available immediately. Remote US-eligible.",
+  "radarAxes": [
+    "Customer Embed",
+    "Conversational AI",
+    "AI / LLM Systems",
+    "Discovery / Consulting",
+    "Solution Design",
+    "Deploy Speed"
+  ],
+  "radarLayers": [
+    {
+      "label": "Knowledge Depth",
+      "values": [
+        0.9,
+        0.82,
+        0.92,
+        0.85,
+        0.78,
+        0.72
+      ]
+    },
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.85,
+        0.88,
+        0.8,
+        0.75,
+        0.92,
+        0.95
+      ]
+    },
+    {
+      "label": "Exec Speed",
+      "values": [
+        0.82,
+        0.75,
+        0.85,
+        0.95,
+        0.88,
+        0.8
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 79,
+  "matchNotes": "Strong discovery-to-deployment pattern match. Conversational AI/voice work (Twilio IVR, ElevenLabs TTS) covers the CX/contact center angle. 5+ year bar is a stretch — frame as professional services consulting pattern, not formal contact center title. Closes June 3.",
+  "applyUrl": "https://careers.zoom.us/jobs/search"
+}

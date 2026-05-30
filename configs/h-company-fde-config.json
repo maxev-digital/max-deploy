@@ -1,0 +1,62 @@
+{
+  "company": "H Company",
+  "role": "Forward Deployed Engineer",
+  "slug": "h-company-fde",
+  "headerTitle": "Forward Deployed Engineer &nbsp;&middot;&nbsp; Autonomous AI Agents &nbsp;&middot;&nbsp; Customer Systems Integration &nbsp;&middot;&nbsp; Production Agentic Workflows",
+  "subjectText": "Forward Deployed Engineer &mdash; H Company (Remote) &middot; $150K&ndash;$180K",
+  "intro": "H Company is building foundational infrastructure for autonomous AI agents &mdash; and the Forward Deployed team makes those agents actually work inside real customer systems. That is three years of live work across 13 platforms.",
+  "bullets": [
+    "<strong>Agentic AI systems in production &mdash;</strong> 14 live endpoints using Claude, GPT-4o, and Gemini with multi-model routing, MCP protocol, HITL confirm-before-execute, and Zod-validated output. Not prototypes &mdash; live systems with real users and real consequences.",
+    "<strong>Customer systems integration &mdash;</strong> CRM data pipelines, IMAP email, Twilio IVR, Sinch SMS, Stripe, Google OAuth2, appraisal APIs, webhook data flows. REST API integration, auth patterns, and data sync under real operational load across eight industry verticals.",
+    "<strong>Six FDE cycles, integration to adoption &mdash;</strong> assess customer system landscape, design integration architecture, build, ship, drive adoption, document handoff. Node.js/TypeScript + React full-stack, Docker/PM2/Nginx deployment."
+  ],
+  "closingLine": "Available immediately. TX-based remote.",
+  "radarAxes": [
+    "Agentic AI Systems",
+    "Systems Integration",
+    "Full-Stack Node.js",
+    "FDE Lifecycle",
+    "Startup Velocity",
+    "Production Quality"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.9,
+        0.88,
+        0.92,
+        0.93,
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.93,
+        0.85,
+        0.9,
+        0.88,
+        0.88,
+        0.92
+      ]
+    },
+    {
+      "label": "Customer Impact",
+      "values": [
+        0.85,
+        0.88,
+        0.85,
+        0.9,
+        0.88,
+        0.85
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 83,
+  "matchNotes": "Strong on agentic AI production systems, customer integration pattern, and Node.js/TypeScript full-stack. H Company builds the agents I already integrate — direct match on deployment layer. Python secondary. 3+ year bar = technically met through FDE engagement count.",
+  "salaryRange": "$150K–$180K",
+  "applyUrl": "https://jobs.ashbyhq.com/hcompany/4e769796-1847-4f9e-9130-a76242b058ea/application"
+}

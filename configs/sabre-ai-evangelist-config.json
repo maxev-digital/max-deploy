@@ -1,0 +1,24 @@
+{
+  "company": "Sabre",
+  "role": "Evangelist, Agentic AI Platform",
+  "slug": "sabre-ai-evangelist",
+  "headerTitle": "Agentic AI Platform Evangelist &nbsp;&middot;&nbsp; Sabre Corporation &nbsp;&middot;&nbsp; Travel Technology &nbsp;&middot;&nbsp; Southlake, TX",
+  "subjectText": "Evangelist, Agentic AI Platform &mdash; Sabre Corporation (Southlake, TX) &middot; $95K&ndash;$147K",
+  "intro": "Sabre powers the global travel industry &mdash; airlines, hotels, agencies &mdash; and is now building agentic AI on top of that infrastructure. The Evangelist role is the person who makes developers and enterprise partners actually understand and adopt the platform. I build agentic AI systems in production daily, I can demo them live, and I speak to the technical audience without losing the business case.",
+  "bullets": [
+    "<strong>Agentic AI in production &mdash;</strong> 14 live endpoints using Claude Code CLI daily: MCP protocol, multi-step agent pipelines, tool use, structured JSON output (Zod), human-in-the-loop confirm-before-execute gates, and multi-model routing across Claude/GPT-4o/Gemini. Not a practitioner who learned from docs &mdash; a builder who uses these systems every day and can show the seams.",
+    "<strong>Developer audience communication &mdash;</strong> six FDE engagements built on the same loop: understand what developers and operators actually need, translate platform capability into language that maps to their workflow, drive adoption past the first demo. That&rsquo;s the evangelist motion applied to real business problems.",
+    "<strong>Travel &amp; hospitality domain &mdash;</strong> 12 years GM-level hospitality operations: high-volume F&amp;B, hotel adjacents, guest experience, vendor systems. Sabre&rsquo;s customers are airlines, hotels, and agencies &mdash; operators I have native context on. The AI platform story lands differently when the evangelist has run the operation."
+  ],
+  "closingLine": "Available immediately. DFW-based (Little Elm, TX) &mdash; Southlake is commutable. Can start any day.",
+  "radarAxes": ["Agentic AI Depth", "Dev Advocacy", "Hospitality Domain", "Platform Demo", "Technical Breadth", "Audience Translation"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.92, 0.85, 0.90, 0.88, 0.89, 0.87] },
+    { "label": "Technical Depth", "values": [0.90, 0.82, 0.87, 0.86, 0.91, 0.84] },
+    { "label": "Domain Fit",      "values": [0.88, 0.87, 0.92, 0.85, 0.86, 0.90] }
+  ],
+  "jobType": "devrel",
+  "matchScore": 77,
+  "matchNotes": "Strong match: agentic AI builder + hospitality domain + DFW-based commute. Salary $95-147K is below Will's floor but the role type (DevRel/Evangelist) is a strong on-ramp and Sabre is a major company with career leverage. DFW location is the unique advantage.",
+  "salaryRange": "$95K–$147K"
+}

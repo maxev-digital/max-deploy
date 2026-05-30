@@ -1,0 +1,24 @@
+{
+  "company": "Trail of Bits",
+  "role": "AI Systems Engineer",
+  "slug": "trail-of-bits-ai-systems",
+  "headerTitle": "AI Systems Engineer &nbsp;&middot;&nbsp; LLM Security &amp; Evaluation &nbsp;&middot;&nbsp; Production AI Engineering &nbsp;&middot;&nbsp; Agentic Systems",
+  "subjectText": "AI Systems Engineer &mdash; Trail of Bits (Remote) &middot; $125K&ndash;$250K",
+  "intro": "Trail of Bits applies rigorous security research to AI systems &mdash; adversarial testing frameworks, model evaluation pipelines, LLM safety harnesses. The production AI engineering and evaluation discipline is live across 14 endpoints.",
+  "bullets": [
+    "<strong>Production AI evaluation harnesses &mdash;</strong> input-output pair generation, edge case cataloguing, regression test sets, cross-model consistency checks (Claude vs GPT-4o). Catch prompt drift on model updates and flag output failures before they reach end users.",
+    "<strong>Agentic systems in production &mdash;</strong> 14 live endpoints using Claude and GPT-4o with tool-use, MCP protocol, HITL confirm-before-execute, structured JSON contracts validated with Zod. Opinions on agent contract design: schemas, memory strategies, fallback behaviors.",
+    "<strong>Security-adjacent engineering mindset &mdash;</strong> every AI system built includes adversarial case handling: prompt injection patterns, hallucination edge cases, and graceful failure modes when LLM confidence is below threshold. HITL patterns implemented because AI systems fail unexpectedly in production."
+  ],
+  "closingLine": "Available immediately. Remote.",
+  "radarAxes": ["AI Eval Harnesses", "Agentic Systems / MCP", "Adversarial AI Thinking", "Python / TypeScript", "Novel Domain Velocity", "Production AI Reliability"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.88, 0.91, 0.82, 0.90, 0.90, 0.90] },
+    { "label": "Tech Depth",       "values": [0.90, 0.93, 0.85, 0.88, 0.85, 0.88] },
+    { "label": "Business Impact",  "values": [0.85, 0.88, 0.88, 0.85, 0.92, 0.88] }
+  ],
+  "jobType": "fde",
+  "matchScore": 68,
+  "matchNotes": "Strong on eval harnesses, agentic systems, MCP, and Python/TypeScript stack. Security research domain is new — gap in cryptography, formal verification, and security audit methodology. Wide salary band ($125-250K) suggests senior IC range if matched well. Remote. Trail of Bits is a highly respected firm — worth applying even as a stretch on the security domain.",
+  "salaryRange": "$125K–$250K"
+}

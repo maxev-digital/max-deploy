@@ -1,0 +1,62 @@
+{
+  "company": "Foley",
+  "role": "Applied AI Engineer",
+  "slug": "foley-applied-ai",
+  "headerTitle": "Applied AI Engineer &nbsp;&middot;&nbsp; Agentic Workflow Systems &nbsp;&middot;&nbsp; Forward-Deployed AI Builder &nbsp;&middot;&nbsp; Business Automation",
+  "subjectText": "Applied AI Engineer &mdash; Foley (Remote US, EST) &middot; $80K&ndash;$130K",
+  "intro": "Foley is going AI-native by rethinking how work gets done from the inside. The Applied AI Engineer embeds with business teams, identifies high-leverage problems, and ships real solutions &mdash; six times completed across eight industries.",
+  "bullets": [
+    "<strong>Forward-deployed AI builder &mdash;</strong> six complete cycles: embed with operational teams, identify highest-friction points, ship AI-powered systems, measure in business terms. Eight industries, same execution model each time.",
+    "<strong>Agentic workflow systems in production &mdash;</strong> 14 live AI endpoints using Claude and GPT-4o with multi-model routing, MCP protocol, HITL confirm-before-execute, Zod-validated output, and webhook-driven automation pipelines equivalent to n8n/Make/Zapier.",
+    "<strong>Backend engineering at production quality &mdash;</strong> TypeScript, Node.js, Next.js 15, PostgreSQL, Prisma ORM across 13 platforms and 100+ API routes. AI integration and backend infrastructure ship together as one system."
+  ],
+  "closingLine": "Available immediately. Remote US, EST hours workable from TX.",
+  "radarAxes": [
+    "Agentic AI Systems",
+    "Forward-Deploy Pattern",
+    "Backend Engineering",
+    "Business Automation",
+    "Ship Velocity",
+    "Impact Measurement"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.92,
+        0.95,
+        0.92,
+        0.9,
+        0.93,
+        0.88
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.9,
+        0.9,
+        0.9,
+        0.88,
+        0.9,
+        0.85
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.88,
+        0.92,
+        0.88,
+        0.9,
+        0.88,
+        0.92
+      ]
+    }
+  ],
+  "jobType": "ai_engineering",
+  "matchScore": 85,
+  "matchNotes": "Exact role description match: forward-deployed AI builder embedded with business teams. Agentic workflow + production engineering stack = direct match. $80-130K is low relative to pipeline but role is high match and remote US. EST hours workable from TX.",
+  "salaryRange": "$80K–$130K",
+  "applyUrl": "https://apply.workable.com/foley-carrier-services-llc/"
+}

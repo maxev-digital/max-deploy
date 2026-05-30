@@ -1,0 +1,24 @@
+{
+  "company": "CloudBees",
+  "role": "Senior Software Engineer, AI Native Platform",
+  "slug": "cloudbees-senior-ai-platform",
+  "headerTitle": "Senior SWE, AI Native Platform &nbsp;&middot;&nbsp; CloudBees &nbsp;&middot;&nbsp; DevOps &amp; CI/CD",
+  "subjectText": "Senior SWE AI Native Platform &mdash; CloudBees (Austin, TX) &middot; $180K&ndash;$205K",
+  "intro": "Building AI-native features into developer tooling is exactly where my work lives — I've integrated LLM layers into production SaaS products, designed the context pipelines behind them, and shipped the APIs that expose those capabilities to end users. CloudBees' platform reach means those integrations matter at scale.",
+  "bullets": [
+    "<strong>AI Integration in Production &mdash;</strong> Shipped AI chat, highlight extraction, and voice synthesis (ElevenLabs TTS) into a live SaaS admin platform — Claude API orchestration, streaming responses, context management — not prototypes, production features with real users.",
+    "<strong>Platform Engineering Instincts &mdash;</strong> Designed multi-tenant API layers with role-based access, webhook pipelines, and developer-facing SDKs; understand the surface area where AI features meet platform contracts and where they break.",
+    "<strong>CI/CD-Adjacent Experience &mdash;</strong> Automated deployment pipelines, containerized services (Docker, PM2), and environment parity across dev/staging/prod are table stakes in how I build — the operational context CloudBees' customers live in."
+  ],
+  "closingLine": "Available immediately. Austin, TX (open to hybrid or remote).",
+  "radarAxes": ["AI/ML Integration", "Platform Engineering", "CI/CD Systems", "Cloud-Native", "API & SDK Design", "Dev Experience"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.88, 0.80, 0.85, 0.87, 0.84] },
+    { "label": "Tech Depth",      "values": [0.92, 0.86, 0.78, 0.83, 0.85, 0.82] },
+    { "label": "Business Impact", "values": [0.88, 0.85, 0.82, 0.84, 0.86, 0.87] }
+  ],
+  "jobType": "fde",
+  "matchScore": 76,
+  "matchNotes": "AI platform integration and multi-tenant SaaS are direct; CI/CD is adjacent — strong overall match",
+  "salaryRange": "$180K–$205K"
+}

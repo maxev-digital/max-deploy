@@ -1,0 +1,25 @@
+{
+  "company": "GitLab",
+  "role": "Senior AI Engineer",
+  "slug": "gitlab-ai-engineer",
+  "headerTitle": "Senior AI Engineer &nbsp;&middot;&nbsp; End-to-End AI Ownership &nbsp;&middot;&nbsp; Diagnose-First &nbsp;&middot;&nbsp; LLM Production Systems &nbsp;&middot;&nbsp; Claude Code Daily",
+  "subjectText": "Senior AI Engineer &mdash; GitLab (Remote US) &middot; $139K&ndash;$218K &mdash; Will Austin",
+  "intro": "GitLab is hiring a Senior AI Engineer who can diagnose real business problems, determine whether AI is the right solution, and ship it end to end &mdash; with guardrails, metrics, and documentation built in. Four complete external engagements, 14 live AI endpoints, Claude Code as the daily primary development environment. Customer Zero is not a talking point &mdash; it is the operating model.",
+  "bullets": [
+    "<strong>Diagnose-first AI delivery &mdash;</strong> four complete external cycles built on the same pattern GitLab describes: map the workflow, identify the actual constraint, validate AI fit before building, then scope, ship, and measure with business metrics. Roofing contractor outreach automation, home services scheduling, auto repair work order tracking, OOH advertising marketplace. Each ended with a system the client operated without technical support and a documented handoff they could own.",
+    "<strong>LLM production stack with AI safety patterns &mdash;</strong> 14 live endpoints: multi-model routing (Claude Haiku/Sonnet/Opus + GPT-4o), MCP protocol, tool-use architecture, HITL confirm-before-execute on destructive operations, Zod-validated structured output contracts that fail loudly on hallucination before reaching a user, per-request observability logging (model ID, prompt version, latency, raw output, correction signals). Prompt injection defense and output filtering are first-class engineering concerns on every agentic endpoint.",
+    "<strong>Orchestration platform depth + business system integration &mdash;</strong> Zapier, n8n, and Make used hands-on alongside custom-built BullMQ + Redis pipelines &mdash; choosing the right layer per workflow, not defaulting to one tool. HubSpot API and Salesforce API integrated directly in production CRM data flows. IMAP email parsing, Stripe webhook pipelines, Google OAuth2, 100+ REST API routes across TypeScript and Python. Python for data pipelines (1.4M+ property records, batch AI processing, agent orchestration). TypeScript for full-stack application delivery."
+  ],
+  "closingLine": "The engineering profile GitLab is hiring for &mdash; diagnose-first AI delivery, LLM production systems with safety patterns, orchestration platform fluency, and business system integration &mdash; is the current daily operating model. I would welcome a conversation about where the Enterprise AI function is taking internal tooling across Sales, Marketing, and CS.",
+  "radarAxes": ["LLM / Agentic Systems", "Full-Stack TypeScript", "Business Diagnosis", "API / Integrations", "End-to-End Ownership", "AI Tooling Daily"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.92, 0.88, 0.87, 0.93, 0.95] },
+    { "label": "Tech Depth",      "values": [0.92, 0.88, 0.80, 0.85, 0.88, 0.90] },
+    { "label": "Business Impact", "values": [0.85, 0.82, 0.95, 0.80, 0.85, 0.88] }
+  ],
+  "jobType": "fde",
+  "matchScore": 86,
+  "matchNotes": "Strong: diagnose-first model exact, 14 LLM endpoints in production, HITL + Zod safety patterns, n8n/Make/Zapier all Tier 1 (named in JD preferred), HubSpot + Salesforce API direct, Customer Zero angle genuine. Gaps: no GitLab platform experience, no Workato/Marketo/Zendesk, Python secondary vs TypeScript-primary. $139-218K solid range.",
+  "salaryRange": "$139K–$218K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=949e793c74f420e0"
+}

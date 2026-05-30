@@ -1,0 +1,24 @@
+{
+  "company": "Suffolk Construction",
+  "role": "Site AI Engineer",
+  "slug": "suffolk-construction-ai",
+  "headerTitle": "Site AI Engineer &nbsp;&middot;&nbsp; Suffolk Construction &nbsp;&middot;&nbsp; Las Vegas, NV &nbsp;&middot;&nbsp; Construction Technology",
+  "subjectText": "Site AI Engineer &mdash; Suffolk Construction (Las Vegas, NV) &middot; $150K&ndash;$182K",
+  "intro": "Suffolk deploys AI on active construction sites to solve the problems contractors actually have: safety monitoring, document Q&amp;A, schedule deviation, subcontractor coordination. I&rsquo;ve built field operations software for a roofing company from the ground floor &mdash; IVR lead intake, crew dispatch, storm-alert campaigns, estimate workflows. I know what field operations look like before an AI layer goes on top of it.",
+  "bullets": [
+    "<strong>Construction operations domain &mdash;</strong> built Roof Works of Texas admin panel end-to-end: estimate wizard, job scheduling, crew dispatch, contract tracking, IVR lead intake, storm-alert campaigns. Roofing is construction &mdash; fast-moving field crews, subcontractors, permit timelines, weather risk. I've engineered for this operational environment, not just observed it.",
+    "<strong>AI deployment into field operations &mdash;</strong> 14 live AI endpoints wired into real operational workflows: outputs trigger scheduling actions, SMS/IVR campaigns, contract generation, and database state changes. AI that changes what happens in the field, not AI that produces reports.",
+    "<strong>Production-grade infrastructure &mdash;</strong> full-stack TypeScript/Next.js 15/Node.js/PostgreSQL on Linux VPS + Docker + PM2 + Nginx across 13 platforms. Site AI Engineer isn't a research role &mdash; it's a deployment role. That's the pattern I've run six times."
+  ],
+  "closingLine": "Available immediately. Las Vegas, NV relocation or hybrid considered. US citizen.",
+  "radarAxes": ["Construction Domain", "AI Deployment", "Field Operations", "Full-Stack Build", "Production Infra", "Startup Cadence"],
+  "radarLayers": [
+    { "label": "Domain Fit",      "values": [0.88, 0.87, 0.91, 0.89, 0.88, 0.85] },
+    { "label": "Technical Depth", "values": [0.82, 0.90, 0.86, 0.92, 0.91, 0.87] },
+    { "label": "Shipped Work",    "values": [0.85, 0.88, 0.89, 0.91, 0.90, 0.88] }
+  ],
+  "jobType": "engineering",
+  "matchScore": 68,
+  "matchNotes": "On-site Las Vegas construction AI role. Will's RWCR build = direct construction domain experience. AI deployment pattern maps. Main variable: relocation/commute to Las Vegas. Salary $150-182K is strong.",
+  "salaryRange": "$150K–$182K"
+}

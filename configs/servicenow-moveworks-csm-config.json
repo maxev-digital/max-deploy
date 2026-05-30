@@ -1,0 +1,24 @@
+{
+  "company": "ServiceNow (Moveworks)",
+  "role": "Senior Customer Success Manager",
+  "slug": "servicenow-moveworks-csm",
+  "headerTitle": "Senior Customer Success Manager &nbsp;&middot;&nbsp; Enterprise AI Adoption &nbsp;&middot;&nbsp; Executive Advisor &nbsp;&middot;&nbsp; Moveworks AI Platform",
+  "subjectText": "Senior Customer Success Manager &mdash; ServiceNow / Moveworks (Remote) &middot; $113K&ndash;$177K",
+  "intro": "Moveworks built the single front door to work for enterprise AI &mdash; now inside ServiceNow. The Senior CSM drives transformational AI adoption with executive sponsors at the world&rsquo;s largest organizations. Six engagements built that operating model.",
+  "bullets": [
+    "<strong>Trusted advisor to executive sponsors &mdash;</strong> six engagements, six leadership relationships built from scratch. Former GM with P&amp;L ownership; I speak in executive terms: time saved, cost reduced, throughput improved, risk mitigated.",
+    "<strong>Transformational AI adoption &mdash;</strong> six complete cycles: discover the transformational goal, map current-state workflow, design AI integration, drive adoption, document the outcome. Different AI readiness on every engagement; same outcome standard.",
+    "<strong>LLM and agentic platform knowledge &mdash;</strong> 14 live endpoints using Claude, GPT-4o, and Gemini. MCP protocol, agentic workflow orchestration, and LLM integration into CRM, ticketing, email, scheduling, and communication channels. AI product fluency from shipping it."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["Executive Advisory", "AI Platform Adoption", "Cross-Functional CSM", "Product Feedback Loop", "LLM / Agentic Systems", "Rapid Adaptation"],
+  "radarLayers": [
+    { "label": "Exec Track Record",   "values": [0.88, 0.87, 0.83, 0.85, 0.90, 0.85] },
+    { "label": "CSM Execution",       "values": [0.82, 0.88, 0.85, 0.88, 0.88, 0.87] },
+    { "label": "AI Platform Depth",   "values": [0.80, 0.85, 0.82, 0.85, 0.92, 0.88] }
+  ],
+  "jobType": "csm",
+  "matchScore": 70,
+  "matchNotes": "Honest stretch: no formal CSM title or ServiceNow/Moveworks platform experience. Strengths are executive advisory track record (GM background), enterprise AI adoption pattern (6x FDE), and LLM/agentic system depth. Remote-West preference is a challenge from TX. Frame FDE work as structured CSM execution.",
+  "salaryRange": "$113K–$177K"
+}

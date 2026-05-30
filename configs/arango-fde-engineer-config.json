@@ -1,0 +1,62 @@
+{
+  "company": "ARANGO",
+  "role": "AI Forward Deploy Sales Engineer",
+  "slug": "arango-fde-engineer",
+  "headerTitle": "AI Forward Deploy Engineer &nbsp;&middot;&nbsp; Technical Presales &nbsp;&middot;&nbsp; Customer Embed &nbsp;&middot;&nbsp; AI Graph Deployment",
+  "subjectText": "AI Forward Deploy Sales Engineer &mdash; ARANGO (Remote)",
+  "intro": "ARANGO&rsquo;s AI Forward Deploy Sales Engineer bridges technical depth and customer deployment &mdash; embedding with prospects, translating requirements into solutions, and driving go-live. Six completed FDE engagements across eight industries map directly to that engagement model.",
+  "bullets": [
+    "<strong>FDE embed-to-ship pattern, six times over &mdash;</strong> discovery workshops, requirements translation, build, UAT, and adoption handoff on every engagement. Home services, EdTech, media, real estate, sports analytics, construction tech &mdash; eight industries, same discipline each time.",
+    "<strong>Technical depth that earns trust in the room &mdash;</strong> 13 production platforms, 14 live AI endpoints, 100+ API routes. Can whiteboard the architecture, write the integration, and demo it live. Not a deck-flipper.",
+    "<strong>AI deployment across the stack &mdash;</strong> Claude Code CLI as primary dev environment, multi-model routing (Claude + GPT-4o + Gemini), agentic pipelines with tool use and MCP protocol, structured JSON contracts validated with Zod &mdash; all in production."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "Customer Embed",
+    "FDE Pattern",
+    "AI Deployment",
+    "Technical Presales",
+    "Solution Design",
+    "Demo Depth"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.93,
+        0.95,
+        0.9,
+        0.85,
+        0.88,
+        0.9
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.88,
+        0.9,
+        0.92,
+        0.87,
+        0.9,
+        0.92
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.9,
+        0.88,
+        0.87,
+        0.9,
+        0.92,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 70,
+  "matchNotes": "FDE pattern is a strong match. 'Sales Engineer' title may have quota component — not purely AE/BDR. Technical presales + deployment is the actual job. No salary listed. Fresh posting May 28. Worth applying to understand the role better.",
+  "salaryRange": "Undisclosed",
+  "applyUrl": "https://arangodb.applytojob.com/apply"
+}

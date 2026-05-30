@@ -1,0 +1,20 @@
+{
+  "company": "Noodle",
+  "role": "Prompt Systems Engineer",
+  "slug": "noodle-prompt-engineer",
+  "headerTitle": "Prompt Systems Engineer &nbsp;&middot;&nbsp; LLM Production Systems &nbsp;&middot;&nbsp; Evaluation Frameworks &nbsp;&middot;&nbsp; Claude Daily &nbsp;&middot;&nbsp; Agentic AI",
+  "subjectText": "Prompt Systems Engineer &mdash; Noodle (Remote) &middot; $115K&ndash;$130K &mdash; Will Austin",
+  "intro": "Noodle is looking for someone who has designed and shipped production prompt systems &mdash; not experimented with them, but built the evaluation layer, caught the edge cases before deployment, and iterated against real users in real workflows. That is the day-to-day across 14 live AI endpoints: system prompt architecture, multi-turn conversation logic, structured output contracts, and the guardrail patterns that keep agents behaving correctly when the conversation goes sideways.",
+  "bullets": [
+    "<strong>Production prompt engineering at scale &mdash;</strong> 14 live AI endpoints built and maintained in Claude Code daily: system prompt design, persona definition, multi-turn conversation logic, chain-of-thought patterns, and RAG integration across enrollment, support, and operational workflows. Every prompt ships with an output contract &mdash; Zod-validated JSON schema that fails loudly on hallucination or format drift before it reaches a user.",
+    "<strong>Evaluation frameworks and quality systems &mdash;</strong> every production AI system ships with a pre-deployment test suite: adversarial inputs designed to surface edge cases, structured output validation, HITL guardrails for low-confidence responses, and per-request observability logging. The evaluation layer is not an afterthought &mdash; it is built before the prompt goes to production.",
+    "<strong>Red-teaming and adversarial testing &mdash;</strong> designed and ran adversarial test scenarios across multi-turn agent workflows: out-of-scope queries, persona drift, conflicting instructions, injection attempts. Built the failure taxonomy before the agent met real users. The goal is finding the breaking point in staging, not in production.",
+    "<strong>Cross-functional delivery with non-technical stakeholders &mdash;</strong> four complete external client engagements translating operational requirements into agent behavior: roofing, home services, auto repair, OOH advertising. Each started with a workflow audit and ended with a production AI system the client operated without technical support."
+  ],
+  "closingLine": "The prompt engineering discipline Noodle is hiring for &mdash; production system design, evaluation frameworks, adversarial testing, and cross-functional delivery against real operational requirements &mdash; is the current daily operating model. I would welcome a conversation about where the AI orchestration platform is headed and what the highest-leverage prompt system opportunities look like in the enrollment and student support workflows.",
+  "jobType": 4,
+  "matchScore": 62,
+  "matchNotes": "Strong: production prompt engineering (14 endpoints), evaluation frameworks (Zod validation + HITL), red-teaming patterns, multi-turn conversation logic, cross-functional stakeholder delivery. Gaps: education/LMS domain (Canvas/Moodle), Langfuse specifically, $115-130K below prior floor but floor dropped. Apply on prompt engineering depth.",
+  "salaryRange": "$115K–$130K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=52e46f4d3f73371e"
+}

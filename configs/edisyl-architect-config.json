@@ -1,0 +1,26 @@
+{
+  "company": "Edisyl",
+  "role": "AI Agent Architect",
+  "slug": "edisyl-architect",
+  "headerTitle": "AI Agent Architect &nbsp;&middot;&nbsp; Production AI Infrastructure &nbsp;&middot;&nbsp; Multi-Agent Orchestration &nbsp;&middot;&nbsp; Enterprise Reliability",
+  "subjectText": "AI Agent Architect &mdash; Edisyl (Remote) &mdash; Will Austin",
+  "intro": "14 production Claude API endpoints live. Multi-model routing, HITL, MCP protocol &mdash; all running against real operational data, not demos. The agent reliability and quasi-determinism problem Edisyl is solving is the specific architecture problem these systems were built around.",
+  "bullets": [
+    "<strong>Production AI agent architecture &mdash;</strong> 14 live endpoints: multi-model routing (Haiku/Sonnet/Opus by task complexity), tool-use architecture, structured JSON output with Zod validation, human-in-the-loop confirm-before-execute, and MCP protocol &mdash; all running in production across 13 platforms. Not prototypes. The eval framework comes before the feature, not after.",
+    "<strong>LLM failure mode literacy &mdash; accuracy cliff understood, designed around &mdash;</strong> built systems that route around model limitations rather than relying on prompting to fix semantic problems. Quasi-determinism achieved through validated tool patterns over raw LLM inference, output consistency checks, and structured fallback routing when agents drift. Zero hallucinations reaching users is the bar.",
+    "<strong>Agent framework built from first principles &mdash;</strong> custom orchestration built without defaulting to LangChain abstractions &mdash; strong documented opinion on why most agent architectures fail at enterprise scale, and a production system that doesn&rsquo;t. Context window management, memory strategies, dependency graph design, and failure mode taxonomy built in before deployment.",
+    "<strong>Observability and eval harness design &mdash;</strong> structured observability across all 14 production AI endpoints: per-request logging (model ID, prompt version, latency, raw output, correction signals), error handling, output consistency checks, and fallback routing. Non-technical operators trust agent results without checking every output &mdash; that is the success condition."
+  ],
+  "closingLine": "The architecture Edisyl is building &mdash; agent fleets that produce the same right answer three times in a row on real unclean data &mdash; is the exact reliability problem these 14 production endpoints are built to solve. Available immediately. TX-based, remote.",
+  "radarAxes": ["Agent Architecture", "LLM Failure Modes", "Eval / Observability", "Python / TypeScript", "Production Ownership", "Custom Orchestration"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.88, 0.90, 0.85, 0.88, 0.93, 0.92] },
+    { "label": "Tech Depth",      "values": [0.85, 0.88, 0.82, 0.85, 0.90, 0.90] },
+    { "label": "Business Impact", "values": [0.82, 0.85, 0.88, 0.82, 0.88, 0.85] }
+  ],
+  "jobType": "fde",
+  "matchScore": 68,
+  "matchNotes": "Strong: production multi-agent orchestration, LLM failure mode patterns, custom framework vs LangChain (JD explicitly allows this), eval/observability design, Python+TypeScript. Gaps: 6-10yr Staff-level requirement, no vector DB production, no LangChain/LlamaIndex, no enterprise-scale deployment. Equity upside justifies applying. Requires written application answers inline.",
+  "salaryRange": "Competitive + equity (undisclosed)",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=c2fb2a1363ff6f12"
+}

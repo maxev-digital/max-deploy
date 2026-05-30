@@ -1,0 +1,24 @@
+{
+  "company": "Cardiff",
+  "role": "Senior Full-Stack Engineer, AI-Native",
+  "slug": "cardiff-ai-native",
+  "headerTitle": "Senior Full-Stack Engineer, AI-Native &nbsp;&middot;&nbsp; Agentic Systems &nbsp;&middot;&nbsp; Claude Code Developer &nbsp;&middot;&nbsp; Production AI Engineering",
+  "subjectText": "Senior Full-Stack Engineer, AI-Native &mdash; Cardiff (Remote) &middot; $101K&ndash;$150K",
+  "intro": "Cardiff is rebuilding around AI-native agentic systems for financial services workflows. Claude Code and Cursor are my primary development environment across all active projects &mdash; MCP protocol, multi-model routing, HITL guardrails in production daily.",
+  "bullets": [
+    "<strong>Claude Code and AI-native development as primary workflow &mdash;</strong> MCP protocol integration, multi-model routing (Haiku/Sonnet/Opus), tool use, HITL confirm-before-execute, Zod-validated output. Not a plugin &mdash; the engineering environment across every project.",
+    "<strong>Agentic systems in production &mdash;</strong> 14 live AI endpoints across CRM, communications, scheduling, and data extraction. SMS, email, and IVR voice automation pipelines running against live customer data across eight industry verticals.",
+    "<strong>Python, TypeScript, SQL full-stack &mdash;</strong> 13 production platforms, 100+ API routes, Docker/PM2/Nginx deployment. Business requirement to prototype to production this week, not next sprint."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["AI-Native Development", "Agentic Systems", "Comms Agent Pipelines", "Full-Stack Production", "Prototype-to-Prod Speed", "MCP / Tool Use"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.93, 0.91, 0.90, 0.92, 0.94, 0.88] },
+    { "label": "Tech Depth",       "values": [0.92, 0.93, 0.88, 0.90, 0.90, 0.92] },
+    { "label": "Business Impact",  "values": [0.90, 0.88, 0.90, 0.88, 0.92, 0.85] }
+  ],
+  "jobType": "fde",
+  "matchScore": 88,
+  "matchNotes": "Excellent match: AI-native dev workflow (Claude Code/Cursor primary), agentic systems in production, comms agent pipelines (Twilio/Sinch/IMAP), MCP protocol integration. FinTech/lending domain is new but AI workflow automation pattern transfers directly. $101-150K is below pipeline but role quality is high.",
+  "salaryRange": "$101K–$150K"
+}

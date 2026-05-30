@@ -207,23 +207,94 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {tab === 'email' && (
-        <div style={{ background: cb, border: `1px solid ${bd}`, borderRadius: 14, padding: '22px', maxWidth: 640 }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 16 }}>Email Configuration</div>
-          <div style={{ fontSize: '0.82rem', color: dim, lineHeight: 1.6, marginBottom: 20 }}>
-            Email sending (SMTP) and receiving (IMAP) are configured via environment variables in your <code style={{ background: 'rgba(255,255,255,0.06)', padding: '1px 5px', borderRadius: 3 }}>.env</code> file.
-          </div>
-          {[
-            'SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'SMTP_FROM',
-            'IMAP_HOST', 'IMAP_PORT', 'IMAP_USER', 'IMAP_PASS',
-          ].map(key => (
-            <div key={key} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: `1px solid ${bd}` }}>
-              <code style={{ fontSize: '0.76rem', color: '#93C5FD' }}>{key}</code>
-              <span style={{ fontSize: '0.74rem', color: dim }}>Set in .env</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {tab === 'email' && <EmailConfigTab cb={cb} bd={bd} dim={dim} />}
     </>
+  );
+}
+
+function EmailConfigTab({ cb, bd, dim }: { cb: string; bd: string; dim: string }) {
+  const [form, setForm] = useState({
+    email: 'info@max-ev-holdings.com',
+    fromName: 'Will Austin',
+    imapHost: 'imap.hostinger.com', imapPort: 993, imapUser: 'info@max-ev-holdings.com', imapPass: '',
+    smtpHost: 'smtp.hostinger.com', smtpPort: 465, smtpUser: 'info@max-ev-holdings.com', smtpPass: '',
+  });
+  const [saving, setSaving] = useState(false);
+  const [saved,  setSaved]  = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/email/account').then(r => r.ok ? r.json() : null).then(data => {
+      if (data?.account) {
+        setForm(f => ({
+          ...f,
+          email:    data.account.email,
+          fromName: data.account.fromName,
+          imapHost: data.account.imapHost,
+          imapPort: data.account.imapPort,
+          imapUser: data.account.imapUser,
+          smtpHost: data.account.smtpHost,
+          smtpPort: data.account.smtpPort,
+          smtpUser: data.account.smtpUser,
+        }));
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  async function save(e: React.FormEvent) {
+    e.preventDefault();
+    setSaving(true);
+    await fetch('/api/email/account', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }
+
+  if (loading) return <div style={{ color: dim, fontSize: 13 }}>Loading...</div>;
+
+  const fields: { label: string; key: keyof typeof form; type?: string; placeholder?: string }[] = [
+    { label: 'Email Address', key: 'email', type: 'email' },
+    { label: 'From Name',     key: 'fromName' },
+    { label: 'IMAP Host',     key: 'imapHost', placeholder: 'imap.hostinger.com' },
+    { label: 'IMAP Port',     key: 'imapPort', type: 'number' },
+    { label: 'IMAP Username', key: 'imapUser' },
+    { label: 'IMAP Password', key: 'imapPass', type: 'password', placeholder: 'Leave blank to keep existing' },
+    { label: 'SMTP Host',     key: 'smtpHost', placeholder: 'smtp.hostinger.com' },
+    { label: 'SMTP Port',     key: 'smtpPort', type: 'number' },
+    { label: 'SMTP Username', key: 'smtpUser' },
+    { label: 'SMTP Password', key: 'smtpPass', type: 'password', placeholder: 'Leave blank to keep existing' },
+  ];
+
+  return (
+    <form onSubmit={save} style={{ maxWidth: 560 }}>
+      <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 20 }}>
+        Email Account — info@max-ev-holdings.com
+      </div>
+      <div style={{ background: cb, border: `1px solid ${bd}`, borderRadius: 14, padding: 22 }}>
+        {fields.map(f => (
+          <div key={f.key} style={{ marginBottom: 14 }}>
+            <label className="label">{f.label}</label>
+            <input
+              className="input"
+              type={f.type ?? 'text'}
+              value={String(form[f.key])}
+              placeholder={f.placeholder}
+              onChange={e => setForm(prev => ({ ...prev, [f.key]: f.type === 'number' ? parseInt(e.target.value) || 0 : e.target.value }))}
+              {...(f.type === 'password' ? {} : { required: true })}
+            />
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <button type="submit" className="btn btn-primary" disabled={saving}>
+          {saved ? <><Check size={13} /> Saved</> : saving ? <><Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> Saving...</> : <><Save size={13} /> Save Email Config</>}
+        </button>
+      </div>
+    </form>
   );
 }

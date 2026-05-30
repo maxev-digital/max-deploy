@@ -1,0 +1,24 @@
+{
+  "company": "Densight AI",
+  "role": "AI Engineer",
+  "slug": "densight-ai-engineer",
+  "headerTitle": "AI Engineer &nbsp;&middot;&nbsp; Densight AI &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "AI Engineer &mdash; Densight AI (Remote) &middot; $100K&ndash;$120K",
+  "intro": "Densight AI is building in the same space I've been shipping in — production AI systems that go beyond the demo. I've integrated LLM APIs into live products, built the infrastructure around them, and maintained the observability to know when they break. That end-to-end ownership is rare and it's exactly what an early AI engineering team needs.",
+  "bullets": [
+    "<strong>Production LLM Engineering &mdash;</strong> Shipped Claude API integrations into live SaaS products — streaming responses, context window management, prompt versioning, and graceful fallbacks when the model misbehaves. Production, not prototype.",
+    "<strong>AI Feature Architecture &mdash;</strong> Designed multi-modal AI pipelines combining text generation (Claude), voice synthesis (ElevenLabs TTS), and behavioral telemetry (GA4) into a single coherent product experience — built to stay up, not just demo well.",
+    "<strong>Full Ownership Mindset &mdash;</strong> At a small AI company, the engineer who ships also maintains, monitors, and iterates. I've run that loop solo across multiple products — from schema design through API contract through deployment — and I prefer it that way."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": ["LLM Engineering", "API & Infra", "Product Instinct", "Observability", "Iteration Speed", "AI Architecture"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.91, 0.88, 0.84, 0.80, 0.93, 0.86] },
+    { "label": "Tech Depth",      "values": [0.89, 0.90, 0.78, 0.83, 0.85, 0.91] },
+    { "label": "Business Impact", "values": [0.85, 0.84, 0.90, 0.82, 0.88, 0.83] }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "Direct LLM engineering match; small AI company = high ownership, strong fit for profile",
+  "salaryRange": "$100K–$120K"
+}

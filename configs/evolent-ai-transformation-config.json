@@ -1,0 +1,62 @@
+{
+  "company": "Evolent",
+  "role": "Sr Analyst, AI Transformation",
+  "slug": "evolent-ai-transformation",
+  "headerTitle": "Sr Analyst, AI Transformation &nbsp;&middot;&nbsp; Healthcare Analytics &nbsp;&middot;&nbsp; LLM Integration &nbsp;&middot;&nbsp; Prompt Engineering",
+  "subjectText": "Sr Analyst, AI Transformation &mdash; Evolent Health (Remote) &middot; $80K&ndash;$110K",
+  "intro": "Evolent is moving healthcare analytics from manual workflows to AI-powered pipelines. The AI transformation execution model &mdash; prompt engineering, LLM integration, workflow automation, and stakeholder enablement &mdash; is live across 14 production endpoints.",
+  "bullets": [
+    "<strong>LLM integration and prompt engineering in production &mdash;</strong> 14 live AI endpoints using Claude and GPT-4o with multi-model routing, chain-of-thought prompt design, structured JSON output with Zod validation, and HITL confirm-before-execute.",
+    "<strong>AI workflow automation replacing manual processes &mdash;</strong> webhook-driven triggers, BullMQ + Redis job queues, and multi-step data transformation pipelines across six deployments. Every system measured against a business outcome: time saved, throughput improved, error rate reduced.",
+    "<strong>Python and SQL data pipelines &mdash;</strong> Python AI integration layers, PostgreSQL with complex multi-join queries and aggregation pipelines across 13 production systems. Analytics engineering discipline transfers directly; Microsoft Fabric is platform-specific."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "LLM / Prompt Eng",
+    "Workflow Automation",
+    "Python / SQL",
+    "AI Enablement",
+    "Data Analytics",
+    "Stakeholder ROI"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.9,
+        0.88,
+        0.82,
+        0.88,
+        0.78,
+        0.85
+      ]
+    },
+    {
+      "label": "AI Depth",
+      "values": [
+        0.92,
+        0.85,
+        0.8,
+        0.85,
+        0.75,
+        0.82
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.88,
+        0.88,
+        0.85,
+        0.9,
+        0.8,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "ai_engineering",
+  "matchScore": 65,
+  "matchNotes": "Strong on LLM/prompt engineering, AI workflow automation, and cross-functional enablement. Healthcare domain is new — no clinical data, HIPAA workflow, or Evolent-specific platform experience. Microsoft Fabric and Azure OpenAI are gaps (have Claude/GPT-4o/PostgreSQL equivalents). $80-110K is low for the stack but role is remote and match on AI transformation pattern is real.",
+  "salaryRange": "$80K–$110K",
+  "applyUrl": "https://evolent.wd1.myworkdayjobs.com/External"
+}

@@ -1,0 +1,26 @@
+{
+  "company": "Titan AI",
+  "role": "Principal Forward Deployed Engineer – Applied AI",
+  "slug": "titan-ai-principal-fde",
+  "headerTitle": "Principal Forward Deployed Engineer &nbsp;&middot;&nbsp; Applied AI &nbsp;&middot;&nbsp; Technical Authority &nbsp;&middot;&nbsp; Production Agentic Systems",
+  "subjectText": "Principal Forward Deployed Engineer – Applied AI — Titan AI (Remote) &middot; $180K&ndash;$220K &mdash; Will Austin",
+  "intro": "Titan AI&rsquo;s Principal FDE is the technical authority on client engagements &mdash; architects end-to-end agentic systems, owns the build, represents Titan&rsquo;s engineering credibility to client engineering teams. Four complete external FDE cycles, 14 live production AI endpoints, custom agentic orchestration built from first principles. Unconventional path with real production scars.",
+  "bullets": [
+    "<strong>Technical authority across four complete external deployments &mdash;</strong> embed, own the architecture, build the system, hand off a documented production capability. Roofing contractor: 1.4M+ property records across three inconsistent CAD APIs, multi-stage normalization, fuzzy entity matching with confidence scoring, human review queue for low-confidence matches, downstream SMS outreach. Home services: 400+ email threads parsed and routed. Auto repair: work order and client communication system. OOH advertising: inventory and booking marketplace. Every engagement ended with a system the client operated without technical support.",
+    "<strong>End-to-end agentic system architecture &mdash;</strong> 14 live production endpoints: multi-model routing (Claude Haiku/Sonnet/Opus by task complexity and cost), tool-use architecture with MCP protocol, structured JSON output contracts (Zod validation on every endpoint), human-in-the-loop confirm-before-execute, observability logging per-request (model ID, prompt version, latency, raw output, correction signals), and structured fallback routing when agents drift. Context window management, memory strategies, and dependency graph design built in before deployment &mdash; not bolted on after.",
+    "<strong>Off-platform builds and bespoke integrations &mdash;</strong> Python data pipelines (1.4M+ property records, batch AI processing), REST API orchestration (100+ routes), IMAP email parsing (imapflow), Stripe webhooks, HubSpot API and Salesforce API in production CRM flows, Google OAuth2, Twilio and Sinch SMS, BullMQ + Redis async job processing, PostgreSQL + Prisma ORM. TypeScript for full-stack application delivery. Docker, PM2, Nginx on Linux VPS. Single production owner from architecture through handoff.",
+    "<strong>Client-facing technical leadership &mdash;</strong> former GM running P&amp;L and 40&ndash;80 staff across Dallas and Las Vegas properties. Embedded with owners, ops leads, and crew managers under live operational pressure across four industries. Earned the ability to hold a room with business leads, push back on scope decisions with substance, and translate complex AI system behavior to non-technical operators. Every engagement closed with a playbook the client ran independently."
+  ],
+  "closingLine": "The Titan AI Principal FDE model &mdash; lead the technical design, own off-platform builds, represent engineering credibility to client architects &mdash; is the exact engagement structure these four deployments were built around. Available immediately. TX-based, remote.",
+  "radarAxes": ["FDE / Technical Lead", "Agentic Arch. Depth", "Off-Platform Builds", "Python / TypeScript", "Client Authority", "Production Ownership"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.88, 0.87, 0.87, 0.88, 0.85, 0.92] },
+    { "label": "Tech Depth",      "values": [0.85, 0.87, 0.85, 0.88, 0.82, 0.90] },
+    { "label": "Business Impact", "values": [0.90, 0.83, 0.83, 0.82, 0.88, 0.88] }
+  ],
+  "jobType": "fde",
+  "matchScore": 62,
+  "matchNotes": "Stretch role. Strong: FDE technical ownership, end-to-end agentic architecture, off-platform builds, Python+TS, client authority, custom orchestration. Gaps: LangChain/LangGraph/DeepAgents specifically required at depth, banking/regulated industry 'strongly preferred', 'senior-level' bar implies 7+ years, pre-Series A risk. Equity upside justifies the application.",
+  "salaryRange": "$180K–$220K",
+  "applyUrl": "https://jobs.ashbyhq.com/titan-ai/0315c130-f36f-490c-89c1-ec685530f111/application?utm_id=12224371&utm_source=FWDDeploy.com"
+}

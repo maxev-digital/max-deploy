@@ -18,17 +18,17 @@ export async function GET(req: NextRequest) {
     where.stage = stage;
   }
 
-  const select = minimal
-    ? { id: true, company: true, role: true, stage: true }
-    : undefined;
-
-  const opportunities = await prisma.opportunity.findMany({
-    where,
-    orderBy: { createdAt: 'desc' },
-    ...(select ? { select } : {
-      include: { contacts: true, outreachLogs: { orderBy: { sentAt: 'desc' }, take: 1 } },
-    }),
-  });
+  const opportunities = minimal
+    ? await prisma.opportunity.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        select: { id: true, company: true, role: true, stage: true },
+      })
+    : await prisma.opportunity.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: { contacts: true, outreachLogs: { orderBy: { sentAt: 'desc' }, take: 1 } },
+      });
 
   return NextResponse.json({ opportunities });
 }

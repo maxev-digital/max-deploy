@@ -1,0 +1,62 @@
+{
+  "company": "Haast",
+  "role": "Forward Deployed Engineer",
+  "slug": "haast-fde",
+  "headerTitle": "Forward Deployed Engineer &nbsp;&middot;&nbsp; LLM Compliance Platform &nbsp;&middot;&nbsp; Full-Stack API Engineering &nbsp;&middot;&nbsp; Series A Startup",
+  "subjectText": "Forward Deployed Engineer &mdash; Haast (Remote US) &middot; $180K&ndash;$220K + equity",
+  "intro": "Haast is building the LLM compliance layer that marketing and legal teams actually need &mdash; and needs an FDE who owns both the customer relationship and technical implementation simultaneously. Six cycles completed across eight industries.",
+  "bullets": [
+    "<strong>Full-stack API engineering in production &mdash;</strong> TypeScript/Node.js, PostgreSQL, Prisma ORM, 100+ REST API routes, BullMQ + Redis, Stripe, Google OAuth2, Twilio. All running across 13 platforms.",
+    "<strong>LLM document processing &mdash;</strong> parse, classify, and extract structured data from contracts, proposals, and compliance documents using Claude and GPT-4o. Zod-validated output, human-review gates. Same architecture as Haast&rsquo;s compliance platform applied to a new vertical.",
+    "<strong>Technical customer relationships &mdash;</strong> six engagements as the sole technical contact for non-engineering stakeholders. Gathered requirements, shipped features, drove adoption, documented handoff. Six for six independent."
+  ],
+  "closingLine": "Available immediately. TX-based remote, eligible US.",
+  "radarAxes": [
+    "Full-Stack API",
+    "LLM / Doc Processing",
+    "Customer Ownership",
+    "Startup Velocity",
+    "Arch Decisions",
+    "Production Quality"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.92,
+        0.87,
+        0.9,
+        0.93,
+        0.85,
+        0.9
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.88,
+        0.9,
+        0.8,
+        0.88,
+        0.88,
+        0.92
+      ]
+    },
+    {
+      "label": "Customer Impact",
+      "values": [
+        0.85,
+        0.83,
+        0.95,
+        0.9,
+        0.82,
+        0.85
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 81,
+  "matchNotes": "Strong on full-stack TypeScript/Node.js, LLM document processing, and customer-facing FDE pattern. Go is a gap — Node.js is the bridge. Compliance domain is adjacent (document processing + structured LLM output in production). Series A startup velocity = direct match.",
+  "salaryRange": "$180K–$220K",
+  "applyUrl": "https://jobs.ashbyhq.com/haast/8d123db2-7e16-4cb7-8423-9324fa80666e"
+}

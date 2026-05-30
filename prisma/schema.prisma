@@ -172,6 +172,78 @@ model Invoice {
   createdAt       DateTime  @default(now())
 }
 
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  priority    String   @default("MEDIUM") // HIGH | MEDIUM | LOW
+  status      String   @default("TODO")   // TODO | IN_PROGRESS | REVIEW | DONE
+  assignedTo  String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  linkedType  String?  // opportunity | contract | company
+  linkedId    String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tasks")
+}
+
+model EmailAccount {
+  id           String    @id @default(cuid())
+  label        String    @default("Main Inbox")
+  email        String    @unique
+  imapHost     String    @default("imap.hostinger.com")
+  imapPort     Int       @default(993)
+  imapUser     String
+  imapPass     String
+  smtpHost     String    @default("smtp.hostinger.com")
+  smtpPort     Int       @default(465)
+  smtpUser     String
+  smtpPass     String
+  fromName     String    @default("Will Austin")
+  lastSyncAt   DateTime?
+  lastUid      Int       @default(0)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  messages     EmailMessage[]
+
+  @@map("email_accounts")
+}
+
+model EmailMessage {
+  id            String       @id @default(cuid())
+  accountId     String
+  account       EmailAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  uid           Int          @default(0)
+  messageId     String?      @unique
+  folder        String       @default("INBOX")
+  subject       String?
+  fromEmail     String
+  fromName      String?
+  toRaw         String       @default("[]")
+  ccRaw         String?
+  bccRaw        String?
+  bodyHtml      String?
+  bodyText      String?
+  snippet       String?
+  isRead        Boolean      @default(false)
+  isStarred     Boolean      @default(false)
+  isSent        Boolean      @default(false)
+  isDraft       Boolean      @default(false)
+  hasAttachment Boolean      @default(false)
+  attachments   Json?
+  inReplyTo     String?
+  threadId      String?
+  receivedAt    DateTime
+  createdAt     DateTime     @default(now())
+
+  @@index([accountId])
+  @@index([folder])
+  @@index([receivedAt(sort: Desc)])
+  @@map("email_messages")
+}
+
 model TimeLog {
   id          String   @id @default(cuid())
   contractId  String

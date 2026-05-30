@@ -1,0 +1,26 @@
+{
+  "company": "Edisyl",
+  "role": "Forward-Deployed AI Data Engineer",
+  "slug": "edisyl-fde-data-engineer",
+  "headerTitle": "Forward-Deployed AI Data Engineer &nbsp;&middot;&nbsp; Messy Data in Production &nbsp;&middot;&nbsp; Client Embed &nbsp;&middot;&nbsp; AI Agent Deployment",
+  "subjectText": "Forward-Deployed AI Data Engineer &mdash; Edisyl (Remote) &mdash; Will Austin",
+  "intro": "Most of the data I&rsquo;ve worked with in production was not AI-ready when I got to it. County appraisal district records across inconsistent schemas. Unstructured email archives parsed into CRM routing logic. Supplier invoices with no standard format. The pattern is always the same: the data exists, it&rsquo;s just not clean. That&rsquo;s the problem I&rsquo;ve been building solutions for.",
+  "bullets": [
+    "<strong>Production data pipelines on real unstructured data &mdash;</strong> Python pipeline processing 1.4M+ property records across three Texas county appraisal district APIs, each with different field schemas, inconsistent address formats, and null-heavy ownership records. Built a multi-stage resolution pipeline: normalization, fuzzy entity matching with confidence scoring, human review queue for low-confidence matches, and structured output to a downstream SMS outreach system. The agent never sees ambiguous input &mdash; ambiguity routes to review.",
+    "<strong>Forward-deployed client implementation, four external engagements &mdash;</strong> each starting with discovering what data actually existed vs. what the client thought existed. Roofing contractor: three county property databases with no consistent schema, CRM with 18 months of untagged leads. Home services: email archive of 400+ inquiry threads parsed and routed into a structured pipeline. OOH advertising: disconnected spreadsheets converted into a live inventory and booking system. Embed, assess the real data environment, build for what exists &mdash; not what should exist.",
+    "<strong>AI agent workflows on imperfect data &mdash;</strong> 14 live AI endpoints built with the assumption that input data will be wrong some percentage of the time. Zod-validated output contracts on every endpoint so failures surface before they reach users. HITL queues for low-confidence outputs. Structured fallback routing when the model can&rsquo;t produce a valid result. Strong opinions on why most AI deployments fail: data quality and validation architecture, not model capability.",
+    "<strong>Python, SQL, REST API integration, full-stack delivery &mdash;</strong> Python for data pipelines, batch AI processing, and API orchestration; PostgreSQL with complex relational schemas; 100+ REST API routes; IMAP email parsing (imapflow); webhook-driven pipeline triggers; Google OAuth2; Stripe; Twilio and Sinch SMS. Four client engagements delivered from data discovery through production handoff, each with documented playbooks the client operated without technical support."
+  ],
+  "closingLine": "The forward-deployed data problem Edisyl is solving &mdash; deploying AI agents against unprepared enterprise data and producing measurable output &mdash; is the exact environment these systems were built for. Available immediately. TX-based, remote.",
+  "radarAxes": ["Data Pipeline / ETL", "FDE / Client Embed", "AI Agent Deployment", "Python / SQL", "Unstructured Data", "Messy Env Instincts"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.85, 0.90, 0.88, 0.88, 0.83, 0.87] },
+    { "label": "Tech Depth",      "values": [0.80, 0.88, 0.85, 0.85, 0.80, 0.85] },
+    { "label": "Business Impact", "values": [0.88, 0.92, 0.82, 0.82, 0.85, 0.90] }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "Strong: FDE client embed model exact, Python data pipelines on real messy data (1.4M+ records), AI agent workflows with validation patterns, 4 client implementations with playbook handoffs, SQL production use. Gaps: no DuckDB/dbt, no enterprise warehouse experience (Snowflake/BigQuery), no financial services domain. Requires two written application answers.",
+  "salaryRange": "Competitive + equity (undisclosed)",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=937c16f3c7a4acaf"
+}

@@ -1,0 +1,62 @@
+{
+  "company": "Kyndryl",
+  "role": "Senior Modernization Architect (Agentic AI)",
+  "slug": "kyndryl-modernization-architect",
+  "headerTitle": "Senior Modernization Architect &nbsp;&middot;&nbsp; Agentic AI Design &amp; Build &nbsp;&middot;&nbsp; Client-Facing Discovery to MVP &nbsp;&middot;&nbsp; Enterprise AI Transformation",
+  "subjectText": "Senior Modernization Architect &mdash; Kyndryl (Dallas, TX) &middot; $179K&ndash;$341K",
+  "intro": "Kyndryl needs a Senior Modernization Architect who leads a client engagement from discovery through working MVP &mdash; assessing architecture, designing the roadmap, and building the agentic AI workflows. Six complete cycles, agentic AI systems in production.",
+  "bullets": [
+    "<strong>Client-facing discovery to MVP &mdash;</strong> six complete engagements: mapped current operational environments, produced actionable roadmaps business owners could approve, shipped the working system. Discovery workshops through deployed solution across eight industries.",
+    "<strong>Agentic AI system design and build &mdash;</strong> 14 live endpoints using Claude and GPT-4o with multi-model routing, tool-use, MCP protocol, HITL confirm-before-execute, and Zod-validated output. Opinions on agent contract design: schemas, memory strategies, fallback behaviors, escalation paths.",
+    "<strong>Executive advisory to technical spec &mdash;</strong> former GM with P&amp;L ownership presented modernization strategy to executive sponsors in business-risk terms, then shifted to API schema with engineering teams in the same conversation. Client-facing deliverables on every engagement."
+  ],
+  "closingLine": "Available immediately. Dallas, TX (local).",
+  "radarAxes": [
+    "Discovery to MVP Pattern",
+    "Agentic AI Systems",
+    "Intelligent Automation",
+    "Exec Advisory Range",
+    "Python / TypeScript",
+    "Enterprise Client Delivery"
+  ],
+  "radarLayers": [
+    {
+      "label": "FDE Track Record",
+      "values": [
+        0.92,
+        0.9,
+        0.9,
+        0.88,
+        0.88,
+        0.9
+      ]
+    },
+    {
+      "label": "Agentic Depth",
+      "values": [
+        0.88,
+        0.93,
+        0.88,
+        0.85,
+        0.9,
+        0.85
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.9,
+        0.88,
+        0.92,
+        0.92,
+        0.85,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 67,
+  "matchNotes": "Strong on client-facing discovery-to-MVP pattern (6x FDE), agentic AI system design/build, exec advisory range (GM background), and Python/TypeScript production stack. Gaps: 10+ yrs requirement, Java proficiency, legacy COBOL/mainframe migration experience, enterprise consulting firm background. Dallas TX is local. $179K-$341K range is exceptional. Honest stretch — apply because the agentic AI + client-facing + TX location combination is rare.",
+  "salaryRange": "$179K–$341K",
+  "applyUrl": "https://kyndryl.wd5.myworkdayjobs.com/en-US/KyndrylProfessionalCareers/job/Agentic-AI-Architect_R-50004-1"
+}

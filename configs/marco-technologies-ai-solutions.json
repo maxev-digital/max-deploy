@@ -1,0 +1,20 @@
+{
+  "company": "Marco Technologies",
+  "role": "AI Solutions Engineer – Agentic & Multi-Agent Systems",
+  "slug": "marco-technologies-ai-solutions",
+  "headerTitle": "AI Solutions Engineer &nbsp;&middot;&nbsp; Agentic Systems &nbsp;&middot;&nbsp; Client Implementation &nbsp;&middot;&nbsp; Python &middot; TypeScript &nbsp;&middot;&nbsp; Claude Daily",
+  "subjectText": "AI Solutions Engineer &mdash; Marco Technologies (Remote, TX) &middot; $110K&ndash;$176K &mdash; Will Austin",
+  "intro": "Marco Technologies is looking for someone who has built and deployed agentic AI systems against real client environments &mdash; not in a sandbox, not as a proof of concept, but as production systems the client depends on daily. That is the operating model across four external client engagements and 14 live AI endpoints: memory, tools, orchestration, and the guardrail patterns that keep agents behaving correctly when the workflow gets complex. The bridge between emerging AI capability and real-world implementation is where this work lives.",
+  "bullets": [
+    "<strong>Agentic systems with memory, tools, and orchestration &mdash;</strong> 14 live endpoints using MCP protocol, tool-use architecture, HITL confirm-before-execute, multi-step reasoning chains, and Zod-validated structured output. Memory strategies implemented per system: short-term context management, long-term state persistence, and cross-session retrieval. Every system is designed to fail loudly and recover gracefully &mdash; not to hallucinate silently.",
+    "<strong>Client implementation and technical stakeholder delivery &mdash;</strong> four complete external engagements from discovery through production handoff: roofing, home services, auto repair, OOH advertising. Each started with translating a business workflow into an AI architecture spec the client could review and approve. Each ended with a deployed system the client ran without technical support. Comfortable presenting AI system design to non-technical operators and executive stakeholders.",
+    "<strong>Production API development and system integration &mdash;</strong> 100+ REST API routes in production across Next.js 15 App Router and Node.js backends, Python data pipelines processing 1.4M+ property records, BullMQ + Redis job queues for async AI orchestration, Stripe Connect webhooks, Twilio and Sinch SMS integration, IMAP email parsing, and Google OAuth2. Integration is not a step at the end &mdash; it is designed into the architecture from the start.",
+    "<strong>Python + TypeScript across the full AI stack &mdash;</strong> Python for data pipelines, batch AI processing, and agent orchestration; TypeScript for full-stack application delivery. Multi-model routing (Claude + GPT-4o) with per-request observability, prompt caching, and cost-optimized model selection by operation type. Responsible AI practices: structured output contracts, governance through Zod validation, and HITL guardrails on every destructive operation."
+  ],
+  "closingLine": "The combination Marco Technologies is hiring for &mdash; production agentic system design, client implementation experience, Python and TypeScript fluency, and the ability to translate AI capability into business outcomes that stakeholders can understand and trust &mdash; is the current operating model. I would welcome a conversation about where the Digital Employee and managed AI service roadmap is headed.",
+  "jobType": 4,
+  "matchScore": 74,
+  "matchNotes": "Strong: agentic systems (memory/tools/orchestration = exact JD language), 14 production endpoints, 4 client implementations, stakeholder translation, Python + API production, TX eligible. Gaps: CS degree required (self-taught), no cloud certs, managed services context new. $110-176K range solid.",
+  "salaryRange": "$110K–$176K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=3469c037710389da"
+}

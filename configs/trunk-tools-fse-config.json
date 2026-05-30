@@ -1,0 +1,62 @@
+{
+  "company": "Trunk Tools",
+  "role": "Senior Full Stack Engineer",
+  "slug": "trunk-tools-fse",
+  "headerTitle": "Senior Full Stack Engineer &nbsp;&middot;&nbsp; LLM-Enabled Agentic Products &nbsp;&middot;&nbsp; Third-Party Integrations &nbsp;&middot;&nbsp; Construction AI",
+  "subjectText": "Senior Full Stack Engineer &mdash; Trunk Tools, Inc. (Remote US) &middot; $120K&ndash;$190K",
+  "intro": "Trunk Tools is scaling AI agents across construction jobsites &mdash; intelligent document Q&amp;A expanding into core operational workflows. The role is hands-on feature work on the LLM-enabled agentic product and building the integration layer that connects Trunk to the systems contractors already use. Both are live in my stack today.",
+  "bullets": [
+    "<strong>LLM-enabled agentic product engineering &mdash;</strong> 14 live AI endpoints using multi-model routing (Claude Haiku/Sonnet/Opus + GPT-4o), Zod-validated structured output, MCP protocol, HITL confirm-before-execute, and agentic workflow orchestration. Production reliability, not demos.",
+    "<strong>Next.js 15 + TypeScript + Node.js + PostgreSQL &mdash;</strong> exact stack, live across 13 platforms. 100+ API routes, BullMQ + Redis job queues, Prisma ORM, Docker/PM2/Nginx. Real users, real operational conditions.",
+    "<strong>Third-party integration connectors &mdash;</strong> Stripe, Google OAuth2, Twilio IVR, Sinch SMS, IMAP servers, TCAD appraisal APIs, webhook pipelines. Auth edge cases, rate limiting, retry logic, and bidirectional sync across eight industry verticals."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "Next.js / TypeScript",
+    "LLM Agentic Product",
+    "Integration / Connectors",
+    "Backend Architecture",
+    "Product Instinct",
+    "Startup-to-Scale"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.93,
+        0.9,
+        0.88,
+        0.88,
+        0.85,
+        0.85
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.92,
+        0.9,
+        0.87,
+        0.9,
+        0.8,
+        0.88
+      ]
+    },
+    {
+      "label": "Product Judgment",
+      "values": [
+        0.85,
+        0.85,
+        0.82,
+        0.85,
+        0.92,
+        0.9
+      ]
+    }
+  ],
+  "jobType": "engineering",
+  "matchScore": 80,
+  "matchNotes": "Direct stack match (Next.js 15, TypeScript, Node.js, PostgreSQL). LLM agentic product engineering is live in my stack. Construction domain is new — but document Q&A and operational workflow AI is the same architecture pattern. NYC/Austin/Remote = workable.",
+  "salaryRange": "$120K–$190K",
+  "applyUrl": "https://jobs.ashbyhq.com/Trunk%20Tools/1d862ead-741b-4ce2-83f4-d914393b9ad3"
+}

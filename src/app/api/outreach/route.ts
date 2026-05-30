@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth';
 export async function GET() {
   await requireAuth();
   const logs = await prisma.outreachLog.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { sentAt: 'desc' },
     take: 50,
     include: { opportunity: { select: { company: true, role: true } } },
   });

@@ -1,0 +1,24 @@
+{
+  "company": "Noodle",
+  "role": "Prompt Systems Engineer",
+  "slug": "noodle-prompt-systems",
+  "headerTitle": "Prompt Systems Engineer &nbsp;&middot;&nbsp; LLM Pipeline Design &nbsp;&middot;&nbsp; Agentic AI &nbsp;&middot;&nbsp; Production AI Engineering",
+  "subjectText": "Prompt Systems Engineer &mdash; Noodle (Remote) &middot; $115K&ndash;$130K",
+  "intro": "Noodle is building the AI layer for higher education &mdash; systems that understand student and institutional context and surface the right information at the right time. The Prompt Systems Engineer owns the architecture that makes that reliable at scale.",
+  "bullets": [
+    "<strong>Prompt engineering and structured output design &mdash;</strong> 14 live AI endpoints where the prompt is the system. Explicit persona framing, output schema contracts, chain-of-thought scaffolding, fallback specifications. Multi-model routing (Haiku for classification, Sonnet for generation) and Zod-validated JSON output on every endpoint.",
+    "<strong>LLM evaluation pipelines &mdash;</strong> input-output pair generation, edge case cataloguing, regression test sets, cross-model consistency checks (Claude vs GPT-4o). Catch prompt drift on model updates and flag output failures before they reach users.",
+    "<strong>Agentic pipeline architecture and context engineering &mdash;</strong> multi-step agentic workflows, tool use, MCP protocol, memory strategies, escalation paths. Built AI systems against live operational data with inconsistent schemas and real-world edge cases across six deployments."
+  ],
+  "closingLine": "Available immediately. Remote.",
+  "radarAxes": ["Prompt Engineering", "LLM Eval Pipelines", "Agentic Systems", "TypeScript / Python", "Context Engineering", "Production AI Reliability"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.93, 0.88, 0.90, 0.90, 0.88, 0.90] },
+    { "label": "Tech Depth",       "values": [0.90, 0.92, 0.92, 0.88, 0.85, 0.88] },
+    { "label": "Business Impact",  "values": [0.88, 0.85, 0.88, 0.86, 0.91, 0.92] }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "Strong alignment on prompt engineering (14 live endpoints), LLM evals, agentic systems, and TypeScript/Python stack. Education domain is new but AI engineering pattern transfers directly. $115-130K is below pipeline ceiling but role quality and direct match is high. Remote.",
+  "salaryRange": "$115K–$130K"
+}

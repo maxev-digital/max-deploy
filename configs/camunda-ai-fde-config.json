@@ -1,0 +1,26 @@
+{
+  "company": "Camunda",
+  "role": "AI Process Forward Deployed Engineer",
+  "slug": "camunda-ai-fde",
+  "headerTitle": "AI Process Forward Deployed Engineer &nbsp;&middot;&nbsp; Agentic Orchestration &nbsp;&middot;&nbsp; Enterprise Deployment &nbsp;&middot;&nbsp; Production AI",
+  "subjectText": "AI Process Forward Deployed Engineer &mdash; Camunda (Remote) &middot; $131K&ndash;$211K &mdash; Will Austin",
+  "intro": "Camunda is hiring the first cohort of Forward Deployed Engineers to bring ProcessOS into production at enterprise customers &mdash; own the end-to-end deployment journey, build the playbook, hand off a functioning capability. Four complete external FDE cycles, 14 live AI endpoints in production. The deploy-and-prove ownership model is the current operating pattern.",
+  "bullets": [
+    "<strong>Deploy-and-prove FDE ownership &mdash;</strong> four complete external deployments: embed, assess the real operational environment, build for what exists (not what should exist), hand off a documented system the client operates without technical support. At every engagement: requirements discovery, sub-two-week MVP, adoption drive, playbook documentation. Zero missed scopes across roofing, home services, auto repair, and OOH advertising.",
+    "<strong>Practical AI in production, not experimentation &mdash;</strong> 14 live endpoints: multi-agent orchestration, tool use, structured JSON output with Zod validation, human-in-the-loop confirm-before-execute, and MCP protocol &mdash; all running in production across 13 platforms. Context management, prompt engineering, agent eval frameworks, and fallback routing built before feature work. When agents drift, structured fallbacks catch it before users see it.",
+    "<strong>Technical depth + stakeholder communication &mdash;</strong> write production-grade custom agents against legacy APIs and third-party REST endpoints. Debug integration failures across mismatched schemas and inconsistent data formats. Explain system behavior and architecture decisions to non-technical operators under live operational pressure. Former GM with P&amp;L ownership across 40&ndash;80 staff &mdash; client communication earned, not credential-based.",
+    "<strong>Python, TypeScript, full-stack delivery &mdash;</strong> Python for data pipelines, batch AI processing, and agent orchestration; Node.js + Next.js 15 App Router; PostgreSQL + Prisma ORM; BullMQ + Redis; Docker, PM2, Nginx. REST API orchestration across 100+ routes. 1.4M+ property records processed through a multi-stage normalization and resolution pipeline. Single production owner from architecture through handoff on all 13 platforms."
+  ],
+  "closingLine": "The ProcessOS deployment model &mdash; own the journey from first workflow to a running, measurably improving production system, hand off a documented capability, feed patterns back into the product &mdash; is the exact engagement structure these four deployments were built around. Available immediately. TX-based, remote.",
+  "radarAxes": ["FDE / Deployment Own.", "Agentic AI Prod", "Enterprise Integration", "Python / TypeScript", "Stakeholder Comms", "Playbook / Handoff"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.87, 0.82, 0.88, 0.87, 0.88] },
+    { "label": "Tech Depth",      "values": [0.87, 0.87, 0.78, 0.88, 0.83, 0.85] },
+    { "label": "Business Impact", "values": [0.92, 0.83, 0.80, 0.82, 0.90, 0.87] }
+  ],
+  "jobType": "fde",
+  "matchScore": 67,
+  "matchNotes": "Strong: FDE embed + handoff model exact, 14 production AI endpoints, custom agents against legacy APIs, stakeholder communication, deploy-and-prove ethos, Python+TS. Gaps: Java (JD mentions Java services), enterprise org scale (Will's engagements are SMBs), BPMN tooling. Java is in supporting context only, core role is agentic orchestration deployment.",
+  "salaryRange": "$131K–$211K",
+  "applyUrl": "https://jobs.ashbyhq.com/camunda/987fb6e0-1e22-45e5-b152-57acbcb59cb2/application?utm_id=12224367&utm_source=FWDDeploy.com"
+}

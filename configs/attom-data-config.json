@@ -1,0 +1,61 @@
+{
+  "company": "ATTOM Data Solutions",
+  "role": "AI Automation Engineer",
+  "slug": "attom-data",
+  "headerTitle": "AI Automation Engineer &nbsp;&middot;&nbsp; LLM Workflow Integration &nbsp;&middot;&nbsp; Business AI Programs &nbsp;&middot;&nbsp; Real Estate Data",
+  "subjectText": "AI Automation Engineer &mdash; ATTOM Data Solutions (Remote) &middot; $150K&ndash;$170K",
+  "intro": "ATTOM is hiring its first AI Automation Engineer to move from ad-hoc experimentation to a structured org-wide program. That is the exact build I have run six times: embed with the team, map workflows, identify where AI integrates meaningfully, ship production automations, drive adoption.",
+  "bullets": [
+    "<strong>Org-wide AI program design &mdash;</strong> six complete FDE engagements across eight industries: mapped department workflows, identified automation opportunities, coordinated pilots, tracked value metrics, documented handoffs. Each team running independently by close.",
+    "<strong>Real estate data domain already live &mdash;</strong> built a TCAD appraisal district batch prospecting pipeline pulling owner names, property types, and bbox records across 1.4M+ parcels into outreach campaigns. ATTOM&rsquo;s territory is not new to this stack.",
+    "<strong>LLM workflow automation in production &mdash;</strong> 14 live AI endpoints with multi-model routing (Claude Haiku/Sonnet/Opus + GPT-4o), structured JSON output, HITL confirm-before-execute, and automation patterns equivalent to n8n/Make/Zapier across 13 platforms."
+  ],
+  "closingLine": "Available immediately. Texas-based (Little Elm), remote.",
+  "radarAxes": [
+    "AI / LLM Systems",
+    "Business Ops",
+    "Automation / Workflows",
+    "Real Estate Domain",
+    "Stakeholder Fluency",
+    "Deploy Speed"
+  ],
+  "radarLayers": [
+    {
+      "label": "Knowledge Depth",
+      "values": [
+        0.92,
+        0.85,
+        0.88,
+        0.9,
+        0.8,
+        0.75
+      ]
+    },
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.88,
+        0.75,
+        0.92,
+        0.85,
+        0.7,
+        0.95
+      ]
+    },
+    {
+      "label": "Exec Speed",
+      "values": [
+        0.78,
+        0.92,
+        0.85,
+        0.72,
+        0.95,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "ai_engineering",
+  "matchScore": 88,
+  "matchNotes": "First AI Automation Engineer hire — greenfield program values execution over pedigree. Real estate data domain is a direct portfolio match (TCAD pipeline). LLM production + GM business fluency = exact dual profile. TX-based remote = eligible state.",
+  "applyUrl": "https://attomdata.applytojob.com/"
+}

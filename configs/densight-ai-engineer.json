@@ -1,0 +1,20 @@
+{
+  "company": "Densight AI",
+  "role": "AI Engineer",
+  "slug": "densight-ai-engineer",
+  "headerTitle": "AI Engineer &nbsp;&middot;&nbsp; LLM Integration &nbsp;&middot;&nbsp; Claude &middot; GPT-4 &middot; RAG Pipelines &nbsp;&middot;&nbsp; Enterprise Workflow Automation &nbsp;&middot;&nbsp; Python",
+  "subjectText": "AI Engineer &mdash; Densight AI (Remote) &middot; $100K&ndash;$121K &mdash; Will Austin",
+  "intro": "Densight AI is building LLM-powered enterprise workflows for clients from day one of engagement &mdash; no ramp period, no sandbox, straight into production integration. That is the operating model: Claude, GPT-4, and open-source LLMs wired into real business processes, documented for client independence after handoff, and maintained against live operational data. This is not adjacent experience &mdash; it is the current daily work.",
+  "bullets": [
+    "<strong>Claude, GPT-4, and multi-model LLM integration &mdash;</strong> 14 live AI endpoints in production using Claude (Haiku + Sonnet routing) and GPT-4o, integrated into enterprise business workflows via Anthropic and OpenAI APIs. Multi-model routing by operation type: fast triage on Haiku, deep analysis on Sonnet. Every endpoint ships with Zod-validated output contracts, HITL guardrails, and per-request observability. Claude is the primary engineering environment, not a tool plugged in at the end.",
+    "<strong>RAG pipelines and document automation &mdash;</strong> built retrieval-augmented pipelines for client knowledge base integration: property data (1.4M+ TCAD records), business document processing, estimate intake automation, and AI-scripted IVR call routing. Document automation across four external client engagements: PDF generation, e-signature pipeline, proposal automation, and structured data extraction from unstructured inputs. Each system documented for client independence post-deployment.",
+    "<strong>Zapier, n8n, Make, and custom automation pipelines &mdash;</strong> hands-on experience with all three platforms for enterprise workflow automation, alongside custom-built orchestration using BullMQ + Redis job queues, webhook-triggered pipelines, IMAP parsing into CRM routing, Stripe webhooks, and Twilio + Sinch SMS automation. Comfortable choosing the right layer for each workflow: no-code platforms for rapid client-facing automation, custom pipelines where throughput, cost, or control requirements demand it.",
+    "<strong>Python + REST API integration in production &mdash;</strong> Python for data pipelines, batch AI processing, web scraping, and agent orchestration; 100+ REST API routes in production across Node.js and Next.js backends. Four complete client engagements collaborating directly with non-technical operators on technical scoping, system design, and delivery &mdash; documented for handoff and maintained post-launch."
+  ],
+  "closingLine": "The integration profile Densight AI is hiring for &mdash; Claude and GPT-4 in production, RAG pipelines, enterprise workflow automation, Python and REST API depth, and the ability to deliver and document for client independence &mdash; is the current operating model. I would welcome a conversation about the enterprise AI deployment roadmap and where the highest-leverage integration opportunities are in the Pakistan and GCC markets.",
+  "jobType": 4,
+  "matchScore": 72,
+  "matchNotes": "Strong: Claude named + daily use, multi-model LLM integration, RAG pipelines, Python + REST APIs, Zapier/n8n/Make all used in practice, 4 client implementations with handoff documentation. International client context (Pakistan/GCC) fine for remote. $100-121K lower but acceptable.",
+  "salaryRange": "$100K–$121K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=b2b681d9eba07ecc"
+}

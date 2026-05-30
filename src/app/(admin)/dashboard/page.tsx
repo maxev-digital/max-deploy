@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { RefreshCw, Loader2, Sparkles, Zap, AlertTriangle, ArrowRight, TrendingUp, Clock, CheckCircle } from 'lucide-react';
+import { RefreshCw, Loader2, Sparkles, Zap, AlertTriangle, ArrowRight, TrendingUp, Clock, CheckCircle, Square, CheckSquare, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Gauge, Ring, Sparkline, StageBar, healthColor, healthGrade } from '@/components/charts';
 
@@ -42,24 +42,36 @@ export default function DashboardPage() {
   const [pipeline, setPipeline]   = useState<{ stage: string; count: number; color: string }[]>([]);
   const [loading, setLoading]     = useState(false);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
+  const [tasks, setTasks]         = useState<{ id: string; title: string; priority: string; status: string; notes: string | null }[]>([]);
+  const [doneCount, setDoneCount] = useState(0);
+  const [newTask, setNewTask]     = useState('');
+  const [addingTask, setAddingTask] = useState(false);
 
   async function fetchAll() {
     setLoading(true);
     try {
-      const [b, h, p] = await Promise.all([
+      const [b, h, p, t] = await Promise.all([
         fetch('/api/ai/briefing').then(r => r.ok ? r.json() : null),
         fetch('/api/ai/health-score').then(r => r.ok ? r.json() : null),
         fetch('/api/opportunities/pipeline-summary').then(r => r.ok ? r.json() : null),
+        fetch('/api/tasks').then(r => r.ok ? r.json() : null),
       ]);
       if (b) setBriefing(b);
       if (h) setHealth(h);
       if (p?.stages) setPipeline(p.stages);
+      if (t) { setTasks(t.tasks ?? []); setDoneCount(t.doneCount ?? 0); }
       setUpdatedAt(new Date());
     } catch { /* silent */ }
     finally { setLoading(false); }
   }
 
-  useEffect(() => { fetchAll(); }, []);
+  useEffect(() => {
+    fetchAll();
+    // Also load tasks independently so they appear fast
+    fetch('/api/tasks').then(r => r.ok ? r.json() : null).then(t => {
+      if (t) { setTasks(t.tasks ?? []); setDoneCount(t.doneCount ?? 0); }
+    });
+  }, []);
 
   const v = briefing?.vitals;
   const gradeColor   = healthColor(health?.overall ?? 0);
@@ -259,6 +271,80 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Task List */}
+      <div style={{ background: cb, border: `1px solid ${bd}`, borderRadius: 14, padding: '18px 20px', marginBottom: 14 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: '0.63rem', fontWeight: 700, letterSpacing: '0.14em', color: '#C8C8C8', textTransform: 'uppercase' }}>Task List</span>
+            <span style={{ fontSize: '0.6rem', color: dim }}>{tasks.length} open · {doneCount} done</span>
+          </div>
+          <Link href="/tasks" style={{ fontSize: '0.68rem', color: '#2563EB', display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+            Board view <ArrowRight size={10} />
+          </Link>
+        </div>
+
+        {/* Add task inline */}
+        <form onSubmit={async e => {
+          e.preventDefault();
+          if (!newTask.trim()) return;
+          setAddingTask(true);
+          await fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: newTask.trim(), priority: 'MEDIUM' }),
+          });
+          setNewTask('');
+          const t = await fetch('/api/tasks').then(r => r.json());
+          setTasks(t.tasks ?? []); setDoneCount(t.doneCount ?? 0);
+          setAddingTask(false);
+        }} style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+          <input
+            value={newTask}
+            onChange={e => setNewTask(e.target.value)}
+            placeholder="Add a task..."
+            style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: `1px solid ${bd}`, borderRadius: 7, padding: '7px 12px', fontSize: '0.8rem', color: '#fff', outline: 'none' }}
+          />
+          <button type="submit" disabled={addingTask || !newTask.trim()} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', background: '#2563EB', border: 'none', borderRadius: 7, cursor: 'pointer', fontSize: '0.75rem', color: '#fff', fontWeight: 600 }}>
+            <Plus size={12} /> Add
+          </button>
+        </form>
+
+        {/* Task rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {tasks.length === 0 && (
+            <div style={{ fontSize: '0.78rem', color: dim, fontStyle: 'italic', padding: '8px 0' }}>All caught up — no open tasks.</div>
+          )}
+          {tasks.map(task => {
+            const priColor = task.priority === 'HIGH' ? '#E05252' : task.priority === 'MEDIUM' ? '#D08E14' : dim;
+            const done = task.status === 'DONE';
+            return (
+              <div key={task.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '8px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.02)', transition: 'background 0.1s' }}
+                onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.05)'}
+                onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.02)'}
+              >
+                <button
+                  onClick={async () => {
+                    const nextStatus = done ? 'TODO' : task.status === 'TODO' ? 'IN_PROGRESS' : 'DONE';
+                    await fetch(`/api/tasks/${task.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: nextStatus }) });
+                    const t = await fetch('/api/tasks').then(r => r.json());
+                    setTasks(t.tasks ?? []); setDoneCount(t.doneCount ?? 0);
+                  }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: done ? '#14B8AD' : task.status === 'IN_PROGRESS' ? '#2563EB' : dim, padding: 0, marginTop: 1, flexShrink: 0 }}
+                  title={done ? 'Mark todo' : task.status === 'TODO' ? 'Mark in progress' : 'Mark done'}
+                >
+                  {done ? <CheckSquare size={15} /> : task.status === 'IN_PROGRESS' ? <CheckSquare size={15} style={{ opacity: 0.5 }} /> : <Square size={15} />}
+                </button>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '0.82rem', color: done ? dim : '#FFFFFF', textDecoration: done ? 'line-through' : 'none', lineHeight: 1.4 }}>{task.title}</div>
+                  {task.notes && !done && <div style={{ fontSize: '0.7rem', color: dim, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.notes}</div>}
+                </div>
+                <span style={{ fontSize: '0.6rem', fontWeight: 700, color: priColor, flexShrink: 0, marginTop: 2 }}>{task.priority}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 

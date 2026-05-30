@@ -1,0 +1,62 @@
+{
+  "company": "Daybreak Technologies",
+  "role": "Senior Full-Stack Engineer",
+  "slug": "daybreak-senior-fullstack",
+  "headerTitle": "Senior Full-Stack Engineer &nbsp;&middot;&nbsp; Daybreak Technologies &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Senior Full-Stack Engineer &mdash; Daybreak Technologies (Remote) &middot; $145K&ndash;$195K",
+  "intro": "Full-stack engineering is where I live — from schema design through API contracts to the React component tree and into deployment automation. At Daybreak's scale, a senior engineer has to be effective across the entire system rather than just owning a slice, which is how I've operated building multiple products from zero.",
+  "bullets": [
+    "<strong>Production Full-Stack at Depth &mdash;</strong> Built complete Next.js + Node.js + PostgreSQL applications including real-time features (WebSockets), complex relational schemas, REST and webhook APIs, and multi-role auth — shipped to live users, not sandboxes.",
+    "<strong>AI Feature Integration &mdash;</strong> Integrated Claude API, ElevenLabs TTS, and GA4 event tracking into a production SaaS admin platform — streaming responses, voice synthesis, and behavioral telemetry as first-class features alongside the core product.",
+    "<strong>Infrastructure and Deployment &mdash;</strong> Managed Docker-containerized services, PM2 process supervision, VPS provisioning, automated SCP deploys, and Nginx reverse proxying — comfortable owning the full path from local build to live endpoint."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": [
+    "Full-Stack Eng",
+    "React/Next.js",
+    "Node.js/API",
+    "Cloud & DevOps",
+    "AI Integration",
+    "Product Delivery"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.92,
+        0.9,
+        0.91,
+        0.85,
+        0.88,
+        0.93
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.9,
+        0.88,
+        0.89,
+        0.82,
+        0.9,
+        0.89
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.89,
+        0.87,
+        0.88,
+        0.84,
+        0.86,
+        0.91
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 74,
+  "matchNotes": "Direct full-stack match — React, Node, cloud deployment, AI integration all line up cleanly",
+  "salaryRange": "$145K–$195K",
+  "applyUrl": "https://www.daybreak.ai/careers"
+}

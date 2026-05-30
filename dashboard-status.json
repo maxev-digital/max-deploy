@@ -1,0 +1,25 @@
+{
+  "_comment": "Manage job application statuses here. Run generate-dashboard.mjs after any change.",
+
+  "applied": [
+    "aimpoint-digital-fde",
+    "marathon-ts-fde",
+    "edisyl-architect",
+    "edisyl-fde-data-engineer",
+    "haast-fde"
+  ],
+
+  "skip": [
+    "ketch-solutions-engineer",
+    "relishiq-lead-platform-engineer",
+    "sentara-mlops-genai",
+    "trail-of-bits-ai-systems",
+    "noodle-prompt-systems",
+    "noodle-prompt-engineer",
+    "densight-ai-engineer"
+  ],
+
+  "location_override": {
+    "toyota-tcc-ai-security": "Plano, TX (DFW Local)"
+  }
+}

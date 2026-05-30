@@ -1,0 +1,26 @@
+{
+  "company": "RingCentral",
+  "role": "AI Forward Deployed Engineer",
+  "slug": "ringcentral-ai-fde",
+  "headerTitle": "AI Forward Deployed Engineer &nbsp;&middot;&nbsp; Production Agentic AI &nbsp;&middot;&nbsp; Strategic Account Embed &nbsp;&middot;&nbsp; Deployment Ownership",
+  "subjectText": "AI Forward Deployed Engineer &mdash; RingCentral (Remote) &middot; $147K&ndash;$215K &mdash; Will Austin",
+  "intro": "RingCentral&rsquo;s AIR Pro team needs engineers who close the gap between acquisition and value realization inside strategic accounts &mdash; not advisory, not support. Embed, deploy, ship. Four complete external FDE cycles, 14 live AI endpoints in production. That is the direct equivalent of the experience bar.",
+  "bullets": [
+    "<strong>Forward-deployed build ownership, four complete external cycles &mdash;</strong> embed, requirements discovery, implementation, adoption, documented handoff. Roofing contractor: three county property databases, SMS outreach pipeline. Home services: 400+ email threads parsed and routed. OOH advertising: disconnected spreadsheets into live booking system. Auto repair: work order tracking and client communication. Zero missed scopes. Every engagement closed with a system the client ran without technical support.",
+    "<strong>Production agentic AI stack &mdash;</strong> 14 live endpoints: multi-turn agent workflows, prompt chaining, retrieval pipelines, decision logic, fallback handling, and live handoff rules. Zod-validated output contracts on every endpoint so failures surface before they reach users. Human-in-the-loop confirm-before-execute on destructive operations. Per-request observability logging (model ID, prompt version, latency, raw output, correction signals). Continuous monitoring and iteration loop built in from day one.",
+    "<strong>CRM and API integration in production &mdash;</strong> HubSpot API and Salesforce API integrated directly in production CRM data flows. IMAP email parsing (imapflow), Stripe webhooks, Google OAuth2, Twilio and Sinch SMS, 100+ REST API routes across TypeScript and Python. The build-integrate-deploy cycle RingCentral AIR Pro customers need is the current operating model across 13 production platforms.",
+    "<strong>Python, TypeScript, full-stack delivery &mdash;</strong> Python for data pipelines (1.4M+ property records, batch AI processing, agent orchestration); Node.js + Next.js 15 App Router for full-stack application delivery; PostgreSQL + Prisma ORM; BullMQ + Redis for async job processing; Docker, PM2, Nginx on Linux VPS. Single production owner across all 13 platforms &mdash; code review, architecture decisions, monitoring, and iteration."
+  ],
+  "closingLine": "The AIR Pro deployment model &mdash; embed inside strategic accounts, translate operational requirements into production-grade agentic AI, own business outcomes &mdash; is the exact pattern these four engagements were built around. Available immediately. TX-based, remote.",
+  "radarAxes": ["FDE / Account Embed", "Agentic AI Prod", "CRM / API Integration", "Python / TypeScript", "Observability / Evals", "Deployment Ownership"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.88, 0.87, 0.88, 0.85, 0.92] },
+    { "label": "Tech Depth",      "values": [0.88, 0.87, 0.85, 0.88, 0.82, 0.90] },
+    { "label": "Business Impact", "values": [0.92, 0.85, 0.87, 0.82, 0.80, 0.88] }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "Strong: FDE embed model exact, 14 production AI endpoints, multi-turn agent workflows, retrieval pipelines, fallback handling, HITL, HubSpot/Salesforce API direct, 100+ REST routes, Python+TypeScript, observability logging. Gaps: telephony domain (SIP/WebRTC/CCaaS), enterprise scale (10k+ users), HIPAA/PCI compliance experience. Telephony is preferred not required.",
+  "salaryRange": "$147K–$215K",
+  "applyUrl": "https://ringcentral.wd1.myworkdayjobs.com/ringcentral_careers/login?redirect=%2Fringcentral_careers%2Fjob%2Fremote-usa%2Fai-agent-customer-engineer_r077760%2Fapply%2FapplyManually&utm_id=12173552&utm_source=FWDDeploy.com"
+}

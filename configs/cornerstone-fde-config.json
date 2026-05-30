@@ -1,0 +1,25 @@
+{
+  "company": "Cornerstone OnDemand",
+  "role": "Forward Deployment Engineer",
+  "slug": "cornerstone-fde",
+  "headerTitle": "Forward Deployment Engineer &nbsp;&middot;&nbsp; AI-Native Enterprise SaaS &nbsp;&middot;&nbsp; Agentic Frameworks &nbsp;&middot;&nbsp; Customer Embed",
+  "subjectText": "Forward Deployment Engineer &mdash; Cornerstone OnDemand (Remote) &middot; $107K&ndash;$172K &mdash; Will Austin",
+  "intro": "Cornerstone is looking for a Forward Deployed Engineer to bridge product engineering and strategic enterprise customers with AI-powered Workforce Agility products. Four complete external FDE engagements, 14 live AI endpoints &mdash; that is the direct equivalent of the experience bar.",
+  "bullets": [
+    "<strong>Forward deployment pattern &mdash;</strong> four complete external engagements from embed to handoff: solution architecture, AI-native implementation with Generative AI and Agentic Frameworks, adoption drive, documented handoff. Four for four, zero missed scopes.",
+    "<strong>Generative AI + Agentic Frameworks in production &mdash;</strong> 14 live endpoints, multi-model routing (Claude Haiku/Sonnet/Opus + GPT-4o), MCP protocol, tool use, HITL confirm-before-execute, Zod-validated structured output contracts. This is the production agentic stack Cornerstone is deploying &mdash; not a proof of concept, not a sandbox.",
+    "<strong>Enterprise stakeholder fluency and adoption planning &mdash;</strong> former GM running P&amp;L and 40&ndash;80 staff across Dallas and Las Vegas properties, translated complex AI systems to non-technical operators under live operational pressure across four deployments. IT, business, and executive stakeholders in the same conversation. Every engagement closed with a system the client ran without technical support."
+  ],
+  "closingLine": "The FDE profile Cornerstone is hiring for &mdash; production Generative AI deployment, agentic framework integration, solution architecture, and adoption planning with non-technical enterprise stakeholders &mdash; is the current operating model. Available immediately, US-eligible.",
+  "radarAxes": ["FDE / Deploy", "GenAI / Agentic", "Solution Architecture", "Enterprise Integration", "Adoption / Change Mgmt", "Full-Stack"],
+  "radarLayers": [
+    { "label": "Knowledge Depth", "values": [0.95, 0.88, 0.85, 0.78, 0.72, 0.90] },
+    { "label": "Shipped Work",    "values": [0.90, 0.82, 0.78, 0.85, 0.80, 0.88] },
+    { "label": "Exec Speed",      "values": [0.85, 0.78, 0.92, 0.72, 0.90, 0.82] }
+  ],
+  "jobType": "fde",
+  "matchScore": 82,
+  "matchNotes": "Direct FDE title, only 1+ year experience required — most accessible bar in the pipeline. Generative AI + Agentic Frameworks = exact production stack. Enterprise deployment + adoption pattern = direct match. Hybrid US = workable.",
+  "salaryRange": "$107K–$172K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=bce467405eb61ce8"
+}

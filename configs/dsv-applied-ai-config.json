@@ -1,0 +1,19 @@
+{
+  "company": "DSV",
+  "role": "Director, Applied AI",
+  "slug": "dsv-applied-ai",
+  "headerTitle": "Director, Applied AI &nbsp;&middot;&nbsp; Greenfield AI Platform Build &nbsp;&middot;&nbsp; Agentic Systems &nbsp;&middot;&nbsp; Enterprise AI Transformation",
+  "subjectText": "Director, Applied AI &mdash; DSV (Austin, TX Remote) &middot; $175K&ndash;$250K",
+  "intro": "DSV is building its North American AI capability from the ground up &mdash; a greenfield charter to architect and ship AI agents and integrated workflows against real operational data. That is the exact build pattern across four external client engagements: no inherited AI infrastructure, no existing playbook, just discovery, design, and production deployment.",
+  "bullets": [
+    "<strong>Greenfield AI capability build &mdash;</strong> four complete cycles from discovery to production: identified highest-leverage operational problems, scoped in ROI terms, shipped the working system. No existing AI infrastructure inherited on any engagement.",
+    "<strong>Agentic AI system design and build &mdash;</strong> 14 live endpoints using Claude (Haiku/Sonnet/Opus) with tool-use patterns, MCP protocol, HITL confirm-before-execute, and Zod-validated output. Opinions on agent contract design: input/output schemas, memory strategies, fallback behaviors.",
+    "<strong>Business case and ROI translation &mdash;</strong> former GM with P&amp;L ownership translated operational friction into approved AI investments across six engagements. Scoped in throughput and cost terms that executive sponsors can act on."
+  ],
+  "closingLine": "The greenfield charter at DSV &mdash; identify, build, and operationalize AI systems against real operational data across a complex enterprise &mdash; is the pattern I have run four times with measurable outcomes. I would welcome a conversation about where the North America AI build is headed.",
+  "jobType": 4,
+  "matchScore": 65,
+  "matchNotes": "Honest stretch: 10+ yrs requirement, 5 yrs AI/ML production, Director-level mgmt experience, Azure/MS ecosystem depth, MLOps (PyTorch/HuggingFace/fine-tuning) all gaps. Strengths: greenfield builder pattern (4x), Anthropic/MCP/agentic in production, exec advisory range (GM background), Python + TypeScript, Dallas TX local. $175-250K ceiling is exceptional. Apply because Anthropic-native + TX + greenfield charter is rare.",
+  "salaryRange": "$175K–$250K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=d18d64a1cb22eaf5"
+}

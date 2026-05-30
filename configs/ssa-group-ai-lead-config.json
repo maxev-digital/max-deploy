@@ -1,0 +1,24 @@
+{
+  "company": "The SSA Group",
+  "role": "Senior AI Technical Lead",
+  "slug": "ssa-group-ai-lead",
+  "headerTitle": "Senior AI Technical Lead &nbsp;&middot;&nbsp; The SSA Group &nbsp;&middot;&nbsp; Hospitality &amp; Attractions Technology &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Senior AI Technical Lead &mdash; The SSA Group (Remote) &middot; $175K&ndash;$190K",
+  "intro": "SSA Group runs food, beverage, retail, and entertainment operations across zoos, aquariums, science centers, and cultural venues nationwide. That&rsquo;s operational hospitality at scale &mdash; and it&rsquo;s my native domain. Twelve years as a GM running high-volume F&amp;B, staff, and P&amp;L ownership. Now I build AI systems for operations like this. The Technical AI Lead role is the intersection of both.",
+  "bullets": [
+    "<strong>Operational hospitality domain &mdash;</strong> 12 years GM-level operations in high-volume F&amp;B and hospitality environments: P&amp;L ownership, 40&ndash;80 staff, multi-location scheduling, vendor relations, guest experience metrics. I understand the operational data and pain points SSA Group is building AI on top of &mdash; from the ground up.",
+    "<strong>AI systems in production &mdash;</strong> 14 live AI endpoints across 13 platforms: multi-model routing (Claude/GPT-4o/Gemini), tool use, MCP protocol, structured JSON output with Zod validation, human-in-the-loop gates. AI that changes operational state and triggers real workflows — not analytics dashboards.",
+    "<strong>Technical leadership without a team &mdash;</strong> architected, built, and deployed every engagement as the sole technical lead: REST API contracts, PostgreSQL schemas, auth systems, Docker + PM2 + Nginx infrastructure, and client-facing training. Ownership model required for a technical lead at an operationally-focused company building net-new AI capability."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": ["Hospitality Domain", "AI Engineering", "Technical Leadership", "Ops Data / Workflows", "Full-Stack Deploy", "Stakeholder Comms"],
+  "radarLayers": [
+    { "label": "Domain Match",    "values": [0.92, 0.89, 0.87, 0.91, 0.88, 0.87] },
+    { "label": "Technical Depth", "values": [0.85, 0.91, 0.86, 0.88, 0.90, 0.82] },
+    { "label": "Leadership Fit",  "values": [0.93, 0.87, 0.90, 0.89, 0.85, 0.90] }
+  ],
+  "jobType": "fde",
+  "matchScore": 75,
+  "matchNotes": "Hospitality/attractions operations + AI engineering = rare combination. Will has both: 12yr GM + 14 production AI endpoints. Senior AI Technical Lead at SSA Group is the bridge role where both sides of the profile pay off simultaneously.",
+  "salaryRange": "$175K–$190K"
+}

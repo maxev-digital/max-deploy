@@ -1,0 +1,24 @@
+{
+  "company": "Ketch",
+  "role": "Senior Solutions Engineer",
+  "slug": "ketch-solutions-engineer",
+  "headerTitle": "Senior Solutions Engineer &nbsp;&middot;&nbsp; Data Privacy Platform &nbsp;&middot;&nbsp; Enterprise Technical Sales &nbsp;&middot;&nbsp; API Integration",
+  "subjectText": "Senior Solutions Engineer &mdash; Ketch (Remote, Eastern/Central) &middot; $140K&ndash;$250K",
+  "intro": "Ketch solves enterprise data privacy and consent at scale &mdash; and the Senior Solutions Engineer is the technical credibility behind every deal. Six FDE cycles and 13 production platforms in TypeScript, Node.js, and REST API patterns built for this operating model.",
+  "bullets": [
+    "<strong>Pre-sales technical discovery and demonstration &mdash;</strong> six enterprise cycles: mapped customer technical environments, designed demonstrations proving value against real stacks, presented to engineering and C-suite stakeholders. Discovery-to-demo is a core operating skill.",
+    "<strong>REST API integration depth &mdash;</strong> 100+ endpoints across 13 production systems: auth flows, webhook pipelines, data transformation, Stripe, Twilio, Google OAuth2, Sinch, IMAP. The integration credibility that closes technical deals.",
+    "<strong>Stakeholder range and availability &mdash;</strong> former GM presenting in business-outcome terms to executives, shifting to API schema and integration architecture with engineering teams in the same conversation. Eastern/Central TZ, 20% travel flexible."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["Technical Discovery", "REST API Depth", "Demo Execution", "Data Environment", "Stakeholder Range", "Integration Engineering"],
+  "radarLayers": [
+    { "label": "FDE Track Record",   "values": [0.90, 0.92, 0.88, 0.80, 0.88, 0.90] },
+    { "label": "Technical Depth",    "values": [0.85, 0.90, 0.85, 0.78, 0.85, 0.92] },
+    { "label": "Customer Impact",    "values": [0.88, 0.88, 0.90, 0.82, 0.90, 0.88] }
+  ],
+  "jobType": "csm",
+  "matchScore": 72,
+  "matchNotes": "Strong on REST API integration depth, JS/HTML prototyping, pre-sales technical discovery pattern (6x FDE), and stakeholder range. Data privacy/compliance domain is new — no Snowflake/BigQuery direct experience, no OneTrust/Ketch platform familiarity. Technical sales execution model is direct match. $140-250K wide range — worth applying.",
+  "salaryRange": "$140K–$250K"
+}

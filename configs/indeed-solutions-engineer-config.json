@@ -1,0 +1,24 @@
+{
+  "company": "Indeed",
+  "role": "Senior Solutions Engineer",
+  "slug": "indeed-solutions-engineer",
+  "headerTitle": "Senior Solutions Engineer &nbsp;&middot;&nbsp; Enterprise ATS Integration &nbsp;&middot;&nbsp; Technical Sales &nbsp;&middot;&nbsp; API Integration Architecture",
+  "subjectText": "Senior Solutions Engineer &mdash; Indeed (Remote) &middot; $84K&ndash;$175K",
+  "intro": "Indeed&rsquo;s Solutions Engineering team owns pre-sales technical discovery, scoping, and solution validation that turns a prospect into a signed client. Six FDE engagements built exactly that operating model across eight industries.",
+  "bullets": [
+    "<strong>Pre-sales technical discovery and solution scoping &mdash;</strong> six enterprise cycles: mapped technical environments, identified integration points, scoped solution architecture, presented to operations and executive stakeholders. Technical validation through working implementations, not slide decks.",
+    "<strong>REST API integration architecture &mdash;</strong> 100+ endpoints across 13 production systems: auth flows, webhook pipelines, data transformation, and third-party integrations (Stripe, Twilio, Google OAuth2, Sinch, IMAP). Integration depth is production-grade, not theoretical.",
+    "<strong>Cross-functional stakeholder range &mdash;</strong> former GM with P&amp;L ownership and 40&ndash;80 staff. C-suite business case to API schema in the same conversation. Engineering, Product, and Sales partnership is the operating model across every engagement."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["Technical Discovery", "API Integration Depth", "Cross-Functional Range", "PoC Delivery", "Enterprise ATS Ecosystem", "Pre-Sales Execution"],
+  "radarLayers": [
+    { "label": "FDE Track Record",  "values": [0.91, 0.92, 0.88, 0.90, 0.80, 0.92] },
+    { "label": "Technical Depth",   "values": [0.85, 0.90, 0.85, 0.88, 0.78, 0.88] },
+    { "label": "Customer Impact",   "values": [0.88, 0.88, 0.90, 0.88, 0.82, 0.90] }
+  ],
+  "jobType": "csm",
+  "matchScore": 74,
+  "matchNotes": "Strong on pre-sales discovery pattern (6x FDE), REST API integration depth, cross-functional stakeholder range (GM background), and PoC delivery. ATS/HR tech domain is new. No formal SE title. $84-175K wide range — upper end requires strong ATS ecosystem knowledge. Technical sales execution pattern is direct match.",
+  "salaryRange": "$84K–$175K"
+}

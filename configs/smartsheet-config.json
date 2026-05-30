@@ -1,0 +1,25 @@
+{
+  "company": "Smartsheet",
+  "role": "Senior Forward Deployed AI Engineer",
+  "slug": "smartsheet",
+  "headerTitle": "Senior FDE AI Engineer &nbsp;&middot;&nbsp; Multi-Agent Orchestration &nbsp;&middot;&nbsp; MCP Architecture &nbsp;&middot;&nbsp; Enterprise AI Deployment",
+  "subjectText": "Senior Forward Deployed AI Engineer &mdash; Smartsheet (Bellevue, WA / Remote) &middot; $227K&ndash;$245K",
+  "intro": "Smartsheet describes a Senior FDE AI Engineer who owns the full engagement lifecycle &mdash; scope, architect, build, validate, hand off &mdash; and understands the Deployment Kit is the real deliverable. Four completed external engagements, 13 production platforms.",
+  "bullets": [
+    "<strong>End-to-end AI deployment ownership &mdash;</strong> four complete external engagements at a sub-2-week MVP cadence: technical discovery to production deployment to structured handoff documentation. A repeatable FDE engagement system across roofing, home services, auto repair, and OOH advertising.",
+    "<strong>Multi-agent orchestration + MCP protocol in production &mdash;</strong> 14 live endpoints with multi-model routing (Claude Haiku/Sonnet/Opus + GPT-4o), tool use, MCP, HITL confirm-before-execute, and Zod-validated output. The Senior FDE AI architecture already operating at scale.",
+    "<strong>Deployment Kit discipline &mdash;</strong> CLAUDE.md structured context files, per-project architecture docs, and operational runbooks designed for non-engineers to operate independently. Standard close condition on every engagement. 25&ndash;50% travel workable."
+  ],
+  "closingLine": "Available immediately. US-eligible.",
+  "radarAxes": ["FDE / Deploy", "Multi-Agent LLM", "MCP / Tool Use", "TypeScript / Stack", "Team Enablement", "System Design"],
+  "radarLayers": [
+    { "label": "Knowledge Depth", "values": [0.95, 0.82, 0.90, 0.88, 0.72, 0.85] },
+    { "label": "Shipped Work",    "values": [0.90, 0.88, 0.85, 0.92, 0.78, 0.80] },
+    { "label": "Exec Speed",      "values": [0.88, 0.75, 0.82, 0.85, 0.88, 0.72] }
+  ],
+  "jobType": "fde",
+  "matchScore": 74,
+  "matchScore": 74,
+  "matchNotes": "Strong on FDE lifecycle, MCP production deployment, Deployment Kit discipline, and enablement leadership. Python is a partial gap vs TypeScript-primary. 6-10yr requirement is a stretch; 25-50% travel is workable.",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=7dc76ba5522f890c"
+}

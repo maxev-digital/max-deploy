@@ -1,0 +1,20 @@
+{
+  "company": "Crum & Forster",
+  "role": "Director, AI Engineering and Automation",
+  "slug": "crum-forster-director-ai",
+  "headerTitle": "Director, AI Engineering &amp; Automation &nbsp;&middot;&nbsp; Agentic Systems &nbsp;&middot;&nbsp; Workflow Automation &nbsp;&middot;&nbsp; Enterprise AI Integration",
+  "subjectText": "Director, AI Engineering and Automation &mdash; Crum &amp; Forster (Remote) &middot; $141K&ndash;$236K &mdash; Will Austin",
+  "intro": "The mandate at Crum &amp; Forster &mdash; identify high-leverage manual workflows, embed AI to automate and accelerate them, and drive adoption of AI-assisted development practices across the engineering org &mdash; is the same pattern I have run four times against real operational data. Each engagement started with a workflow audit: what is being done manually, where does it break down, what does the AI replacement need to produce to be trusted by the people who depend on it. That discipline is what makes AI automation stick in production.",
+  "bullets": [
+    "<strong>Business workflow automation using AI &mdash;</strong> four complete cycles identifying and replacing high-friction manual workflows with AI-driven systems: estimate intake to CRM routing, lead scoring and partner assignment, submission processing to crew dispatch, campaign triggering from property data pipelines. Each delivered against real operational constraints with measurable throughput improvement.",
+    "<strong>Production agentic AI systems &mdash;</strong> 14 live endpoints using Claude and GPT-4o with MCP protocol, HITL guardrails, structured JSON output, Zod validation, and per-request observability. Architecture standards, output contracts, and evaluation patterns established before build on every system &mdash; the governance layer that keeps AI automation auditable in an enterprise context.",
+    "<strong>AI-assisted development practices &mdash;</strong> Claude Code is the daily engineering environment across all 13 production platforms. Driving adoption of AI-assisted development is not a future initiative here &mdash; it is the current operating model, with CLAUDE.md context architecture per project, multi-model routing strategy, and MCP server configuration as standard practice.",
+    "<strong>Workflow automation ROI framing &mdash;</strong> former P&amp;L owner and GC who translated operational friction into approved investments: Roof Works replaced $2,000+/month in fragmented SaaS tools; MAX EV Digital consolidated six legacy platforms into one AI-governed system. Comfortable building the business case in throughput and cost terms that underwriting and operations leadership can act on."
+  ],
+  "closingLine": "The intersection of enterprise workflow automation, agentic AI systems, and driving AI-assisted development adoption at scale is where my current work lives. I would welcome a conversation about where Crum &amp; Forster&rsquo;s AI engineering function is headed and what the highest-leverage automation opportunities look like in the underwriting and submission pipeline.",
+  "jobType": 4,
+  "matchScore": 62,
+  "matchNotes": "Strong: production agentic AI (14 endpoints), workflow automation pattern (4x), AI-assisted dev adoption (Claude Code daily), business ROI framing, Python. Gaps: 10+ yrs requirement, no CS degree, no insurance vertical, no formal engineering team leadership, AWS in progress. $141-236K range is excellent. Apply because workflow automation framing transfers and Anthropic-native in production is rare at director level.",
+  "salaryRange": "$141K–$236K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=6265b9d4a19307c8"
+}

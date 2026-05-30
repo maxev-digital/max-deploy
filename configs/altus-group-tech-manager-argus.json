@@ -1,0 +1,21 @@
+{
+  "company": "Altus Group",
+  "role": "Technical Manager / Principal Engineer — ARGUS Client Enablement",
+  "slug": "altus-group-tech-manager-argus",
+  "headerTitle": "Technical Manager — AI-First Engineering & Client Enablement",
+  "subjectText": "Technical Manager, Client Enablement Group (ARGUS) — Will Austin",
+  "intro": "I lead client-facing technical delivery end-to-end — discovery through production handoff — and build the AI-first engineering systems that make delivery reliable at scale. Four external enterprise engagements shipped in full: scoped, architected, deployed, documented, handed off. Fourteen live AI endpoints across 13 platforms, governed daily in Claude Code — backed by 12 years managing teams of 40–80 under live operational pressure and a seven-figure commercial GC business with full accountability from contract through closeout.",
+  "bullets": [
+    "Led full client engagement lifecycle for four external enterprise deliveries: structured discovery to separate actual requirements from stated ones, written success criteria and architectural documentation before build, production deployment, and handoff — across roofing operations, home services, auto repair, and OOH advertising verticals",
+    "AI-first engineering in practice, not in principle: 14 live production AI endpoints built and maintained daily in Claude Code — MCP protocol, multi-model routing, HITL guardrails, structured JSON output with Zod validation, per-request observability (model ID, prompt version, latency, raw output, correction signals) across every system",
+    "Established development standards and delivery governance across all owned platforms: CLAUDE.md context architecture per engagement encoding business rules, integration patterns, and evaluation targets; Zod-validated output schemas for machine-checkable correctness; regression detection from production logs before failures compound",
+    "Full-stack Python + TypeScript delivery: 100+ REST API routes, PostgreSQL, Docker, Linux VPS, BullMQ + Redis, Nginx, PM2 — comfortable leading architectural discussions from implementation experience, not just from design docs",
+    "12 years managing teams of 40–80 under live operational pressure at multi-location entertainment venues (Dallas + Las Vegas), followed by seven-figure commercial GC business with direct accountability for scope, budget, schedule, and multi-stakeholder alignment across owners, architects, engineers, subcontractors, and inspectors"
+  ],
+  "closingLine": "My experience combining hands-on AI-first engineering with client delivery leadership and team management under real operational pressure maps directly to the Client Enablement Group mandate. I'd welcome a conversation about where the integration services function is headed.",
+  "jobType": 4,
+  "matchScore": 65,
+  "matchNotes": "Strong: AI-first engineering, client delivery lifecycle, architectural governance, operational leadership. Gap: software engineering team management (managed non-technical teams), no C#, no ARGUS/CRE domain. Salary range $185-215K is compelling.",
+  "salaryRange": "$185K-$215K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=6008d6ac1f0013fe"
+}

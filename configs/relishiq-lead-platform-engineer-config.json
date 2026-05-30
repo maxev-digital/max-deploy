@@ -1,0 +1,24 @@
+{
+  "company": "Relishiq",
+  "role": "Lead Platform Engineer",
+  "slug": "relishiq-lead-platform-engineer",
+  "headerTitle": "Lead Platform Engineer &nbsp;&middot;&nbsp; Relishiq &nbsp;&middot;&nbsp; SaaS Platform",
+  "subjectText": "Lead Platform Engineer &mdash; Relishiq (Remote) &middot; $130K&ndash;$170K",
+  "intro": "Platform engineering at a growing SaaS company means owning the systems other engineers build on top of — and doing it with enough architectural foresight that you don't have to rebuild it when the team triples. I've designed and run that foundation solo across multiple products, which means I've made the expensive mistakes already and know what actually holds up at scale.",
+  "bullets": [
+    "<strong>Platform Ownership End to End &mdash;</strong> Designed and maintained multi-tenant SaaS infrastructure including API layers, auth systems, Postgres schemas, Docker containerization, and Nginx routing — the full platform stack, not a slice of it.",
+    "<strong>Developer Velocity Focus &mdash;</strong> Built internal tooling, automated deploy pipelines, and environment parity workflows that eliminated manual steps and let product engineers ship without ops overhead — the leverage multiplier a lead platform role is supposed to provide.",
+    "<strong>AI & Integration Layer &mdash;</strong> Added LLM feature layers (Claude API), third-party webhook pipelines, and real-time event systems on top of the platform foundation — experience wiring AI capabilities into a production platform without destabilizing the core."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": ["Platform Architecture", "Infra & DevOps", "API Design", "AI Integration", "Dev Tooling", "SaaS Scale"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.88, 0.85, 0.90, 0.84, 0.87, 0.83] },
+    { "label": "Tech Depth",      "values": [0.90, 0.88, 0.87, 0.82, 0.85, 0.80] },
+    { "label": "Business Impact", "values": [0.85, 0.83, 0.86, 0.80, 0.88, 0.84] }
+  ],
+  "jobType": "fde",
+  "matchScore": 71,
+  "matchNotes": "Strong platform/infra ownership match; Relishiq domain unknown but SaaS platform lead profile aligns well",
+  "salaryRange": "$130K–$170K"
+}

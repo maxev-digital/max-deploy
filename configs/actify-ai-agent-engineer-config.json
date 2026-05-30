@@ -1,0 +1,26 @@
+{
+  "company": "Actify AI",
+  "role": "Agent Engineer",
+  "slug": "actify-ai-agent-engineer",
+  "headerTitle": "Agent Engineer &nbsp;&middot;&nbsp; Actify AI &nbsp;&middot;&nbsp; Remote AI Startup",
+  "subjectText": "Agent Engineer &mdash; Actify AI (Remote) &middot; $82K&ndash;$99K",
+  "intro": "Agentic AI isn't a buzzword to me — it's what I build. I've shipped 14 production AI endpoints running multi-model routing (Claude, GPT-4o, Gemini), human-in-the-loop confirm-before-execute, tool use, and MCP protocol across 13 live platforms. If Actify needs someone who can architect an agent pipeline, wire it to real business logic, and ship it to production without a committee — that's the exact FDE pattern I've run six times.",
+  "bullets": [
+    "<strong>Agentic Systems in Production &mdash;</strong> Designed and deployed multi-step agent pipelines with tool use, structured JSON output (Zod), MCP protocol, and human-in-the-loop gates across 13 live platforms — not demo repos, not proofs of concept. Daily Claude Code CLI workflow: prompt engineering, context window management, CLAUDE.md architecture.",
+    "<strong>Multi-Model Routing &mdash;</strong> Built production routing layer across Anthropic Claude (Haiku/Sonnet/Opus), OpenAI GPT-4o, and Google Gemini 2.0 Flash — model selection by task complexity, cost, and latency. Cross-model output consistency validation and structured evaluation in active use.",
+    "<strong>Full-Stack Agent Integration &mdash;</strong> 14 live AI endpoints wired into full-stack TypeScript/Next.js 15/Node.js/PostgreSQL applications — agent outputs trigger workflows, update database state, generate PDFs, send SMS, and interface with Stripe, Twilio, Google Calendar, and IMAP. End-to-end, not API-only.",
+    "<strong>Rapid Agent Deployment Cadence &mdash;</strong> 6 FDE engagements shipped at a 6-week average from first assessment to production deployment — embedding, scoping, building, and delivering agentic features to non-technical business operators. Adoption included. Linux VPS + Docker + PM2 + Nginx CI/CD pipelines on every engagement.",
+    "<strong>Startup Operating Mode &mdash;</strong> Solo technical operator across every engagement — no team handoffs, no PM layer, no eng manager to escalate to. Scope, architect, build, ship, support. The ownership model at an early-stage AI startup is the same one I've run since 2020."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central). Cleared to start any day.",
+  "radarAxes": ["Agentic Eng", "Multi-Model", "Full-Stack", "Tool Use / MCP", "Prod Deploy", "Startup Ops"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.93, 0.88, 0.90, 0.87, 0.91, 0.89] },
+    { "label": "Technical Depth", "values": [0.89, 0.92, 0.86, 0.91, 0.84, 0.80] },
+    { "label": "Domain Fit",      "values": [0.91, 0.85, 0.83, 0.88, 0.90, 0.93] }
+  ],
+  "jobType": "fde",
+  "matchScore": 78,
+  "matchNotes": "Agentic AI startup — strong match on agent patterns, multi-model, and startup operating mode; salary below typical floor but remote and type 4 direct hit",
+  "salaryRange": "$82K–$99K"
+}

@@ -1,0 +1,24 @@
+{
+  "company": "Virtual Atlantic",
+  "role": "Technical PM & Solutions Architect",
+  "slug": "virtual-atlantic-solutions-architect",
+  "headerTitle": "Technical PM &amp; Solutions Architect &nbsp;&middot;&nbsp; Virtual Atlantic &nbsp;&middot;&nbsp; Remote SaaS",
+  "subjectText": "Technical PM &amp; Solutions Architect &mdash; Virtual Atlantic (Remote) &middot; $93K&ndash;$111K",
+  "intro": "SaaS implementation roles live or die on the person who can translate between what the product does and what the client actually needs — and then own the gap. I've run that loop as the sole technical lead across 13 production platforms: assess the operation, architect the solution, drive adoption with non-technical stakeholders, and ship.",
+  "bullets": [
+    "<strong>SaaS Implementation Ownership &mdash;</strong> Deployed full-stack platforms into live business operations across roofing, healthcare, hospitality, and real estate — each engagement starting from client assessment, ending with a running system and trained team. Not a handoff role: I own outcomes.",
+    "<strong>Technical Project Management &mdash;</strong> Managed multi-phase builds with external stakeholders, vendor integrations (Stripe, Twilio, Google OAuth, SMTP, IVR), and cross-functional dependencies — while writing the code. Twelve years of GM-level operational management means I know how to run a project, not just participate in one.",
+    "<strong>Solutions Architecture at Scale &mdash;</strong> Designed multi-tenant SaaS architecture: REST API contracts, PostgreSQL schemas, auth systems, Docker + PM2 + Nginx infra — built to hand off to a client or a future engineering team without rework."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": ["Implementation", "Project Mgmt", "Client Ops", "API & Infra", "SaaS Architecture", "Stakeholder Comm"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.92, 0.88, 0.90, 0.85, 0.83, 0.87] },
+    { "label": "Tech Depth",      "values": [0.86, 0.82, 0.78, 0.91, 0.89, 0.80] },
+    { "label": "Business Impact", "values": [0.88, 0.91, 0.93, 0.83, 0.80, 0.89] }
+  ],
+  "jobType": "fde",
+  "matchScore": 68,
+  "matchNotes": "Strong implementation/solutions fit; PM+architect combo maps well to solo FDE engagement model; salary below typical floor but remote and fresh listing",
+  "salaryRange": "$93K–$111K"
+}

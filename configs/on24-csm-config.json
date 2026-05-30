@@ -1,0 +1,62 @@
+{
+  "company": "ON24",
+  "role": "Customer Success Manager",
+  "slug": "on24-csm",
+  "headerTitle": "Customer Success Manager &nbsp;&middot;&nbsp; ON24 &nbsp;&middot;&nbsp; Digital Experience Platform &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Customer Success Manager &mdash; ON24 (Remote) &middot; $90K&ndash;$100K",
+  "intro": "ON24 converts webinars and virtual events into first-party engagement data that marketing and sales teams act on. Customer success at ON24 is the person who keeps enterprise clients building with the platform after the initial purchase &mdash; driving adoption, surfacing expansion signals, and preventing churn. I&rsquo;ve run that exact cycle six times as an FDE: assess maturity, drive adoption, document outcomes, hand off a running system.",
+  "bullets": [
+    "<strong>Customer success as FDE engagement &mdash;</strong> six complete engagements across 13 platforms: embedded with non-technical business operators, drove AI and platform adoption from first assessment to trained team, measured health metrics throughout, and intervened before adoption stalled. ON24 CSM is the same motion applied to one platform instead of six client stacks.",
+    "<strong>Enterprise relationship management &mdash;</strong> former GM with 12 years of P&amp;L ownership, 40&ndash;80 staff, and multi-location vendor relationships. Presented outcomes to executive sponsors in business-value terms. Translated technology gaps into actionable plans stakeholders could approve and budget for.",
+    "<strong>Digital marketing &amp; analytics domain &mdash;</strong> HubSpot certified (Email Marketing, Inbound, Reporting &amp; Analytics, CMS), Google certified (GA4, Ads, Campaign Manager 360), Meta Social Media Marketing certified. ON24&rsquo;s customer base is digital marketers &mdash; I speak that language natively and understand what they&rsquo;re trying to measure."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": [
+    "Platform Adoption",
+    "Executive Stakeholders",
+    "Digital Marketing Domain",
+    "Account Health",
+    "Onboarding & Training",
+    "Retention Signal"
+  ],
+  "radarLayers": [
+    {
+      "label": "FDE Track Record",
+      "values": [
+        0.9,
+        0.87,
+        0.88,
+        0.85,
+        0.88,
+        0.82
+      ]
+    },
+    {
+      "label": "Domain Match",
+      "values": [
+        0.85,
+        0.86,
+        0.91,
+        0.83,
+        0.87,
+        0.8
+      ]
+    },
+    {
+      "label": "Customer Outcomes",
+      "values": [
+        0.88,
+        0.85,
+        0.86,
+        0.87,
+        0.86,
+        0.83
+      ]
+    }
+  ],
+  "jobType": "csm",
+  "matchScore": 65,
+  "matchNotes": "ON24 is a public SaaS platform for digital marketing events. CSM role, remote, $90-100K above floor. Will's FDE pattern = CSM engagement model. Digital marketing certs = client language match. Salary is the floor but role type is Type 3 on-ramp. Worth applying.",
+  "salaryRange": "$90K–$100K",
+  "applyUrl": "https://jobs.jobvite.com/on24/job/oQBRzfwB"
+}

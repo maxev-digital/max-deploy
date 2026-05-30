@@ -1,0 +1,62 @@
+{
+  "company": "NICE",
+  "role": "Forward Deployed Engineer",
+  "slug": "nice-fde",
+  "headerTitle": "Forward Deployed Engineer &nbsp;&middot;&nbsp; Conversational AI Agents &nbsp;&middot;&nbsp; Enterprise Agentic Systems &nbsp;&middot;&nbsp; Production at Scale",
+  "subjectText": "Forward Deployed Engineer &mdash; NICE (Remote US) &middot; Conversational AI &amp; Enterprise Agent Deployment",
+  "intro": "NICE is building production-ready conversational AI agents that outperform human operators at scale. The FDE owns the full lifecycle &mdash; pilot through launch. Six complete deployment cycles, 14 live endpoints.",
+  "bullets": [
+    "<strong>Full lifecycle AI agent ownership &mdash;</strong> pilot through production handoff. 14 live endpoints using Claude, GPT-4o, and Gemini with multi-model routing, MCP protocol, HITL confirm-before-execute, and agentic workflow orchestration. Production-ready is the only mode.",
+    "<strong>Conversational AI and voice automation in production &mdash;</strong> Twilio IVR with AI-powered call routing, dynamic script generation via Claude API, and ElevenLabs TTS voice synthesis. Handling real inbound call volume for a live home services business.",
+    "<strong>TypeScript + React full-stack, enterprise stakeholder fluency &mdash;</strong> 13 production platforms, 100+ API routes, BullMQ + Redis. Six engagements where the primary relationship was with department heads and C-suite executives, not technical teams."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "AI Agent Lifecycle",
+    "Conversational / Voice AI",
+    "TypeScript / React",
+    "RAG + Evaluation",
+    "Enterprise Stakeholders",
+    "Reusable Frameworks"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.93,
+        0.85,
+        0.92,
+        0.82,
+        0.87,
+        0.8
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.9,
+        0.88,
+        0.9,
+        0.85,
+        0.8,
+        0.82
+      ]
+    },
+    {
+      "label": "Enterprise Impact",
+      "values": [
+        0.88,
+        0.82,
+        0.85,
+        0.8,
+        0.92,
+        0.85
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 78,
+  "matchNotes": "Strong on AI agent production lifecycle, conversational AI (Twilio IVR + TTS), and TypeScript/React. Go is a gap. No formal NICE CX platform experience but enterprise agent deployment pattern is direct. Startup/founder mentality = genuine match.",
+  "salaryRange": "Competitive",
+  "applyUrl": "https://job-boards.greenhouse.io/nice/jobs/4842105101"
+}

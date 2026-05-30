@@ -1,0 +1,62 @@
+{
+  "company": "Zip",
+  "role": "AI Forward Deployed Engineer",
+  "slug": "zip-ai-fde",
+  "headerTitle": "AI Forward Deployed Engineer &nbsp;&middot;&nbsp; AI Agent Workflows &nbsp;&middot;&nbsp; Enterprise Automation &nbsp;&middot;&nbsp; Customer Embedding",
+  "subjectText": "AI Forward Deployed Engineer &mdash; Zip (Remote) &middot; $130K&ndash;$150K",
+  "intro": "Zip is building the AI orchestration layer for enterprise procurement &mdash; agents and humans moving together across teams, tools, and suppliers. The operating model &mdash; embed inside a strategic account, surface the problem, build and ship &mdash; is how I have worked across six FDE engagements.",
+  "bullets": [
+    "<strong>AI agent and workflow automation &mdash;</strong> 14 live Claude endpoints (Haiku/Sonnet/Opus routing), webhook-driven pipelines, Zod-validated structured output, HITL approval gates, MCP protocol. Production systems across eight industry verticals.",
+    "<strong>Six FDE engagements, full relationship ownership &mdash;</strong> discovery calls with ops and executive stakeholders, requirements translation, implementation, adoption, handoff documentation. Surfaced the next problem before the customer articulated it on every engagement.",
+    "<strong>Finance and integration workflow automation &mdash;</strong> Stripe billing automation, invoice pipelines, vendor workflows, financial reporting, and API integrations across Twilio, Google OAuth2, Sinch, and internal data systems. Procurement is a new vertical; the workflow discipline and executive credibility with finance stakeholders transfer directly."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based), willing to travel for customer deployments.",
+  "radarAxes": [
+    "AI Agent Automation",
+    "Customer Embedding",
+    "Integration Engineering",
+    "Workflow Diagnosis",
+    "Procurement Domain",
+    "Product Feedback Loop"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.9,
+        0.92,
+        0.88,
+        0.87,
+        0.65,
+        0.85
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.92,
+        0.88,
+        0.87,
+        0.9,
+        0.6,
+        0.82
+      ]
+    },
+    {
+      "label": "Customer Impact",
+      "values": [
+        0.88,
+        0.9,
+        0.85,
+        0.85,
+        0.7,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 75,
+  "matchNotes": "Strong on AI agent/workflow automation (Claude, N8N patterns live), complex customer engagement ownership, and integration engineering. Procurement domain is the main gap — no formal enterprise procurement experience, but finance/AP workflow patterns and GM-level P&L credibility cover the stakeholder angle.",
+  "salaryRange": "$130K–$150K",
+  "applyUrl": "https://jobs.ashbyhq.com/zip"
+}

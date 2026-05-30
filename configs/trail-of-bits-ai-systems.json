@@ -1,0 +1,20 @@
+{
+  "company": "Trail of Bits",
+  "role": "AI Systems Engineer",
+  "slug": "trail-of-bits-ai-systems",
+  "headerTitle": "AI Systems Engineer &nbsp;&middot;&nbsp; Workflow Automation &nbsp;&middot;&nbsp; Claude + Anthropic API Daily &nbsp;&middot;&nbsp; Python &middot; TypeScript &nbsp;&middot;&nbsp; Production AI",
+  "subjectText": "AI Systems Engineer &mdash; Trail of Bits (Remote) &middot; $125K&ndash;$250K &mdash; Will Austin",
+  "intro": "Trail of Bits is looking for someone who builds AI-powered workflows that actually ship &mdash; not prototypes, not proofs of concept, but production systems that eliminate manual processes and keep running. That is the operating model across 13 production platforms and 14 live AI endpoints: identify the highest-friction manual workflow, design the AI replacement, ship it, and own it. The Anthropic API is not a bonus skill here &mdash; it is the primary engineering environment.",
+  "bullets": [
+    "<strong>AI workflow automation in production &mdash;</strong> built and maintain AI-powered systems that replaced manual operational workflows across four external client engagements: estimate intake to CRM routing, lead scoring and assignment, outreach campaign triggering from property data pipelines, crew dispatch automation. Each started with identifying what was being done manually and why it kept breaking. Each ended with a system the team ran without technical support.",
+    "<strong>Anthropic API and Claude as the engineering environment &mdash;</strong> Claude Code is the primary engineering environment across all 13 production platforms. Multi-model routing (Claude + GPT-4o), MCP protocol, HITL guardrails, Zod-validated output schemas, per-request observability on every AI endpoint. Not a plugin or autocomplete &mdash; the actual system where architecture decisions and production requirements become working software.",
+    "<strong>Python + TypeScript at production scale &mdash;</strong> both languages running daily: Python for data pipelines (1.4M+ property records, batch AI processing, API orchestration), TypeScript across Next.js 15 App Router, 100+ REST API routes, BullMQ + Redis job queues, Prisma ORM. Full-stack ownership on every system &mdash; no handoffs, no waiting on another team.",
+    "<strong>Fast-paced, loosely-structured environments &mdash;</strong> four complete external client deliveries from zero to production, each under two weeks to working software. Every engagement ran without a defined process, a project manager, or a committee. Scope came in, system shipped, client operated it. Working directly with Dan Guido and senior leadership on internal infrastructure is exactly the operating model."
+  ],
+  "closingLine": "The combination Trail of Bits is hiring for &mdash; production AI workflow automation, Anthropic API depth, Python and TypeScript fluency, and the instinct to ship fast in a loosely-structured environment &mdash; is the current daily operating model. I would welcome a conversation about where the highest-leverage automation opportunities are in your internal infrastructure.",
+  "jobType": 4,
+  "matchScore": 70,
+  "matchNotes": "Strong: AI workflow automation in production (exact role), Anthropic API named as bonus (Will's primary env), Python + TypeScript, CEO-adjacent delivery model, startup/fast-paced DNA, 4 client engagements. Gaps: recent degree requirement (self-taught), no cybersecurity background (role is internal tooling not security research). Salary ceiling $250K exceptional.",
+  "salaryRange": "$125K–$250K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=13afcd4890867198"
+}

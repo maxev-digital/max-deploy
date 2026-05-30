@@ -1,0 +1,24 @@
+{
+  "company": "Sentara",
+  "role": "Senior MLOps & Generative AI Engineer",
+  "slug": "sentara-mlops-genai",
+  "headerTitle": "Senior MLOps &amp; Generative AI Engineer &nbsp;&middot;&nbsp; Sentara &nbsp;&middot;&nbsp; Health System AI",
+  "subjectText": "Senior MLOps &amp; GenAI Engineer &mdash; Sentara (Remote) &middot; $91K&ndash;$152K",
+  "intro": "Operationalizing generative AI in a high-stakes environment — where model outputs touch patient workflows, compliance requirements are real, and reliability isn't optional — is exactly the engineering problem I find most interesting. I've built and deployed production AI pipelines end to end, and I understand the gap between a working prototype and a system someone can trust.",
+  "bullets": [
+    "<strong>Production AI Deployment &mdash;</strong> Shipped LLM-powered features (Claude API, streaming responses, context management) into live SaaS products with real users — not research environments. Built the observability, retry logic, and fallback handling that separates a demo from a deployable system.",
+    "<strong>MLOps Foundations &mdash;</strong> Managed containerized services via Docker and PM2, automated deploy pipelines with environment-specific configs, and maintained service health across dev/staging/prod — the operational discipline MLOps at a health system requires.",
+    "<strong>Generative AI Integration Breadth &mdash;</strong> Integrated Claude API, ElevenLabs TTS, GA4 behavioral telemetry, and webhook-driven event pipelines into a single production platform — multi-modal AI, not just text — with the logging and monitoring to keep it stable in production."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": ["GenAI Integration", "MLOps & Infra", "Production Reliability", "API Engineering", "Observability", "Health Tech Context"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.91, 0.84, 0.87, 0.90, 0.82, 0.68] },
+    { "label": "Tech Depth",      "values": [0.89, 0.88, 0.85, 0.87, 0.86, 0.65] },
+    { "label": "Business Impact", "values": [0.87, 0.82, 0.90, 0.85, 0.84, 0.72] }
+  ],
+  "jobType": "fde",
+  "matchScore": 68,
+  "matchNotes": "Strong GenAI/MLOps engineering fit; health system domain is new but compliance-aware prod AI mindset transfers",
+  "salaryRange": "$91K–$152K"
+}

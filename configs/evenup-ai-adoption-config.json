@@ -1,0 +1,62 @@
+{
+  "company": "EvenUp",
+  "role": "AI Adoption Manager",
+  "slug": "evenup-ai-adoption",
+  "headerTitle": "AI Adoption Manager &nbsp;&middot;&nbsp; Enterprise Change Management &nbsp;&middot;&nbsp; SaaS Onboarding &nbsp;&middot;&nbsp; Legal AI Platform",
+  "subjectText": "AI Adoption Manager &mdash; EvenUp (Remote / Regional) &middot; $112K",
+  "intro": "EvenUp&rsquo;s AI Adoption Manager owns the critical first 30 days &mdash; when a law firm either becomes a true AI shop or reverts to old habits. Six FDE engagements: close the deal on adoption, not just the deployment.",
+  "bullets": [
+    "<strong>Change management across non-technical teams &mdash;</strong> six deployments, six independent teams operating AI-powered workflows post-handoff. Onboarding design, training, champion identification, daily adoption metric tracking. Six for six.",
+    "<strong>Executive ROI and end-user coaching &mdash;</strong> former GM presenting business outcomes to ownership while coaching operational staff on the floor the same day. The EvenUp dual communication requirement is the operating mode across every engagement.",
+    "<strong>Early at-risk intervention &mdash;</strong> tracked adoption signals (login frequency, feature utilization, declining usage) across all six deployments. Intervened before adoption stalled. The difference between a customer who succeeds and one who churns is a week of ignored signals."
+  ],
+  "closingLine": "Available immediately. Remote US, regional travel flexible.",
+  "radarAxes": [
+    "Change Management",
+    "Executive ROI Fluency",
+    "End-User Coaching",
+    "Health Monitoring",
+    "Champion Enablement",
+    "White-Glove Delivery"
+  ],
+  "radarLayers": [
+    {
+      "label": "FDE Track Record",
+      "values": [
+        0.9,
+        0.88,
+        0.88,
+        0.85,
+        0.87,
+        0.88
+      ]
+    },
+    {
+      "label": "Exec Credibility",
+      "values": [
+        0.85,
+        0.92,
+        0.82,
+        0.8,
+        0.85,
+        0.85
+      ]
+    },
+    {
+      "label": "Customer Impact",
+      "values": [
+        0.88,
+        0.85,
+        0.9,
+        0.87,
+        0.88,
+        0.9
+      ]
+    }
+  ],
+  "jobType": "csm",
+  "matchScore": 73,
+  "matchNotes": "Strong on change management, exec-to-end-user range, and champion enablement — all demonstrated across 6 FDE cycles. Legal/law firm domain is new but process is transferable. 50% travel is the main constraint. $112K is lower salary — apply anyway given adoption-role match.",
+  "salaryRange": "$112K",
+  "applyUrl": "https://jobs.ashbyhq.com/evenup/eca375f0-6f20-4d4c-947d-46e4cb6d9b15"
+}

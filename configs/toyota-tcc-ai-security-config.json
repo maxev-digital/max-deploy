@@ -1,0 +1,26 @@
+{
+  "company": "Toyota Financial Services",
+  "role": "Forward Deployed AI Security Lead",
+  "slug": "toyota-tcc-ai-security",
+  "headerTitle": "Forward Deployed AI Security Lead &nbsp;&middot;&nbsp; Multi-Agent Architecture &nbsp;&middot;&nbsp; Internal Embed &nbsp;&middot;&nbsp; Production Agentic AI",
+  "subjectText": "Forward Deployed AI Security Lead &mdash; Toyota Financial Services (Plano, TX) &mdash; Will Austin",
+  "intro": "Toyota Financial Services is building a Forward Deployed AI Security Lead who embeds with internal security teams, understands their operational reality, and builds production AI systems that transform it. Four complete external FDE engagements, 14 live AI endpoints in production. The embed-discover-build-ship model is the current daily operating pattern.",
+  "bullets": [
+    "<strong>Forward-deployed embed model, four complete external cycles &mdash;</strong> embed with operators, discover the actual workflows and pain points (not the assumed ones), translate operational problems into AI-solvable specifications, build, ship, measure. Roofing contractor: three county databases, outreach automation. Home services: email archive parsed into structured pipeline. Auto repair: work order system. OOH advertising: disconnected spreadsheets into live platform. Sub-two-week MVP on every engagement. Documented handoff the client ran without support.",
+    "<strong>Multi-agent AI architecture in production &mdash;</strong> 14 live endpoints: multi-model routing (Claude Haiku/Sonnet/Opus by task complexity), tool-use architecture, structured JSON output contracts, human-in-the-loop confirm-before-execute on consequential actions, and MCP protocol &mdash; all running in production. Observability on every request: model ID, prompt version, latency, raw output, correction signals. Model routing layer directing tasks to optimal model by complexity, latency, and cost &mdash; the same architecture the TFS security triage system requires.",
+    "<strong>RAG, API integrations, and full-stack observability &mdash;</strong> retrieval-augmented generation systems built on top of unstructured data in production. HubSpot API and Salesforce API integrated directly in production CRM data flows. 100+ REST API routes across TypeScript and Python. IMAP email parsing, Stripe webhooks, Twilio SMS, Google OAuth2. Structured dashboards built for multiple user groups. Every system includes evaluation frameworks and feedback loops from day one.",
+    "<strong>Python + TypeScript, security-aware architecture patterns &mdash;</strong> Python for data pipelines (1.4M+ property records), batch AI processing, and agent orchestration; Node.js + Next.js 15 App Router; PostgreSQL; BullMQ + Redis; Docker, PM2, Nginx on Linux VPS. Output validation, hallucination detection before user exposure, and structured fallback routing are first-class engineering concerns on every endpoint. Former GM running P&amp;L and 40&ndash;80 staff &mdash; security-conscious operational decision-making under real stakes."
+  ],
+  "closingLine": "The TFS FDE model &mdash; embed with security team leads, translate their operational reality into AI systems that transform it, own the outcome &mdash; is the exact engagement structure these four deployments were built around. DFW-local, available immediately.",
+  "radarAxes": ["FDE / Internal Embed", "Multi-Agent Arch.", "RAG / API Integration", "Python / TypeScript", "Observability / Evals", "HITL / Safety Patterns"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.87, 0.87, 0.88, 0.85, 0.87] },
+    { "label": "Tech Depth",      "values": [0.87, 0.87, 0.85, 0.88, 0.83, 0.87] },
+    { "label": "Business Impact", "values": [0.92, 0.83, 0.85, 0.82, 0.80, 0.85] }
+  ],
+  "jobType": "fde",
+  "matchScore": 65,
+  "matchNotes": "Strong: FDE embed model exact, multi-agent architecture, HITL, model routing, RAG, API integrations, observability, Python+TS, local DFW (Plano). Gaps: EDR/XDR security tool APIs specifically required, AWS (used but not primary), security operations domain (MITRE ATT&CK, alert triage, incident response). Security build skills match; security domain context is the gap.",
+  "salaryRange": "Undisclosed (Toyota competitive)",
+  "applyUrl": "https://toyota.wd503.myworkdayjobs.com/tmna/login?redirect=%2Ftmna%2Fjob%2Fplano-texas%2Fforward-deployed-ai-security-lead_10328400%2Fapply%2FapplyManually&utm_id=12224374&utm_source=FWDDeploy.com"
+}

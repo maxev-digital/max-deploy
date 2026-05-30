@@ -1,0 +1,25 @@
+{
+  "company": "Curative",
+  "role": "Software Engineer L2 (Forward Deployed)",
+  "slug": "curative-forward-deployed",
+  "headerTitle": "Forward Deployed Software Engineer &nbsp;&middot;&nbsp; AI-Native Development &nbsp;&middot;&nbsp; Claude Code Daily &nbsp;&middot;&nbsp; Full Production Ownership",
+  "subjectText": "Forward Deployed Software Engineer &mdash; Curative (Remote) &middot; $217,500 &mdash; Will Austin",
+  "intro": "Curative&rsquo;s forward deployed engineer sits with clinical teams, hears what&rsquo;s broken, and ships the fix the same week. Four external FDE engagements across roofing, home services, auto repair, and OOH advertising &mdash; healthcare domain is new, AI-native forward-deployed execution is not. Claude Code is the primary engineering environment across all 13 production platforms. Not a plugin. The actual surface where architecture decisions and production requirements become working software.",
+  "bullets": [
+    "<strong>AI-native development as primary mode &mdash;</strong> Claude Code CLI as the primary engineering environment daily &mdash; exactly what Curative describes. Parallel agents for implementation, review, and debugging. Directing AI output, not accepting it. Every AI-generated diff reviewed before merge. Opinions about prompt architecture, subagent task splitting, and keeping AI from drifting on complex codebases.",
+    "<strong>Forward-deployed software engineering &mdash;</strong> four complete external cycles: workflow review with non-technical operators, requirement extraction under operational pressure, implementation, adoption, documented handoff. Embedded with owners, ops leads, and crew managers; shipped working software within two weeks on every engagement. Zero missed scopes.",
+    "<strong>Python and TypeScript full-stack, single production owner &mdash;</strong> 13 production platforms: Node.js + Next.js 15 App Router, Python data pipelines (1.4M+ property records, batch AI processing), PostgreSQL/Prisma ORM, BullMQ + Redis, Docker, PM2, Nginx. Owned code review, architecture decisions, production monitoring, and iteration across all of them. No handoffs, no waiting on another team."
+  ],
+  "closingLine": "The operating model Curative is hiring for &mdash; AI-native forward deployment, Claude Code as primary environment, Python + TypeScript full-stack ownership, and embedded stakeholder translation &mdash; is the current daily reality. Available immediately. TX-based, remote-eligible.",
+  "radarAxes": ["AI-Native Dev Workflow", "Forward-Deploy Pattern", "Python / TypeScript", "Production Ownership", "Ops Stakeholder Translation", "Ship Velocity"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.95, 0.95, 0.90, 0.93, 0.88, 0.95] },
+    { "label": "Tech Depth",       "values": [0.93, 0.90, 0.92, 0.90, 0.85, 0.92] },
+    { "label": "Business Impact",  "values": [0.90, 0.93, 0.88, 0.92, 0.92, 0.90] }
+  ],
+  "jobType": "fde",
+  "matchScore": 93,
+  "matchNotes": "Highest match in pipeline. Explicitly AI-native mandatory (Claude Code named directly), Python+TypeScript full-stack, embedded FDE with ops team, single owner of production service. The 'AI-first working style' section is a literal description of Will's workflow. Healthcare domain is new but JD explicitly says not required. $217.5K exceptional. Top priority application.",
+  "salaryRange": "$217,500",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=0441e5a2f9112533"
+}

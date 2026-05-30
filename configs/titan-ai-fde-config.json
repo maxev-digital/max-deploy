@@ -1,0 +1,26 @@
+{
+  "company": "Titan AI",
+  "role": "Forward Deployed Engineer – Applied AI Focus",
+  "slug": "titan-ai-fde",
+  "headerTitle": "Forward Deployed Engineer &nbsp;&middot;&nbsp; Applied AI &nbsp;&middot;&nbsp; Client Embed &nbsp;&middot;&nbsp; Agentic Workflow Delivery",
+  "subjectText": "Forward Deployed Engineer – Applied AI — Titan AI (Remote) &middot; $140K&ndash;$160K &mdash; Will Austin",
+  "intro": "Titan AI is building the AI platform for banking and wants engineers who own the build inside client environments. Four external FDE engagements, 14 live AI endpoints, Python-first with TypeScript on the stack. Unconventional path to get here &mdash; that&rsquo;s the description, not the exception.",
+  "bullets": [
+    "<strong>Builder-first FDE pattern &mdash;</strong> four complete external deployments: requirements discovery with non-technical operators, prototype, feedback loop, refine, ship. Roofing contractor outreach pipeline. Home services scheduling automation. Auto repair work order system. OOH advertising marketplace. Every engagement ran fast: sub-two-week MVP cadence, full handoff to clients who ran the systems without technical support. Zero missed scopes.",
+    "<strong>Agentic workflow ownership in production &mdash;</strong> 14 live endpoints: agent architectures with tool use, structured JSON output, human-in-the-loop confirm-before-execute, eval-driven iteration, and observability on every request (model ID, prompt version, latency, raw output, correction signals). Custom orchestration built from first principles &mdash; strong opinions on when frameworks abstract too much and when they don&rsquo;t. The configuration, evals, and observability Titan Foundry engagements need are the current production model.",
+    "<strong>Client-facing technical delivery &mdash;</strong> embedded with owners, ops leads, and crew managers across four industries. Translated complex AI system behavior to non-technical operators under live operational pressure. Prototype to production to handoff in a single engagement. Former GM running P&amp;L and 40&ndash;80 staff across Dallas and Las Vegas properties &mdash; earned the ability to hold a room with business leads before learning to code.",
+    "<strong>Python (core) + TypeScript, agent search patterns &mdash;</strong> Python for data pipelines (1.4M+ property records, batch AI processing, agent orchestration); TypeScript for full-stack application delivery; PostgreSQL, BullMQ + Redis, REST API orchestration. Prompt and context engineering daily across Claude Haiku/Sonnet/Opus and GPT-4o. Vector search and RAG patterns used in production document retrieval workflows."
+  ],
+  "closingLine": "The Titan AI FDE model &mdash; own the build on the platform, iterate with client operators, capture patterns back into the toolkit &mdash; is the exact engagement structure these four deployments were built around. Available immediately. TX-based, remote.",
+  "radarAxes": ["FDE / Client Embed", "Agentic AI Prod", "Python / TypeScript", "Eval / Observability", "Client Communication", "Ship Velocity"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.90, 0.87, 0.88, 0.83, 0.87, 0.92] },
+    { "label": "Tech Depth",      "values": [0.87, 0.85, 0.88, 0.82, 0.83, 0.88] },
+    { "label": "Business Impact", "values": [0.92, 0.83, 0.83, 0.80, 0.90, 0.90] }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "Strong: FDE embed model exact, builder-first ethos direct match, Python+TS, agentic workflow ownership, evals, HITL, custom orchestration, client-facing. Gaps: LangChain/LangGraph specifically named (will builds custom), banking domain, pre-Series A risk. JD explicitly says 'unconventional paths preferred' and 'what you don’t know, pick up in weeks not quarters.'",
+  "salaryRange": "$140K–$160K",
+  "applyUrl": "https://jobs.ashbyhq.com/titan-ai/9a2e4f06-a63f-4f31-b0b7-e8049bc070e9/application?utm_id=12224372&utm_source=FWDDeploy.com"
+}

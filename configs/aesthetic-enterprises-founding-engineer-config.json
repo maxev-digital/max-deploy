@@ -1,0 +1,25 @@
+{
+  "company": "Aesthetic Enterprises",
+  "role": "Founding Engineer",
+  "slug": "aesthetic-enterprises",
+  "headerTitle": "Founding Engineer &nbsp;&middot;&nbsp; Aesthetic Enterprises &nbsp;&middot;&nbsp; Multi-Location Aesthetics Platform &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Founding Engineer &mdash; Aesthetic Enterprises (Remote) &middot; $140,000",
+  "intro": "13 production platforms built solo. Square, GoHighLevel, Twilio, Stripe, custom analytics dashboards pulling from multi-source POS and CRM data &mdash; I&rsquo;ve integrated all of it. The role you&rsquo;ve described is the exact founding engineering engagement I run: assess the real problem, own the build, ship to production, drive adoption across a non-technical team.",
+  "bullets": [
+    "<strong>Unified analytics from multi-source operational data &mdash;</strong> built dashboards consolidating heterogeneous data across booking systems, POS-equivalent financial data, CRM pipelines, and marketing platforms into a single source of truth. Ran this across six client engagements in roofing, home services, entertainment, and SaaS &mdash; the 40-location Square + GoHighLevel consolidation architecture is a familiar pattern.",
+    "<strong>Full-stack generalist + AI-augmented development &mdash;</strong> React/Next.js 15 front-end, Node.js/Python back-end, PostgreSQL, REST API design, and SaaS integration wiring. Daily Claude Code CLI user &mdash; this is my primary engineering environment, not a credential. Ship full platforms in 6-week windows. Wire up API integrations, build dashboards, and deploy backends in the same week without context-switching cost.",
+    "<strong>Workflow automation at operational scale &mdash;</strong> built Twilio IVR flows, Sinch SMS campaigns, BullMQ drip engines, and cron-based automation pipelines across multiple production platforms. Zapier/n8n/Make integration pattern fluency. All six client engagements were direct founder-to-engineer: assess actual needs vs. assumed ones, propose the architecture, own the build, hand off a running system."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central). Ready to start with the analytics dashboard.",
+  "radarAxes": ["Multi-Source Data", "Full-Stack Build", "AI-Augmented Dev", "SaaS Integrations", "Workflow Automation", "Founder Engagement"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.88, 0.91, 0.93, 0.87, 0.89, 0.92] },
+    { "label": "Technical Depth", "values": [0.85, 0.90, 0.95, 0.84, 0.86, 0.88] },
+    { "label": "Domain Match",    "values": [0.82, 0.88, 0.91, 0.86, 0.88, 0.95] }
+  ],
+  "jobType": "engineering",
+  "matchScore": 74,
+  "matchNotes": "Founding engineer at multi-location aesthetics platform. 6 FDE engagements + multi-source analytics builds + daily AI-augmented dev = strong match. $140K is at floor. Remote is ideal. Direct founder working model matches Will's entire pattern.",
+  "salaryRange": "$140,000",
+  "applyUrl": "https://to.indeed.com/aam4c82b8km2"
+}

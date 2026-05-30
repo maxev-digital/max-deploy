@@ -1,0 +1,62 @@
+{
+  "company": "LightBox",
+  "role": "Senior Software Engineer",
+  "slug": "lightbox-senior-swe",
+  "headerTitle": "Senior Software Engineer &nbsp;&middot;&nbsp; Real Estate Data &amp; Analytics &nbsp;&middot;&nbsp; Full-Stack TypeScript &nbsp;&middot;&nbsp; Remote",
+  "subjectText": "Senior Software Engineer &mdash; LightBox (Remote) &middot; $150K&ndash;$165K",
+  "intro": "LightBox is the data and analytics layer for commercial real estate &mdash; pulling appraisal district data, property records, and market signals into tools that real estate professionals depend on. County appraisal district API integration, property data pipelines, and full-stack engineering are production-proven.",
+  "bullets": [
+    "<strong>Real estate data integration, in production &mdash;</strong> built and deployed county appraisal district API pipelines (TCAD and multi-county CAD endpoints), property-level data normalization, bbox-based geographic queries, and large-scale owner name extraction under real operational load.",
+    "<strong>TypeScript + Next.js 15 + PostgreSQL full-stack &mdash;</strong> 13 production platforms, 100+ API routes, Prisma ORM, BullMQ + Redis, Docker, PM2, Nginx. Multi-tenant architecture patterns. Remote-deployed on Linux VPS with CI/CD pipelines. Ship velocity is established.",
+    "<strong>Data pipeline and integration depth &mdash;</strong> webhook processing, scheduled reporting, Stripe billing, IMAP email sync (90-day), external API integration across multiple undocumented schemas. The messy real-world data problem is a daily working condition, not a new challenge."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "Real Estate Data",
+    "TypeScript / Next.js",
+    "Data Pipelines",
+    "API Integration",
+    "Full-Stack Depth",
+    "Remote Delivery"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.9,
+        0.93,
+        0.88,
+        0.9,
+        0.92,
+        0.93
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.88,
+        0.92,
+        0.9,
+        0.93,
+        0.9,
+        0.88
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.92,
+        0.88,
+        0.9,
+        0.88,
+        0.88,
+        0.9
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 75,
+  "matchNotes": "Good match on real estate data domain (TCAD pipelines), TypeScript/Next.js stack, data integration. LightBox is CRE data analytics. $150-165K is fair. Standard senior SWE hire, not FDE. Remote. Real estate data experience is a genuine differentiator here.",
+  "salaryRange": "$150K–$165K",
+  "applyUrl": "https://www.lightboxre.com/about/careers/"
+}

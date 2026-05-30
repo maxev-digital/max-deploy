@@ -1,0 +1,62 @@
+{
+  "company": "Hermeus",
+  "role": "Senior AI Engineer, Internal AI Platforms",
+  "slug": "hermeus-senior-ai-engineer",
+  "headerTitle": "Senior AI Engineer &nbsp;&middot;&nbsp; Internal AI Platforms &nbsp;&middot;&nbsp; Agentic Systems &nbsp;&middot;&nbsp; Hypersonic Aerospace",
+  "subjectText": "Senior AI Engineer, Internal AI Platforms &mdash; Hermeus (Remote) &middot; $136K&ndash;$227K",
+  "intro": "Hermeus is building hypersonic aircraft &mdash; and needs a Senior AI Engineer to ship the internal AI platform that makes their engineering team faster. Agentic systems, LLM APIs, and production-grade internal tooling are the exact working mode across 14 live endpoints.",
+  "bullets": [
+    "<strong>Internal AI tooling in production &mdash;</strong> 14 live AI endpoints built to accelerate real operational workflows across 13 platforms. Claude Code CLI as primary development environment daily &mdash; building AI systems that engineers actually use, not demos.",
+    "<strong>Agentic systems with tool use and MCP &mdash;</strong> multi-step agents with function calling, MCP protocol, HITL confirm-before-execute, structured JSON output validated with Zod. Designed for reliability first because AI systems fail unexpectedly in production.",
+    "<strong>Full-stack delivery, fast &mdash;</strong> TypeScript, Next.js 15, Python, PostgreSQL, BullMQ + Redis, Docker, PM2, Nginx &mdash; 13 production platforms shipped solo at a 6-week average cadence. The AI layer lands on infrastructure that already works."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "Internal AI Tooling",
+    "Agentic Systems",
+    "LLM APIs / MCP",
+    "Full-Stack Platform",
+    "Startup Velocity",
+    "Production Reliability"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.92,
+        0.91,
+        0.9,
+        0.93,
+        0.95,
+        0.88
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.88,
+        0.93,
+        0.92,
+        0.9,
+        0.87,
+        0.9
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.9,
+        0.88,
+        0.87,
+        0.88,
+        0.92,
+        0.9
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 74,
+  "matchNotes": "Good match on internal AI tooling, agentic systems, MCP protocol, full-stack delivery. Aerospace domain is new but internal AI platforms are domain-agnostic. Remote. $136-227K wide band. Hermeus is a serious startup — worth the stretch on domain.",
+  "salaryRange": "$136K–$227K",
+  "applyUrl": "https://jobs.lever.co/hermeus"
+}

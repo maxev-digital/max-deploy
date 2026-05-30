@@ -1,0 +1,21 @@
+{
+  "company": "Convr",
+  "role": "Forward Deployed Software Engineer",
+  "slug": "convr-fde",
+  "headerTitle": "Forward Deployed Software Engineer — Full-Stack TypeScript & Client Delivery",
+  "subjectText": "Forward Deployed Software Engineer — Convr (Remote) · $150K–$170K — Will Austin",
+  "intro": "Thirteen production platforms across Next.js 15 App Router, TypeScript, React 19, PostgreSQL, and Docker — built, deployed, and maintained as engineer of record on every one. The FDE lifecycle is what I've been running: embed technically, build against real client constraints, validate with stakeholders, ship, and make sure the custom work doesn't become unmaintainable sprawl.",
+  "bullets": [
+    "Full FDE lifecycle across four external client engagements — structured discovery to separate real requirements from stated ones, architectural planning, full-stack implementation, technical workshops with client stakeholders to validate and iterate, and production handoff with documentation. Same pattern every time. Zero missed scopes.",
+    "Next.js 15 App Router, React 19, TypeScript — primary production stack across 13 platforms. Type-safe patterns enforced throughout: Zod-validated output schemas, structured JSON contracts between services, strict TypeScript across all API routes and components. tRPC-compatible mental model applied via custom type-safe API layers.",
+    "Production integrations as a core discipline — Stripe, Google OAuth2, Twilio IVR, Sinch SMS, IMAP (imapflow), property data APIs, AI model APIs — auth edge cases, rate limiting, retry logic, bidirectional sync, webhook handling. The integration layer is where client deployments succeed or fail; treated it accordingly.",
+    "Preventing sprawl by design — context architecture per engagement (business rules, integration constraints, routing) defined before build begins; reusable evaluation patterns and SDK-style abstractions shared across all 13 platforms rather than one-off implementations per client",
+    "Client-facing technical communication across the full engagement cycle: non-technical founders, operations teams, and stakeholders — comfortable presenting architectural trade-offs in plain language, running structured discovery workshops, managing scope expectations through delivery, and translating business requirements into implementation decisions without losing either side of the conversation"
+  ],
+  "closingLine": "The pattern Convr is hiring for — embed technically, build what clients actually need, prevent integration debt from compounding, mentor while delivering — is the engagement model I've run across every project. I'd welcome a conversation about where the current client integration priorities are.",
+  "jobType": 4,
+  "matchScore": 74,
+  "matchNotes": "Strong: Next.js App Router, TypeScript, React 19, FDE lifecycle, client embedding, type-safe patterns, production integrations, prevent sprawl discipline. Gap: 10+ years requirement (6 actual), no tRPC explicitly, no data visualization specialty. $150-170K is in range.",
+  "salaryRange": "$150K–$170K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=2930b5d61ee2ee31"
+}

@@ -1,0 +1,62 @@
+{
+  "company": "Dataiku",
+  "role": "Strategic Customer Success Manager",
+  "slug": "dataiku-csm",
+  "headerTitle": "Strategic Customer Success Manager &nbsp;&middot;&nbsp; AI Platform Adoption &nbsp;&middot;&nbsp; Enterprise Account Management &nbsp;&middot;&nbsp; Data Science Deployment",
+  "subjectText": "Strategic Customer Success Manager, Americas &mdash; Dataiku (Remote) &middot; $160K&ndash;$170K",
+  "intro": "Dataiku helps the world&rsquo;s largest enterprises move from AI experimentation to production at scale. Six FDE engagements: assess current AI maturity, identify lowest-friction path to production value, guide implementation, drive adoption, and measure outcomes in business terms.",
+  "bullets": [
+    "<strong>Enterprise AI platform adoption &mdash;</strong> six complete cycles across eight industries: assessed current state, identified where AI delivers measurable value, guided implementation, drove adoption, documented handoff. The Dataiku adoption arc is the model applied six times.",
+    "<strong>Executive stakeholder management &mdash;</strong> former GM with full P&amp;L ownership and 40&ndash;80 staff. Present to VPs and executive sponsors in business-outcome terms; translate AI maturity gaps into actionable plans stakeholders can approve.",
+    "<strong>Customer health monitoring and expansion signal &mdash;</strong> tracked adoption metrics across all six deployments: feature utilization, declining usage, stakeholder disengagement. Intervened before adoption stalled on every engagement."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": [
+    "Enterprise AI Adoption",
+    "Executive Stakeholders",
+    "AI Maturity Navigation",
+    "Account Health / Churn",
+    "Cross-Functional Bridge",
+    "Data Science Domain"
+  ],
+  "radarLayers": [
+    {
+      "label": "FDE Track Record",
+      "values": [
+        0.9,
+        0.88,
+        0.87,
+        0.82,
+        0.87,
+        0.65
+      ]
+    },
+    {
+      "label": "Exec Credibility",
+      "values": [
+        0.82,
+        0.92,
+        0.85,
+        0.78,
+        0.85,
+        0.6
+      ]
+    },
+    {
+      "label": "Customer Outcomes",
+      "values": [
+        0.88,
+        0.85,
+        0.88,
+        0.85,
+        0.82,
+        0.7
+      ]
+    }
+  ],
+  "jobType": "csm",
+  "matchScore": 68,
+  "matchNotes": "Honest stretch: no formal CSM title or data science background. Strengths are FDE-as-CSM (six cycles), executive credibility, and AI platform adoption pattern. Dataiku-specific data science knowledge (MLOps, Jupyter workflows, model registry) is a gap — frame around AI maturity navigation and business-outcome translation. East Coast preferred = flag.",
+  "salaryRange": "$160K–$170K",
+  "applyUrl": "https://job-boards.greenhouse.io/dataiku/jobs/5981661004"
+}

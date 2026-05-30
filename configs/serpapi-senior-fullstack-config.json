@@ -1,0 +1,62 @@
+{
+  "company": "SerpApi",
+  "role": "Senior Fullstack Engineer",
+  "slug": "serpapi-senior-fullstack",
+  "headerTitle": "Senior Full Stack Engineer &nbsp;&middot;&nbsp; API-First SaaS &nbsp;&middot;&nbsp; TypeScript &sol; Next.js &nbsp;&middot;&nbsp; Austin TX",
+  "subjectText": "Senior Fullstack Engineer &mdash; SerpApi (Austin, TX) &middot; $150K&ndash;$180K",
+  "intro": "SerpApi powers search data at scale for thousands of developers &mdash; reliability, performance, and clean API design are the table stakes. Thirteen production platforms with 100+ API routes and daily multi-model AI engineering are the working baseline.",
+  "bullets": [
+    "<strong>TypeScript + Next.js 15 + PostgreSQL in production &mdash;</strong> 13 platforms, 100+ API routes, Prisma ORM, multi-tenant architecture patterns. Next.js App Router, React 19, Tailwind, Zod validation, BullMQ + Redis job queues. Can ship a meaningful PR in week one.",
+    "<strong>API-first engineering mindset &mdash;</strong> REST API design, webhook pipelines, Stripe billing, Google OAuth2, IMAP integration, Twilio/Sinch, county appraisal district APIs. Experience with messy real-world data from undocumented schemas under real operational load.",
+    "<strong>Austin-based, full ownership &mdash;</strong> Founder-led solo engineering across 13 production platforms means no hand-holding required. Architectural decisions, deployment, infra, and quality are all one person&rsquo;s responsibility. That discipline transfers directly."
+  ],
+  "closingLine": "Available immediately. Austin TX (in market).",
+  "radarAxes": [
+    "TypeScript / Next.js",
+    "API Design",
+    "Full-Stack Depth",
+    "Production Reliability",
+    "Austin / In-Market",
+    "Ship Velocity"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.93,
+        0.9,
+        0.92,
+        0.88,
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.92,
+        0.93,
+        0.9,
+        0.9,
+        0.9,
+        0.88
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.88,
+        0.88,
+        0.87,
+        0.9,
+        0.88,
+        0.92
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 78,
+  "matchNotes": "Strong stack match: TypeScript, Next.js, PostgreSQL, REST APIs, developer-facing tooling. Austin TX = in-market advantage. Not an FDE role — standard senior SWE hire. SerpApi is developer-focused B2B. $150-180K is solid. High ownership startup culture matches.",
+  "salaryRange": "$150K–$180K",
+  "applyUrl": "https://serpapi.com/careers/senior-fullstack-engineer"
+}

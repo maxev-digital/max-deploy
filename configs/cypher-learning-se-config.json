@@ -1,0 +1,23 @@
+{
+  "company": "Cypher Learning",
+  "role": "Solutions Engineer",
+  "slug": "cypher-learning-se",
+  "headerTitle": "Solutions Engineer &nbsp;&middot;&nbsp; Enterprise SaaS Integration &nbsp;&middot;&nbsp; AI-Native Platform &nbsp;&middot;&nbsp; Customer Technical Lead",
+  "subjectText": "Solutions Engineer &mdash; Cypher Learning (U.S. Remote) &middot; $74K&ndash;$112K",
+  "intro": "Cypher Learning is building the AI-native LMS &mdash; CYPHER Agent, an agentic natural-language interface across content creation, delivery, personalization, and analytics. The Solutions Engineer drives technical evaluations and integration from discovery through adoption.",
+  "bullets": [
+    "<strong>Technical evaluation to adoption &mdash;</strong> six complete SE-equivalent cycles: discovery, integration design, stakeholder navigation, and adoption measurement. 13 production platforms, 6-week average cadence from technical assessment to handoff.",
+    "<strong>REST API integration engineering &mdash;</strong> Stripe, Google OAuth2, IMAP/SMTP, Twilio, Sinch, and webhook pipelines across 13 production systems. Troubleshoot auth flows, navigate data schemas, support integration design from both sides of the stack.",
+    "<strong>AI-native platform expertise &mdash;</strong> 14 live Claude endpoints (Haiku/Sonnet/Opus routing), multi-model LLM workflows, MCP protocol, structured JSON output. Can speak to practical enterprise applications of agentic interfaces from direct build experience."
+  ],
+  "closingLine": "Available immediately. U.S. Remote &mdash; Texas-based, near Plano HQ.",
+  "radarAxes": ["Solutions Engineering", "API / Integration", "AI / LLM Fluency", "Enterprise SaaS", "Stakeholder Fluency", "Technical Documentation"],
+  "radarLayers": [
+    { "label": "Knowledge Depth", "values": [0.88, 0.92, 0.90, 0.80, 0.85, 0.82] },
+    { "label": "Shipped Work",    "values": [0.85, 0.88, 0.82, 0.78, 0.72, 0.92] },
+    { "label": "Exec Speed",      "values": [0.92, 0.80, 0.78, 0.88, 0.95, 0.75] }
+  ],
+  "jobType": "solutions_engineer",
+  "matchScore": 76,
+  "matchNotes": "LTI/SCORM/SAML specifics are a gap — frame API + integration depth as the transferable pattern. TX-based candidate = geographic alignment to Plano HQ. Lowest salary in batch but most accessible bar and direct on-ramp to SE track at AI-native company."
+}

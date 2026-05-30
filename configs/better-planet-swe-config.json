@@ -1,0 +1,24 @@
+{
+  "company": "Better Planet",
+  "role": "Software Engineer (Mid-Senior)",
+  "slug": "better-planet-swe",
+  "headerTitle": "Software Engineer &nbsp;&middot;&nbsp; Better Planet &nbsp;&middot;&nbsp; Mission-Driven Tech",
+  "subjectText": "Software Engineer Mid-Senior &mdash; Better Planet (Remote) &middot; $80K&ndash;$180K",
+  "intro": "I build product-complete systems end to end — from data ingestion and API design through UI and deployment — which makes me effective in lean, mission-focused environments where generalism and ownership matter more than headcount. Better Planet's model of shipping real climate impact through software is exactly the kind of high-leverage work I want to apply that to.",
+  "bullets": [
+    "<strong>Full-Stack Ownership &mdash;</strong> Solo-shipped multiple SaaS products (Next.js, Node.js, Postgres, Docker) from zero to live users — including auth, billing hooks, admin tooling, and analytics — the full surface area a mid-size engineering team would distribute across 3-4 engineers.",
+    "<strong>Data Systems &mdash;</strong> Built property data pipelines pulling from county appraisal districts, geospatial APIs, and enrichment services — ingestion, dedup, storage, and queryable admin UI — directly applicable to environmental or impact data workflows.",
+    "<strong>Pragmatic and Adaptable &mdash;</strong> Delivered across React, Python, PostgreSQL, REST and real-time WebSocket APIs; I learn the stack a role needs, not just the one I shipped last — ready to contribute in week one."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US timezone).",
+  "radarAxes": ["Full-Stack Dev", "API Engineering", "Cloud Infra", "Data Systems", "Product Thinking", "Clean Code"],
+  "radarLayers": [
+    { "label": "Shipped Work",    "values": [0.91, 0.88, 0.84, 0.82, 0.87, 0.89] },
+    { "label": "Tech Depth",      "values": [0.88, 0.86, 0.80, 0.80, 0.84, 0.87] },
+    { "label": "Business Impact", "values": [0.89, 0.85, 0.82, 0.84, 0.88, 0.86] }
+  ],
+  "jobType": "fde",
+  "matchScore": 68,
+  "matchNotes": "Strong generalist fit; domain (climate/sustainability) is new but engineering profile aligns well",
+  "salaryRange": "$80K–$180K"
+}

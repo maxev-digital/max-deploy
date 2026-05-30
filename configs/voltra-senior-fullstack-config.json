@@ -1,0 +1,24 @@
+{
+  "company": "VolTra",
+  "role": "Senior Full Stack Engineer",
+  "slug": "voltra-senior-fullstack",
+  "headerTitle": "Senior Full Stack Engineer &nbsp;&middot;&nbsp; Automotive Analytics SaaS &nbsp;&middot;&nbsp; Claude Code Native &nbsp;&middot;&nbsp; High-Ownership Startup Engineering",
+  "subjectText": "Senior Full Stack Engineer &mdash; VolTra (Remote) &middot; $100K&ndash;$201K",
+  "intro": "VolTra is the analytics layer for car dealerships &mdash; pulling DMS and CRM data and surfacing the numbers that actually matter. The first engineering hire outside the founding team needs full ownership, fast shipping, and direct customer communication.",
+  "bullets": [
+    "<strong>Claude Code as primary development environment &mdash;</strong> parallel agents for feature implementation, PR review, and test resolution simultaneously. Review every AI-generated diff. Anthropic API familiarity is the current working mode, not a nice-to-have.",
+    "<strong>TypeScript, Next.js 15, PostgreSQL in production &mdash;</strong> 13 platforms, 100+ API routes, Prisma ORM, multi-tenant architecture patterns. Next.js + Supabase + PostgreSQL is the daily stack. Can ship a meaningful PR in week one.",
+    "<strong>Third-party data integration &mdash;</strong> county appraisal district APIs, Stripe, Twilio/Sinch, Google OAuth2, IMAP, webhook pipelines. Messy real-world data from undocumented schemas under real operational load. The automotive DMS/CRM integration challenge is the same class of problem."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["Claude Code Native", "Next.js / TypeScript", "3rd-Party Data Integration", "High-Ownership Startup", "Analytics Pipelines", "Ship Velocity"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.95, 0.90, 0.88, 0.93, 0.85, 0.93] },
+    { "label": "Tech Depth",       "values": [0.93, 0.92, 0.85, 0.90, 0.82, 0.90] },
+    { "label": "Business Impact",  "values": [0.88, 0.88, 0.87, 0.92, 0.88, 0.92] }
+  ],
+  "jobType": "fde",
+  "matchScore": 76,
+  "matchNotes": "Good stack match: Next.js/TypeScript/PostgreSQL/Supabase, Claude Code daily use, high-ownership startup culture, 3rd-party API integration experience. Not a formal FDE role — standard startup SWE hire. Automotive domain is new. $100-201K wide range (upper end is strong). First eng hire responsibility is a good fit for the ownership model.",
+  "salaryRange": "$100K–$201K"
+}

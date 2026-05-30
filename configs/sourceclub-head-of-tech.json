@@ -1,0 +1,20 @@
+{
+  "company": "SourceClub",
+  "role": "Head of Technology Operations Systems & AI",
+  "slug": "sourceclub-head-of-tech",
+  "headerTitle": "Head of Technology Operations &amp; AI &nbsp;&middot;&nbsp; Claude in Production Daily &nbsp;&middot;&nbsp; HubSpot &middot; Stripe &middot; Business Automation &nbsp;&middot;&nbsp; Technical Founder Profile",
+  "subjectText": "Head of Technology Operations Systems &amp; AI &mdash; SourceClub (Remote) &middot; $120K&ndash;$180K &mdash; Will Austin",
+  "intro": "SourceClub is looking for someone who has built production AI systems using Claude &mdash; not directed others to build them &mdash; and who brings the forward-deployed founder instinct to a small, fast-moving team. That is the exact profile. Claude Code is the daily engineering environment across 13 production platforms, 14 live AI endpoints, and four complete external client engagements. The technology stack you named &mdash; HubSpot, Stripe, and a fragmented operations layer &mdash; is exactly what the MAX EV Digital platform was built to consolidate and automate.",
+  "bullets": [
+    "<strong>Production AI systems using Claude, hands-on &mdash;</strong> 14 live endpoints built and maintained daily in Claude Code: multi-model routing (Claude + GPT-4o), MCP protocol, HITL guardrails, Zod-validated output schemas, per-request observability. The specific example required: the MAX EV Digital outreach automation pipeline &mdash; AI-scripted Twilio IVR call routing, Sinch SMS campaigns triggered off a 1.4M-parcel TCAD property data pipeline, ElevenLabs TTS voice agent, all wired to a live CRM and crew dispatch loop. End-to-end, in production, measurable outcomes.",
+    "<strong>HubSpot, Stripe, and operations data layer &mdash;</strong> HubSpot certified (CMS, Inbound, Email, Reporting &amp; Analytics); Stripe Connect with commission tracking, webhook handling, and billing integration in production; custom 3-panel IMAP email client replacing ActiveCampaign; BullMQ + Redis job queue replacing Zapier for all automation sequencing. Built the system that makes these tools unnecessary &mdash; which means understanding exactly where each one breaks down.",
+    "<strong>Technical founder / forward-deployed profile &mdash;</strong> every engagement starts with a workflow audit: what is being done manually, where does it fail, what does the AI replacement need to produce to be trusted by the people depending on it. Ran this for four external clients across roofing, home services, auto repair, and OOH advertising. Supervised delivery, sequenced the build, presented outcomes to non-technical founders and operators.",
+    "<strong>AI enablement and cross-functional delivery &mdash;</strong> built and maintain the CLAUDE.md context architecture across all 13 platforms &mdash; encoding business rules, integration patterns, and routing decisions so every AI system is auditable and governable. Comfortable owning KPI dashboards, sequencing one technical team member&rsquo;s work, and driving cross-functional projects from conception through production handoff."
+  ],
+  "closingLine": "The combination SourceClub is looking for &mdash; Claude in production, HubSpot and Stripe depth, forward-deployed founder instinct, and the ability to drive AI enablement across a small team &mdash; is the current operating model. I would welcome a conversation about the savings analysis pipeline and where the highest-leverage automation opportunities are.",
+  "jobType": 4,
+  "matchScore": 82,
+  "matchNotes": "Strong: Claude named explicitly + Will uses it daily, HubSpot certified + Stripe in production, technical founder/FDE profile called out, MAX EV Digital = exact stack replacement they're running (HubSpot/Stripe/QuickBooks/ops tools), 4 client deliveries, production AI end-to-end example ready. Gaps: dental/healthcare domain, Zapier/Make/Notion not explicitly in stack, QuickBooks not built. $120-180K is in range.",
+  "salaryRange": "$120K–$180K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=d11a74965de436c9"
+}

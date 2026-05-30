@@ -1,0 +1,62 @@
+{
+  "company": "Coder",
+  "role": "Forward Deployed Engineering Manager",
+  "slug": "coder-fde-manager",
+  "headerTitle": "Forward Deployed Engineering Manager &nbsp;&middot;&nbsp; Agentic Dev Environments &nbsp;&middot;&nbsp; FDE Program Builder &nbsp;&middot;&nbsp; Customer Solutions",
+  "subjectText": "Forward Deployed Engineering Manager &mdash; Coder (Remote) &middot; $168K&ndash;$247K",
+  "intro": "Coder is standing up its first Forward Deployed Engineering function &mdash; the exact program I have run six times independently across eight industries. Discovery to production handoff, adoption documentation, and team handoff on every engagement.",
+  "bullets": [
+    "<strong>FDE program built from zero &mdash;</strong> six complete engagements: customer discovery, solution architecture, implementation, adoption drive, documented handoff. The program Coder is building is the model already in operation.",
+    "<strong>Agentic development in production &mdash;</strong> 14 live Claude endpoints (multi-model routing, MCP, HITL confirm-before-execute), deployed into customer environments. Already the customer profile Coder is trying to enable.",
+    "<strong>Enterprise onboarding and cloud-native deployment &mdash;</strong> six non-technical teams operating AI-powered workflows independently post-handoff. Docker, PM2, Nginx, SSH pipelines across every engagement."
+  ],
+  "closingLine": "Available immediately. TX-based remote.",
+  "radarAxes": [
+    "FDE Lifecycle",
+    "Agentic / AI Dev",
+    "Cloud-Native Infra",
+    "Customer Onboarding",
+    "Exec Credibility",
+    "Program Design"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.95,
+        0.88,
+        0.85,
+        0.9,
+        0.85,
+        0.82
+      ]
+    },
+    {
+      "label": "Platform Depth",
+      "values": [
+        0.88,
+        0.92,
+        0.9,
+        0.8,
+        0.75,
+        0.78
+      ]
+    },
+    {
+      "label": "Exec Speed",
+      "values": [
+        0.82,
+        0.8,
+        0.78,
+        0.92,
+        0.95,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 84,
+  "matchNotes": "Builder role standing up new FDE function — exact model I've run 6x. Agentic dev environment focus is live in my stack. Enterprise onboarding pattern is a direct match. Preferred Terraform = in progress. Strong match on everything material.",
+  "salaryRange": "$168K–$247K",
+  "applyUrl": "https://jobs.ashbyhq.com/coder"
+}

@@ -1,0 +1,25 @@
+{
+  "company": "Vanta",
+  "role": "Senior Software Engineer, GTM Engineering",
+  "slug": "vanta-gtm-engineering",
+  "headerTitle": "Senior Software Engineer, GTM Engineering &nbsp;&middot;&nbsp; AI Workflow Automation &nbsp;&middot;&nbsp; Revenue Operations &nbsp;&middot;&nbsp; Forward-Deployed Builder",
+  "subjectText": "Senior Software Engineer, GTM Engineering &mdash; Vanta (Remote) &middot; $156K&ndash;$184K",
+  "intro": "Vanta&rsquo;s GTM Engineering team embeds with Sales, CS, and RevOps to identify manual workflows and ship AI-powered systems that eliminate them. Four external client engagements across eight industries, 13 production platforms &mdash; that is the exact execution model.",
+  "bullets": [
+    "<strong>GTM workflow automation in production &mdash;</strong> four complete external cycles: embed with operational teams, map highest-friction workflows, ship automation, measure throughput gain, hand off. Lead intake to CRM routing, storm-alert campaign triggering, crew dispatch automation, proposal generation &mdash; all running against live operational data without further technical support.",
+    "<strong>Python, TypeScript, and automation platforms directly &mdash;</strong> 14 live Claude endpoints, webhook-driven triggers, BullMQ + Redis job queues, multi-step data transformation pipelines. Zapier, n8n, and Make all used hands-on in production alongside custom-built orchestration &mdash; choosing the right layer per workflow, not defaulting to one platform.",
+    "<strong>GTM system integration &mdash;</strong> HubSpot API and Salesforce API used directly in production CRM data flows; Stripe billing + webhooks, IMAP email parsing into CRM routing, Google OAuth2, cross-system data sync across 13 production platforms. The integration layer that keeps GTM data clean is production-grade and owned end to end."
+  ],
+  "closingLine": "Available immediately. Remote US (TX-based).",
+  "radarAxes": ["GTM Workflow Automation", "Python / TypeScript", "Internal Tooling", "AI Integration", "RevOps Data Layer", "Embed-and-Ship Pattern"],
+  "radarLayers": [
+    { "label": "Shipped Work",     "values": [0.92, 0.90, 0.93, 0.91, 0.85, 0.95] },
+    { "label": "Tech Depth",       "values": [0.88, 0.92, 0.88, 0.93, 0.87, 0.90] },
+    { "label": "Business Impact",  "values": [0.93, 0.88, 0.90, 0.90, 0.88, 0.92] }
+  ],
+  "jobType": "fde",
+  "matchScore": 84,
+  "matchNotes": "Strong match: embed-and-ship GTM automation model exact, HubSpot API + Salesforce API now direct Tier 1, n8n/Zapier/Make all claimed directly, Python + TypeScript stack, LLM production endpoints, non-technical stakeholder delivery. 7+ yrs is the main stretch. No Gong/Snowflake/dbt but RevOps integration pattern is solid. $156-184K strong.",
+  "salaryRange": "$156K–$184K",
+  "applyUrl": "https://www.indeed.com/viewjob?jk=4156f128d8b5a70e"
+}

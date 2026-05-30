@@ -1,0 +1,62 @@
+{
+  "company": "Commerce",
+  "role": "Manager, Software Engineering",
+  "slug": "commerce-engineering-manager",
+  "headerTitle": "Manager, Software Engineering &nbsp;&middot;&nbsp; Commerce &nbsp;&middot;&nbsp; E-Commerce Platform",
+  "subjectText": "Manager Software Engineering &mdash; Commerce (Remote) &middot; $165K&ndash;$247K",
+  "intro": "My engineering leadership has always been player-coach in practice: I set technical direction, ship code alongside the team, and connect delivery to business outcomes. Having built and scaled multi-tenant SaaS products solo and with contractors, I've learned to run lean, prioritize ruthlessly, and still maintain quality at pace.",
+  "bullets": [
+    "<strong>Technical Leadership in Practice &mdash;</strong> Led architecture and delivery across multiple concurrent SaaS products — defined the roadmap, made the stack decisions, handled cross-system dependencies, and kept shipping velocity high without accumulating debt that kills teams.",
+    "<strong>E-Commerce Adjacent Systems &mdash;</strong> Built payment integrations (Stripe), subscription billing flows, inventory-aware admin tooling, and multi-tenant data isolation — the building blocks that underpin any modern commerce platform.",
+    "<strong>Team Building and Mentorship &mdash;</strong> Directed offshore and contract engineers across time zones, set code review standards, and built the kind of documentation and tooling culture that keeps teams from depending on any single person — including me."
+  ],
+  "closingLine": "Available immediately. Remote (TX-based, US Central).",
+  "radarAxes": [
+    "Engineering Leadership",
+    "System Architecture",
+    "Team Building",
+    "Product Delivery",
+    "Technical Depth",
+    "Cross-Functional"
+  ],
+  "radarLayers": [
+    {
+      "label": "Shipped Work",
+      "values": [
+        0.87,
+        0.9,
+        0.82,
+        0.91,
+        0.88,
+        0.85
+      ]
+    },
+    {
+      "label": "Tech Depth",
+      "values": [
+        0.84,
+        0.88,
+        0.8,
+        0.87,
+        0.9,
+        0.82
+      ]
+    },
+    {
+      "label": "Business Impact",
+      "values": [
+        0.9,
+        0.87,
+        0.85,
+        0.89,
+        0.86,
+        0.88
+      ]
+    }
+  ],
+  "jobType": "fde",
+  "matchScore": 72,
+  "matchNotes": "EM role with e-commerce context — strong leadership and delivery fit; direct commerce platform exp is adjacent",
+  "salaryRange": "$165K–$247K",
+  "applyUrl": "https://www.commerce.com/careers/"
+}
