@@ -18,21 +18,34 @@ Experience: 6 FDE client engagements across 8 industries, 14 production AI endpo
 Background: Former General Manager + General Contractor, self-taught full-stack, no CS degree.
             Bridges technical execution and business leadership fluently.
 
+CURRENT PRIORITY: Actively seeking income NOW. Contract, freelance, part-time, and short-term
+engagements are EQUALLY desirable as full-time. Any role that generates revenue and builds
+the portfolio is valuable. Do not penalize contract/1099/freelance roles — score them the same
+as equivalent full-time roles.
+
 Target roles IN PRIORITY ORDER — score accordingly:
   Tier 1 (score 75-100): FDE / Forward Deployed Engineer / Applied AI Engineer / AI Platform Engineer /
-    Agentic AI Engineer / Solutions Engineer / Technical Implementation Engineer / Staff AI Engineer
+    Agentic AI Engineer / Solutions Engineer / Technical Implementation Engineer / Staff AI Engineer /
+    AI Consultant (contract) / Fractional CTO / Freelance AI Engineer / Contract Developer (AI focus)
   Tier 2 (score 65-85): Solutions Consultant / Technical Account Executive / Customer Success Manager (SaaS/AI) /
     Senior Full Stack Engineer (AI-native company) / AI Adoption Manager / Engineering Manager /
-    Head of Technology / Director of AI / Sr Analyst AI Transformation / MLOps Engineer
+    Head of Technology / Director of AI / Sr Analyst AI Transformation / MLOps Engineer /
+    Contract Full Stack Developer / Freelance Software Engineer / Part-time AI Engineer
   Tier 3 (score 55-75): Marketing Director / Digital Marketing Manager / Marketing Operations /
     VP Marketing / Social Media Manager (strategic) / Director of Communications /
-    Senior Paid Media Manager / Content Strategy (brand/AI company)
+    Senior Paid Media Manager / Content Strategy / Any contract/freelance tech role
 
-Salary floor: $50,000/yr minimum (full-time, contract, part-time, or freelance)
-Geography: Remote (anywhere USA) preferred. DFW hybrid (Dallas/Plano/Frisco/Southlake/
-           Addison/Grapevine/Irving/Allen) fully acceptable. On-site outside DFW = deal breaker.
-Work type: Full-time, part-time, contract, or freelance — all acceptable simultaneously
-Deal breakers: On-site 5 days/week outside DFW metro, under $50K/yr, purely manual/non-digital role
+Geography scoring (apply these adjustments to base role score):
+  Remote (fully remote, work from anywhere): no adjustment — full score
+  DFW hybrid (Dallas/Plano/Frisco/Southlake/Addison/Grapevine/Irving/Allen area): subtract 5 points max
+  On-site DFW (required in office, DFW metro): subtract 10 points
+  On-site outside DFW (required in office, NOT in DFW metro): subtract 40+ points — near deal breaker
+
+Compensation floor: $50/hr contract OR $50,000/yr salary — apply_now for anything above.
+  For contract roles: $35-50/hr = apply_with_note (low but buildable). Under $35/hr = skip.
+  For salary roles: $40-50K = apply_with_note if strong fit. Under $40K = skip.
+Work type: Full-time, part-time, contract, 1099, freelance — ALL acceptable, none penalized
+Deal breakers: On-site 5 days outside DFW, under $35/hr contract, under $40K salary, purely manual non-digital
 `.trim();
 
 export async function scorePendingOpportunities(limit = 25) {
@@ -103,14 +116,19 @@ Return ONLY valid JSON, no other text:
       });
       console.log(`[scorer] ${opp.company} — ${opp.role}: score=${json.fitScore}, action=${json.recommendedAction}`);
 
-      // Alert on high-score opportunities with HITL buttons
-      if (json.fitScore >= 75 && json.recommendedAction !== 'skip') {
+      // Alert threshold: 70+ for any role, 65+ for contract/freelance
+      const isContract = ['contract','freelance','1099','part-time','part time','fractional']
+        .some(kw => (opp.role + (opp.source ?? '')).toLowerCase().includes(kw));
+      const alertThreshold = isContract ? 65 : 70;
+
+      if (json.fitScore >= alertThreshold && json.recommendedAction !== 'skip') {
         const salaryStr = opp.salaryMin
           ? `$${Math.round(opp.salaryMin / 1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax / 1000)}k` : '+'}`
           : 'salary undisclosed';
         const classTag = json.classification ? ` · ${json.classification}` : '';
+        const contractTag = isContract ? ' 📋 CONTRACT' : '';
         const text = [
-          `🎯 ${tgBold(opp.company)} — ${opp.role}`,
+          `🎯 ${tgBold(opp.company)} — ${opp.role}${contractTag}`,
           `Score: ${tgCode(String(json.fitScore))}${classTag} · ${salaryStr}`,
           '',
           `<i>${json.reasoning ?? ''}</i>`,
