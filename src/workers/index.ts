@@ -11,6 +11,7 @@ import { scorePendingOpportunities } from './opportunity-scorer';
 import { generateDailyBriefing } from './briefing-job';
 import { scheduleFollowUps } from './follow-up-scheduler';
 import { startEmailIdleMonitors } from './email-idle';
+import { parseInboundEmails } from './email-parser';
 
 console.log('[workers] Starting MAX-DEPLOY background workers...');
 
@@ -55,6 +56,12 @@ setTimeout(async () => {
   try { await scorePendingOpportunities(); }
   catch (e) { console.error('[scorer] Startup error:', e); }
 }, 5000);
+
+// Email parser — classify inbound recruiter emails every 30 min
+cron.schedule('*/30 * * * *', async () => {
+  try { await parseInboundEmails(); }
+  catch (e) { console.error('[email-parser] Error:', e); }
+});
 
 // Start IMAP IDLE monitors — persistent push, no polling
 setTimeout(async () => {

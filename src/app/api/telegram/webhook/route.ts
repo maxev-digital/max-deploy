@@ -144,6 +144,41 @@ async function handleConfirmApply(oppId: string, callbackQueryId: string, messag
   );
 }
 
+async function handleRespond(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Drafting reply…');
+  await editTelegramMessage(messageId, '⏳ Drafting reply to recruiter…', []);
+
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId } });
+  if (!opp) { await editTelegramMessage(messageId, '❌ Opportunity not found.'); return; }
+
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-sonnet-4-6', max_tokens: 600,
+      messages: [{ role: 'user', content: `Draft a concise, professional reply to this recruiter outreach for Will Austin.
+
+ROLE: ${opp.role ?? 'the role'}
+COMPANY: ${opp.company}
+JD PREVIEW: ${(opp.jdText ?? '').slice(0, 1000)}
+
+Will Austin is actively interested. Write a 3-4 sentence reply:
+- Confirm genuine interest
+- Highlight 1-2 relevant strengths (FDE experience, AI platforms, client delivery)
+- Ask for next steps or a call
+
+Return ONLY the email body text, no subject line, no JSON.` }],
+    });
+
+    const draft = (msg.content[0] as { type: string; text: string }).text.trim();
+    await editTelegramMessage(messageId, `✅ Reply drafted — ${tgBold(opp.company)}`);
+
+    await sendTelegram(
+      `📧 ${tgBold('Recruiter Reply Draft')}\n${opp.company} — ${opp.role}\n\n${draft}\n\n${tgItalic('Copy this, go to /email, and send from there.')}`
+    );
+  } catch (e) {
+    await editTelegramMessage(messageId, `❌ Draft failed: ${(e as Error).message}`);
+  }
+}
+
 async function handleCancel(oppId: string, callbackQueryId: string, messageId: number) {
   await answerCallbackQuery(callbackQueryId, 'Cancelled');
   const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
@@ -285,6 +320,7 @@ export async function POST(req: NextRequest) {
       else if (action === 'later')         await handleLater(oppId, cq.id, messageId);
       else if (action === 'confirm_apply') await handleConfirmApply(oppId, cq.id, messageId);
       else if (action === 'cancel')        await handleCancel(oppId, cq.id, messageId);
+      else if (action === 'respond')       await handleRespond(oppId, cq.id, messageId);
       else                                 await answerCallbackQuery(cq.id, 'Unknown action');
 
       return NextResponse.json({ ok: true });
