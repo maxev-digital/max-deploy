@@ -6,6 +6,7 @@ import {
   tgBold, tgCode, tgItalic, tgLink, applyButtons, confirmApplyButtons,
 } from '@/lib/telegram';
 import { buildCoverLetterHtml } from '@/lib/cover-letter';
+import { generateCoverLetterPdf } from '@/lib/generate-pdf';
 
 const CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -41,26 +42,41 @@ async function handleApply(oppId: string, callbackQueryId: string, messageId: nu
     const cfg = JSON.parse(raw.replace(/^```json\n?/, '').replace(/\n?```$/, ''));
     const html = buildCoverLetterHtml({ company: opp.company, role: opp.role, showFdeFramework: isFde, ...cfg });
 
+    // Generate PDF server-side
+    const pdfPath = await generateCoverLetterPdf(html, oppId);
+
     const existing = (opp.analysisJson as Record<string, unknown>) ?? {};
     await prisma.opportunity.update({
       where: { id: oppId },
-      data: { coverLetterUrl: `/cover-letter/${oppId}`, analysisJson: { ...existing, coverLetterHtml: html, coverLetterConfig: cfg } },
+      data: {
+        coverLetterUrl: pdfPath ?? `/cover-letter/${oppId}`,
+        analysisJson:   { ...existing, coverLetterHtml: html, coverLetterConfig: cfg, coverLetterPdf: pdfPath },
+      },
     });
 
     const salaryStr = opp.salaryMin ? `$${Math.round(opp.salaryMin/1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax/1000)}k` : '+'}` : 'salary undisclosed';
-    await editTelegramMessage(messageId, `✅ Cover letter drafted — ${tgBold(opp.company)}`);
-    await sendTelegramButtons(
-      [
-        `📄 ${tgBold('Cover Letter Ready')}`,
-        `${tgBold(opp.company)} — ${opp.role}`,
-        salaryStr,
-        '',
-        tgLink('👁 Review Cover Letter', `${BASE_URL}/cover-letter/${oppId}`),
-        '',
-        tgItalic('Review, print to PDF, then tap Mark Applied.'),
-      ].join('\n'),
-      confirmApplyButtons(oppId)
-    );
+
+    // Pick resume based on classification
+    const resumeVariant = (opp.classification ?? '').includes('Marketing') ? 'slingshot' : 'fde';
+    const resumeLabel   = resumeVariant === 'slingshot' ? 'Slingshot Resume' : 'FDE Resume';
+
+    await editTelegramMessage(messageId, `✅ Docs ready — ${tgBold(opp.company)}`);
+
+    const lines = [
+      `📋 ${tgBold('Application Kit')}`,
+      `${tgBold(opp.company)} — ${opp.role}`,
+      salaryStr,
+      '',
+      pdfPath
+        ? tgLink('📄 Cover Letter PDF', `${BASE_URL}${pdfPath}`)
+        : tgLink('📄 Cover Letter (HTML)', `${BASE_URL}/cover-letter/${oppId}`),
+      tgLink(`📎 ${resumeLabel}`, `${BASE_URL}/resumes/${resumeVariant}.pdf`),
+      opp.applyUrl ? tgLink('🔗 Open Application', opp.applyUrl) : '',
+      '',
+      tgItalic('Open PDF links, review, then tap Mark Applied.'),
+    ].filter(Boolean).join('\n');
+
+    await sendTelegramButtons(lines, confirmApplyButtons(oppId));
   } catch (e) {
     await editTelegramMessage(messageId, `❌ Draft failed: ${(e as Error).message}`);
   }

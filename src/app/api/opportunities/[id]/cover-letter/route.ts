@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { prisma } from '@/lib/prisma';
 import { buildCoverLetterHtml } from '@/lib/cover-letter';
+import { generateCoverLetterPdf } from '@/lib/generate-pdf';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -92,20 +93,20 @@ Return ONLY valid JSON, no other text:
       showFdeFramework: isFde,
     });
 
-    // Save HTML to opportunity record
-    await prisma.opportunity.update({
-      where: { id },
-      data:  { coverLetterUrl: `/cover-letter/${id}`, notes: (opp.notes ?? '') },
-    });
+    // Generate PDF server-side (Chromium headless)
+    const pdfPath = await generateCoverLetterPdf(html, id);
 
-    // Store the HTML in a separate field via analysisJson extension (reuse analysisJson.coverLetterHtml)
+    // Save to opportunity record
     const existing = (opp.analysisJson as Record<string, unknown>) ?? {};
     await prisma.opportunity.update({
       where: { id },
-      data:  { analysisJson: { ...existing, coverLetterHtml: html, coverLetterConfig: cfg } },
+      data: {
+        coverLetterUrl: pdfPath ?? `/cover-letter/${id}`,
+        analysisJson:   { ...existing, coverLetterHtml: html, coverLetterConfig: cfg, coverLetterPdf: pdfPath },
+      },
     });
 
-    return NextResponse.json({ html, config: cfg });
+    return NextResponse.json({ html, pdfUrl: pdfPath, config: cfg });
   } catch (e) {
     console.error('[cover-letter] Error:', (e as Error).message);
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });
