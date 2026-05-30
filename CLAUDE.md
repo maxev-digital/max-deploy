@@ -1,4 +1,58 @@
-# MAX-DEPLOY — Career Operations Platform
+# MAX-DEPLOY — Autonomous FDE Agent
+
+---
+
+## THE VISION (align on this before every session)
+
+MAX-DEPLOY is not a job board dashboard. It is an **autonomous FDE agent** that runs Will Austin's entire career operation — job search, recruiter relationships, and freelance pipeline — in parallel, 24/7, with Will as the HITL at specific authorization checkpoints reachable from his phone via Telegram or Slack.
+
+### The Agent Loop
+
+```
+DISCOVER → SCORE → NOTIFY → AUTHORIZE → ACT → LOG → MONITOR
+```
+
+1. **Discover** — Agents continuously pull from RSS feeds, ATS boards (Greenhouse/Lever/Ashby), email inbox (recruiter inbound), and freelance platforms. New opportunities enter the system automatically.
+
+2. **Score** — Every opportunity is scored by Claude (Haiku, cheap) against Will's profile: fit score 0-100, classification (FDE/AI Engineer/Contract/Skip), recommended action, salary assessment, strengths, gaps.
+
+3. **Notify** — High-score opportunities (80+, apply_now) trigger immediate Telegram/Slack messages with the key details. Will sees it on his phone within minutes of posting.
+
+4. **Authorize** — Telegram inline buttons: **[Apply] [Skip] [Later]**. Will taps one button. That's the HITL checkpoint. No PC required.
+
+5. **Act** — On [Apply]: agent drafts a targeted cover letter (Claude Sonnet, FDE framework for FDE roles), selects the correct resume variant (FDE or Slingshot), submits the application or opens the apply URL with cover letter ready. Logs everything.
+
+6. **Log** — Application recorded in pipeline. Stage = Applied. OutreachLog entry created. Follow-up tasks auto-scheduled (Day 7, Day 14).
+
+7. **Monitor** — IMAP IDLE watches for replies. Interview inquiry detected → immediate Telegram alert. Follow-up scheduler surfaces stale applications daily at 7 AM.
+
+### Three Parallel Streams (all running simultaneously)
+
+| Stream | Source | HITL Checkpoint |
+|---|---|---|
+| **Full-time FDE/AI roles** | ATS watchlist + RSS + bookmarklet | Tap [Apply] on Telegram |
+| **Contract/freelance** | Upwork RSS, Contra, email inbound | Tap [Apply] on Telegram |
+| **Recruiter inbound** | IMAP email parser → opportunity record | Tap [Respond] on Telegram |
+
+### HITL Authorization Points (everything else is autonomous)
+
+| Event | Trigger | Action Required | Channel |
+|---|---|---|---|
+| High-score opportunity found (80+) | Scorer completes | Tap [Apply] / [Skip] / [Later] | Telegram |
+| Recruiter email classified as lead | Email parser | Tap [Respond] / [Skip] | Telegram |
+| Draft cover letter ready | After [Apply] tapped | Review at `/cover-letter/[id]` → Print PDF | Browser |
+| Follow-up due (Day 7/14) | Daily 7 AM scheduler | Tap [Send Follow-up] / [Skip] | Telegram |
+| Interview inquiry detected | IMAP IDLE | Read + tap [Confirm] / [Reschedule] | Telegram |
+
+### What is Fully Autonomous (no action ever needed)
+
+- RSS polling every 6h
+- ATS watchlist polling daily 3 AM
+- Opportunity scoring every 15 min (Haiku)
+- IMAP IDLE email monitoring (push, no polling)
+- Morning briefing daily 6 AM (Sonnet, 1 call)
+- Follow-up task scheduling daily 7 AM
+- Telegram/Slack alerts on new high-score finds
 
 ---
 
@@ -34,58 +88,109 @@ dashboard · inbox · pipeline · companies · contacts · intelligence · outre
 
 ---
 
-## CURRENT FOCUS: Application Pipeline — Fully Automated / Max HITL
+## BUILD PLAN — Ordered by Priority
 
-**Goal:** One-click morning review. Scorer surfaces top opportunities. One click drafts a cover letter. One click marks Applied and logs it. Claude does the work. Will makes the calls.
+### Phase 1 — Telegram HITL Authorization Loop ← BUILD THIS FIRST
+**This is the core of the autonomous agent. Without it, Will must be at his PC for everything.**
 
-### Phase 1 — Inbox → Apply Flow (BUILD THIS FIRST)
-Priority order within this phase:
+The Telegram bot already has TOKEN + CHAT_ID configured and the webhook route exists (`/api/telegram/webhook`). What's missing is inline keyboard buttons and the callback handler that triggers actions.
 
-1. **Cover letter button on inbox/pipeline cards** *(next)*
-   - "Draft Cover Letter" button on each scored opportunity card
-   - Calls `POST /api/opportunities/[id]/cover-letter`
-   - Opens `/cover-letter/[id]` in new tab
-   - FDE roles auto-get the 7-step methodology callout (already wired in API)
-   - API + page + lib already built — just needs UI button on cards
+**1a. Telegram inline buttons on high-score alerts**
+- When scorer finds fitScore 80+ + recommendedAction = apply_now:
+  - Current: sends a plain text alert
+  - Needed: sends message WITH inline keyboard `[✅ Apply] [⏭ Skip] [🕐 Later]`
+- Telegram bot API: `inline_keyboard` in `reply_markup`
+- Callback data format: `apply:{opportunityId}` / `skip:{opportunityId}` / `later:{opportunityId}`
 
-2. **Apply action** *(next)*
-   - "Apply" button on inbox card: moves stage inbox → applied, sets appliedAt timestamp
-   - Logs to OutreachLog (type: application, direction: sent)
-   - Prompts for contact name/email (optional quick-add)
-   - Already have `PATCH /api/opportunities/[id]` — just needs the UI action
+**1b. Webhook callback handler**
+- `/api/telegram/webhook` receives `callback_query` events (not just messages)
+- `apply:{id}` → draft cover letter (Claude Sonnet) → send follow-up Telegram with cover letter link + `[✅ Confirm Apply] [✏️ Edit First]`
+- `skip:{id}` → mark stage = rejected, send confirmation
+- `later:{id}` → snooze 48h, reschedule alert
 
-3. **Resume selection on Apply** *(next)*
-   - When Apply is clicked: modal asks "Which resume?" — FDE (default) or Slingshot
-   - Stores `resumeVariant` on the opportunity record
-   - Links to PDF download: `/files/resumes/will-austin-fde-resume.pdf` (hosted on maxev-admin-prod VPS)
+**1c. Apply confirmation flow**
+- After cover letter drafted: Telegram sends `"Cover letter ready for [Company]. Review: max-ev-holdings.com/cover-letter/[id] — Apply?" [✅ Mark Applied] [✏️ Edit]`
+- `[✅ Mark Applied]` → sets stage = applied, appliedAt = now, creates OutreachLog entry, schedules Day 7 follow-up task
 
-4. **Inbox filter by score / action** *(next)*
-   - Filter bar: show only apply_now · apply_with_note · 70+ score · unscored
-   - Collapses the firehose into the signal — this is the 10-minute morning review
+**What Will does:** Gets a Telegram notification on his phone. Reads the 3-line summary. Taps [Apply]. Gets a second message with the cover letter link. Reviews it in browser. Taps [Mark Applied]. Done. PC optional throughout.
 
-5. **Skip / Target actions** *(next)*
-   - Skip: marks stage = rejected, removes from inbox
-   - Target: moves to pipeline at "target" stage for future application
+---
 
-### Phase 2 — Email Parser (BUILD AFTER PHASE 1)
-Converts recruiter cold outreach hitting IMAP inbox into opportunity records.
-- IMAP IDLE already notifies on new mail (email-idle.ts)
-- Need: email-parser worker that reads new EmailMessage records, calls Haiku to classify + extract, creates Opportunity if it's a job lead
-- High value — captures warm inbound recruiter leads automatically
+### Phase 2 — Inbox UI: Cover Letter + Apply + Filter
+**For when Will IS at the dashboard — makes it fast.**
 
-### Phase 3 — Indeed RSS (LOW EFFORT, HIGH VALUE)
-User needs to go to Indeed.com → Saved Searches → copy the RSS URL for each saved search.
-Searches to set up: "Forward Deployed Engineer remote", "AI Engineer Texas", "Applied AI engineer", "Claude Anthropic engineer"
-Add via Settings → Streams page.
+**2a. Cover letter button on inbox/pipeline cards**
+- "Cover Letter" button → calls `POST /api/opportunities/[id]/cover-letter` → opens `/cover-letter/[id]` in new tab
+- API + page + lib already built (`src/lib/cover-letter.ts`, API route, preview page)
+- Just needs the button wired into the inbox card UI
 
-### Phase 4 — Bookmarklet (BUILD AFTER PHASE 2)
-JS snippet that sends current page URL to `POST /api/opportunities/scrape`.
-API already built (`/src/app/api/opportunities/scrape/route.ts`).
-Need: expose the bookmarklet JS snippet on the `/bookmarklet` page.
+**2b. Apply / Skip / Target quick actions on cards**
+- [Apply] → modal: resume variant (FDE default / Slingshot) → sets stage = applied, logs OutreachLog
+- [Skip] → stage = rejected, removed from inbox
+- [Target] → stage = target, stays in pipeline for later
 
-### Phase 5 — Contracts + Earnings (LATER — not current focus)
-Enter current freelance work (Paloma Home Services, Roof Works of Texas) to activate Earnings page.
-Stripe payment links, Plaid bank monitoring — defer until Phase 1-4 done.
+**2c. Inbox filter bar**
+- Filter buttons: All · Apply Now · 70+ Score · Unscored · FDE Only
+- Collapses the 690-opportunity firehose into the 10-20 items that matter today
+
+---
+
+### Phase 3 — Email Parser: Recruiter Inbound → Opportunities
+**Closes the inbound loop. Warm leads hitting the inbox become tracked pipeline records.**
+
+- IMAP IDLE already notifies on new mail and saves to `email_messages` table
+- Need: worker that reads unprocessed `email_messages`, calls Haiku to classify:
+  - Is this a job lead / recruiter outreach? (yes/no)
+  - If yes: extract company, role, salary, contact name, contact email, source
+  - Creates `Opportunity` record (stage = inbox, source = recruiter_inbound)
+  - Creates `Contact` record linked to opportunity
+  - Triggers Telegram alert: "📨 Recruiter inbound — [Name] at [Company] re: [Role] [View] [Respond] [Skip]"
+- Runs: on each new email_message (triggered by IMAP IDLE notification)
+
+---
+
+### Phase 4 — Indeed Personal RSS + Bookmarklet
+**Low effort, high value. Completes the discovery layer.**
+
+**4a. Indeed personal RSS** (Will does this manually — 10 min)
+- Go to Indeed.com → Saved Searches → create 4-5 searches → copy RSS URL for each
+- Searches: "Forward Deployed Engineer remote", "AI Engineer Texas remote", "Applied AI engineer", "Claude Anthropic engineer", "FDE $150K"
+- Add via Settings → Streams page (already built)
+
+**4b. Bookmarklet**
+- `/bookmarklet` page already exists — needs to display the JS drag-to-bookmarks snippet
+- JS snippet: `javascript:(function(){fetch('https://max-ev-holdings.com/api/opportunities/scrape',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:location.href})}).then(r=>r.json()).then(d=>alert('Added: '+d.role+' at '+d.company+' — Score: '+d.fitScore))})()`
+- Scrape API already built and working
+
+---
+
+### Phase 5 — Follow-up Automation via Telegram
+**Closes the loop on applications already submitted.**
+
+- Follow-up scheduler already runs daily 7 AM and creates tasks
+- Need: when task is created for Day 7/14 follow-up, send Telegram with draft follow-up email
+  - "📋 Follow-up due: [Company] — [Role] (applied X days ago) [View Draft] [Send] [Skip]"
+- Draft email API already built (`/api/ai/draft-email`)
+- [Send] → SMTP send via `/api/outreach/[id]/send`
+
+---
+
+### Phase 6 — Freelance / Contract Parallel Stream
+**Not current focus. Build after Phases 1-3 proven.**
+
+- Add Upwork RSS feed (saved search URL from Upwork)
+- Add Contra API feed
+- Enter current active contracts (Paloma, Roof Works) → activates Earnings page
+- Contracts/Invoices/Earnings system already built — just needs data entry
+
+---
+
+### Phase 7 — Interview + Offer Management
+**Not current focus. Build after pipeline is generating interview activity.**
+
+- IMAP parser detects interview-related keywords → Telegram alert
+- Offer comparison engine (already in CLAUDE.md spec)
+- Calendar integration for scheduling
 
 ---
 
