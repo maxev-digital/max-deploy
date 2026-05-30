@@ -91,6 +91,7 @@ export async function pollAtsWatchlist() {
         if (jobId) {
           if (co.atsType === 'greenhouse') jdText = await fetchGreenhouseJD(co.atsSlug, jobId);
           else if (co.atsType === 'lever') jdText = await fetchLeverJD(co.atsSlug, jobId);
+          await new Promise(r => setTimeout(r, 300)); // stay under Greenhouse rate limit
         }
 
         await prisma.opportunity.create({
