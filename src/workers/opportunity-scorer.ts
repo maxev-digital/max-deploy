@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { prisma } from '../lib/prisma';
-import { sendTelegram, tgBold, tgCode } from '../lib/telegram';
+import { sendTelegramButtons, tgBold, tgCode, applyButtons } from '../lib/telegram';
 import { slackFields } from '../lib/slack';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -103,17 +103,25 @@ Return ONLY valid JSON, no other text:
       });
       console.log(`[scorer] ${opp.company} — ${opp.role}: score=${json.fitScore}, action=${json.recommendedAction}`);
 
-      // Alert on high-score opportunities
-      if (json.fitScore >= 80 && json.recommendedAction === 'apply_now') {
+      // Alert on high-score opportunities with HITL buttons
+      if (json.fitScore >= 75 && json.recommendedAction !== 'skip') {
         const salaryStr = opp.salaryMin
           ? `$${Math.round(opp.salaryMin / 1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax / 1000)}k` : '+'}`
-          : 'undisclosed';
-        await sendTelegram(
-          `🎯 ${tgBold('High-Score Opportunity')}\n\n${tgBold(opp.company)} — ${opp.role}\nScore: ${tgCode(String(json.fitScore))} · ${salaryStr}\n\n<i>${json.reasoning}</i>\n\nmax-ev-holdings.com/inbox`
-        );
+          : 'salary undisclosed';
+        const classTag = json.classification ? ` · ${json.classification}` : '';
+        const text = [
+          `🎯 ${tgBold(opp.company)} — ${opp.role}`,
+          `Score: ${tgCode(String(json.fitScore))}${classTag} · ${salaryStr}`,
+          '',
+          `<i>${json.reasoning ?? ''}</i>`,
+          '',
+          json.matchStrengths?.slice(0, 2).map((s: string) => `• ${s}`).join('\n') ?? '',
+        ].filter(Boolean).join('\n');
+
+        await sendTelegramButtons(text, applyButtons(opp.id));
         await slackFields(
-          `🎯 High-Score Opportunity — ${json.fitScore}`,
-          { Company: opp.company, Role: opp.role, Salary: salaryStr, Action: 'apply_now', Reasoning: json.reasoning?.slice(0, 120) ?? '' },
+          `🎯 ${json.fitScore} — ${opp.company} · ${opp.role}`,
+          { Salary: salaryStr, Class: json.classification ?? '?', Action: json.recommendedAction ?? '?', Reasoning: json.reasoning?.slice(0, 120) ?? '' },
           '#14B8AD'
         );
       }

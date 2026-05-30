@@ -1,53 +1,162 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Anthropic from '@anthropic-ai/sdk';
 import { prisma } from '@/lib/prisma';
-import { sendTelegram, tgBold, tgCode } from '@/lib/telegram';
+import {
+  sendTelegram, sendTelegramButtons, editTelegramMessage, answerCallbackQuery,
+  tgBold, tgCode, tgItalic, tgLink, applyButtons, confirmApplyButtons,
+} from '@/lib/telegram';
+import { buildCoverLetterHtml } from '@/lib/cover-letter';
 
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const BASE_URL  = process.env.NEXTAUTH_URL ?? 'https://max-ev-holdings.com';
 
-function isAuthorized(chatId: number | string): boolean {
-  return String(chatId) === String(CHAT_ID);
+function isAuthorized(chatId: number | string) { return String(chatId) === String(CHAT_ID); }
+
+// ─── Callback actions (button taps) ───────────────────────────────────────────
+
+async function handleApply(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Drafting cover letter…');
+  await editTelegramMessage(messageId, '⏳ Drafting cover letter…', []);
+
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId } });
+  if (!opp) { await editTelegramMessage(messageId, '❌ Opportunity not found.'); return; }
+  if (!opp.jdText) {
+    await editTelegramMessage(messageId, `❌ No JD text for ${opp.company} — open inbox to draft manually.\n${BASE_URL}/inbox`);
+    return;
+  }
+
+  try {
+    const isFde = ['FDE','Forward Deployed','Applied AI','Solutions Engineer','AI Platform','Agentic']
+      .some(kw => opp.role.toLowerCase().includes(kw.toLowerCase()) || (opp.classification ?? '').includes('FDE'));
+
+    const fdeSuffix = isFde ? '\n\nFor FDE roles weave in Will\'s 7-step framework: Discovery→Scope→Architecture→Agentic Build→Validate→Deploy→Iterate. Bias for shipping, AI as primary teammate, end-to-end accountability.' : '';
+
+    const msg = await anthropic.messages.create({
+      model: 'claude-sonnet-4-6', max_tokens: 1400,
+      messages: [{ role: 'user', content: `Write a targeted cover letter for Will Austin.\n\nCANDIDATE: AI-native FDE engineer. 6 FDE engagements, 14 production AI endpoints, 13 platforms, former GM/GC. Skills: Next.js, TypeScript, Python, Claude API, MCP, BullMQ, Docker, Twilio, HubSpot. Open to remote or DFW hybrid.${ fdeSuffix }\n\nJOB: ${opp.company} — ${opp.role}\n${opp.jdText.slice(0, 3500)}\n\nReturn ONLY valid JSON:\n{"headerTitle":"Role · Company","subjectText":"Role — Company · salary","intro":"2-3 sentence opener referencing specific JD details. HTML <strong> ok.","bullets":["<strong>Label —</strong> specific detail","same","same"],"closingLine":"1 sentence availability/location close."}` }],
+    });
+
+    const raw = (msg.content[0] as { type: string; text: string }).text.trim();
+    const cfg = JSON.parse(raw.replace(/^```json\n?/, '').replace(/\n?```$/, ''));
+    const html = buildCoverLetterHtml({ company: opp.company, role: opp.role, showFdeFramework: isFde, ...cfg });
+
+    const existing = (opp.analysisJson as Record<string, unknown>) ?? {};
+    await prisma.opportunity.update({
+      where: { id: oppId },
+      data: { coverLetterUrl: `/cover-letter/${oppId}`, analysisJson: { ...existing, coverLetterHtml: html, coverLetterConfig: cfg } },
+    });
+
+    const salaryStr = opp.salaryMin ? `$${Math.round(opp.salaryMin/1000)}k${opp.salaryMax ? `–$${Math.round(opp.salaryMax/1000)}k` : '+'}` : 'salary undisclosed';
+    await editTelegramMessage(messageId, `✅ Cover letter drafted — ${tgBold(opp.company)}`);
+    await sendTelegramButtons(
+      [
+        `📄 ${tgBold('Cover Letter Ready')}`,
+        `${tgBold(opp.company)} — ${opp.role}`,
+        salaryStr,
+        '',
+        tgLink('👁 Review Cover Letter', `${BASE_URL}/cover-letter/${oppId}`),
+        '',
+        tgItalic('Review, print to PDF, then tap Mark Applied.'),
+      ].join('\n'),
+      confirmApplyButtons(oppId)
+    );
+  } catch (e) {
+    await editTelegramMessage(messageId, `❌ Draft failed: ${(e as Error).message}`);
+  }
 }
 
+async function handleSkip(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Skipped');
+  await prisma.opportunity.update({ where: { id: oppId }, data: { stage: 'rejected', lastActivity: new Date() } });
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
+  await editTelegramMessage(messageId, `⏭ Skipped — ${opp?.company ?? ''} · ${opp?.role ?? ''}`);
+}
+
+async function handleLater(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Snoozed 48h');
+  const snoozeDate = new Date(Date.now() + 48 * 3600000);
+  await prisma.opportunity.update({ where: { id: oppId }, data: { followUpDue: snoozeDate } });
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
+  await editTelegramMessage(messageId,
+    `🕐 Snoozed — ${opp?.company ?? ''} · ${opp?.role ?? ''}\nResurfaces ${snoozeDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`,
+  );
+}
+
+async function handleConfirmApply(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, '✅ Marked Applied!');
+  const now = new Date();
+
+  await prisma.opportunity.update({ where: { id: oppId }, data: { stage: 'applied', appliedAt: now, lastActivity: now } });
+
+  await prisma.outreachLog.create({
+    data: { opportunityId: oppId, type: 'email', direction: 'sent', subject: 'Application submitted', sentAt: now, status: 'sent', followUpDue: new Date(now.getTime() + 7 * 86400000) },
+  });
+
+  await prisma.task.createMany({
+    data: [
+      { title: 'Follow-up Day 7',  notes: 'Check in on application status', linkedType: 'opportunity', linkedId: oppId, dueDate: new Date(now.getTime() + 7  * 86400000), priority: 'MEDIUM', status: 'TODO' },
+      { title: 'Follow-up Day 14', notes: 'Final follow-up attempt',        linkedType: 'opportunity', linkedId: oppId, dueDate: new Date(now.getTime() + 14 * 86400000), priority: 'MEDIUM', status: 'TODO' },
+    ],
+  });
+
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
+  await editTelegramMessage(messageId,
+    `✅ ${tgBold('Applied!')} — ${opp?.company ?? ''} · ${opp?.role ?? ''}\n\n📅 Follow-ups scheduled: Day 7 + Day 14\n${tgItalic('Good luck!')}`,
+  );
+}
+
+async function handleCancel(oppId: string, callbackQueryId: string, messageId: number) {
+  await answerCallbackQuery(callbackQueryId, 'Cancelled');
+  const opp = await prisma.opportunity.findUnique({ where: { id: oppId }, select: { company: true, role: true } });
+  await editTelegramMessage(
+    messageId,
+    `↩️ Cancelled — ${opp?.company ?? ''} · ${opp?.role ?? ''}\nReturned to inbox.`,
+    applyButtons(oppId)
+  );
+}
+
+// ─── Text commands ─────────────────────────────────────────────────────────────
+
 async function handleCommand(cmd: string, args: string): Promise<string> {
-  const now    = new Date();
-  const stale  = new Date(now.getTime() - 14 * 86400000);
+  const now   = new Date();
+  const stale = new Date(now.getTime() - 14 * 86400000);
 
   if (cmd === '/start' || cmd === '/help') {
     return [
-      tgBold('MAX-DEPLOY Career OS'),
+      tgBold('MAX-DEPLOY — Autonomous FDE Agent'),
       '',
-      'Available commands:',
-      tgCode('/inbox')     + ' — Top scored opportunities waiting for review',
-      tgCode('/pipeline')  + ' — Active applications by stage',
-      tgCode('/tasks')     + ' — Due and overdue tasks',
-      tgCode('/followups') + ' — Applications with follow-ups due',
-      tgCode('/brief')     + ' — Generate a fresh daily briefing',
-      tgCode('/earnings')  + ' — MRR and active contracts',
-      tgCode('/score [url]') + ' — Score a job URL',
+      'Commands:',
+      `${tgCode('/inbox')}     — Top opportunities with Apply buttons`,
+      `${tgCode('/pipeline')}  — Active applications by stage`,
+      `${tgCode('/tasks')}     — Overdue tasks`,
+      `${tgCode('/followups')} — Follow-ups due`,
+      `${tgCode('/brief')}     — Quick pipeline snapshot`,
+      `${tgCode('/earnings')}  — MRR + contracts`,
     ].join('\n');
   }
 
   if (cmd === '/inbox') {
-    const limit = parseInt(args) || 8;
+    const limit = Math.min(parseInt(args) || 5, 10);
     const opps = await prisma.opportunity.findMany({
-      where: { stage: 'inbox' },
+      where: { stage: 'inbox', fitScore: { gte: 70 } },
       orderBy: { fitScore: 'desc' },
       take: limit,
     });
-    if (!opps.length) return '📭 Inbox is empty.';
-    const lines = [`${tgBold(`Inbox — ${opps.length} opportunities`)}`, ''];
+    if (!opps.length) return '📭 No 70+ opportunities in inbox right now.';
     for (const o of opps) {
-      const score = o.fitScore ?? '?';
-      const action = o.recommendedAction?.replace(/_/g, ' ') ?? '';
-      lines.push(`• ${tgBold(o.company)} — ${o.role}`);
-      lines.push(`  Score: <code>${score}</code> ${action ? `· ${action}` : ''}`);
+      const sal = o.salaryMin ? `$${Math.round(o.salaryMin/1000)}k+` : 'N/A';
+      await sendTelegramButtons(
+        `🎯 ${tgBold(o.company)} — ${o.role}\n${tgCode(String(o.fitScore ?? '?'))} · ${o.classification ?? ''} · ${sal}`,
+        applyButtons(o.id), true
+      );
     }
-    return lines.join('\n');
+    return `Sent ${opps.length} top opportunities ↑`;
   }
 
   if (cmd === '/pipeline') {
     const opps = await prisma.opportunity.findMany({
-      where: { stage: { in: ['target', 'applied', 'screening', 'interview', 'final', 'offer'] } },
+      where: { stage: { in: ['target','applied','screening','interview','final','offer'] } },
       orderBy: { stage: 'asc' },
     });
     if (!opps.length) return '📋 No active applications.';
@@ -64,41 +173,24 @@ async function handleCommand(cmd: string, args: string): Promise<string> {
   if (cmd === '/tasks') {
     const tasks = await prisma.task.findMany({
       where: { status: { not: 'DONE' }, dueDate: { lte: now } },
-      orderBy: [{ priority: 'asc' }, { dueDate: 'asc' }],
-      take: 10,
+      orderBy: [{ priority: 'asc' }, { dueDate: 'asc' }], take: 10,
     });
     if (!tasks.length) return '✅ No overdue tasks.';
-    const lines = [`${tgBold(`Tasks — ${tasks.length} due/overdue`)}\n`];
-    for (const t of tasks) {
-      const due = t.dueDate ? new Date(t.dueDate).toLocaleDateString() : 'no date';
-      lines.push(`• [${t.priority}] ${t.title}`);
-      lines.push(`  Due: ${due} · ${t.status}`);
-    }
-    return lines.join('\n');
+    return [`${tgBold(`Tasks — ${tasks.length} due`)}\n`, ...tasks.map(t => `• [${t.priority}] ${t.title} · ${t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '?'}`)].join('\n');
   }
 
   if (cmd === '/followups') {
     const opps = await prisma.opportunity.findMany({
-      where: {
-        stage: { in: ['applied', 'screening', 'interview', 'final'] },
-        followUpDue: { lte: now },
-      },
-      orderBy: { followUpDue: 'asc' },
-      take: 10,
+      where: { stage: { in: ['applied','screening','interview','final'] }, followUpDue: { lte: now } },
+      orderBy: { followUpDue: 'asc' }, take: 10,
     });
     if (!opps.length) return '✅ No follow-ups due.';
-    const lines = [`${tgBold(`Follow-ups due — ${opps.length}`)}\n`];
-    for (const o of opps) {
-      const due = o.followUpDue ? new Date(o.followUpDue).toLocaleDateString() : '';
-      lines.push(`• ${o.company} — ${o.role}`);
-      lines.push(`  Stage: ${o.stage} · Due: ${due}`);
-    }
-    return lines.join('\n');
+    return [`${tgBold(`Follow-ups — ${opps.length}`)}\n`, ...opps.map(o => `• ${o.company} — ${o.role}\n  ${o.stage} · due ${o.followUpDue ? new Date(o.followUpDue).toLocaleDateString() : '?'}`)].join('\n');
   }
 
   if (cmd === '/earnings') {
     const contracts = await prisma.contract.findMany({ where: { status: 'active' } });
-    const invoices  = await prisma.invoice.findMany({ where: { status: { in: ['overdue', 'pending'] } } });
+    const invoices  = await prisma.invoice.findMany({ where: { status: { in: ['overdue','sent'] } } });
     const mrr = contracts.reduce((s, c) => {
       if (c.rateType === 'monthly') return s + c.rate;
       if (c.rateType === 'weekly')  return s + c.rate * 4.33;
@@ -106,69 +198,74 @@ async function handleCommand(cmd: string, args: string): Promise<string> {
       return s;
     }, 0);
     const ar = invoices.reduce((s, i) => s + i.total, 0);
-    return [
-      tgBold('Earnings Snapshot'),
-      '',
-      `MRR: ${tgCode(`$${Math.round(mrr).toLocaleString()}`)}`,
-      `Active Contracts: ${tgCode(String(contracts.length))}`,
-      `Outstanding AR: ${tgCode(`$${ar.toLocaleString()}`)} (${invoices.length} invoices)`,
-    ].join('\n');
+    return [`${tgBold('Earnings')}`, `MRR: ${tgCode(`$${Math.round(mrr).toLocaleString()}`)}`, `Contracts: ${tgCode(String(contracts.length))}`, `AR: ${tgCode(`$${ar.toLocaleString()}`)} (${invoices.length} invoices)`].join('\n');
   }
 
   if (cmd === '/brief') {
-    // Trigger a fresh briefing generation
     const inboxCount = await prisma.opportunity.count({ where: { stage: 'inbox' } });
     const active     = await prisma.opportunity.count({ where: { stage: { in: ['applied','screening','interview','final','offer'] } } });
     const followUps  = await prisma.opportunity.count({ where: { followUpDue: { lte: now }, stage: { in: ['applied','screening','interview','final'] } } });
     const tasksDue   = await prisma.task.count({ where: { status: { not: 'DONE' }, dueDate: { lte: now } } });
     const staleApps  = await prisma.opportunity.count({ where: { stage: { in: ['applied','screening','interview','final'] }, lastActivity: { lt: stale } } });
-    return [
-      tgBold('📋 Quick Brief'),
-      '',
-      `📥 Inbox: ${tgCode(String(inboxCount))} unreviewed`,
-      `🎯 Pipeline: ${tgCode(String(active))} active applications`,
-      `⏰ Follow-ups due: ${tgCode(String(followUps))}`,
-      `✅ Tasks overdue: ${tgCode(String(tasksDue))}`,
-      `⚠️ Stale (14d+): ${tgCode(String(staleApps))}`,
-      '',
-      `<i>Check dashboard for full AI briefing → max-ev-holdings.com</i>`,
-    ].join('\n');
+    return [`${tgBold('📋 Brief')}`, `📥 Inbox: ${tgCode(String(inboxCount))}`, `🎯 Pipeline: ${tgCode(String(active))}`, `⏰ Follow-ups: ${tgCode(String(followUps))}`, `✅ Tasks due: ${tgCode(String(tasksDue))}`, `⚠️ Stale: ${tgCode(String(staleApps))}`, `\n${tgItalic(BASE_URL)}`].join('\n');
   }
 
-  return `Unknown command: ${tgCode(cmd)}\n\nSend ${tgCode('/help')} for available commands.`;
+  return `Unknown command: ${tgCode(cmd)}  —  ${tgCode('/help')}`;
 }
+
+// ─── Router ────────────────────────────────────────────────────────────────────
+
+type TelegramUpdate = {
+  message?: { chat: { id: number }; message_id: number; text?: string };
+  callback_query?: {
+    id: string;
+    from: { id: number };
+    message?: { message_id: number; chat: { id: number } };
+    data?: string;
+  };
+};
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json() as {
-      message?: {
-        chat: { id: number };
-        text?: string;
-        from?: { first_name?: string };
-      };
-    };
+    const body = await req.json() as TelegramUpdate;
 
-    const message = body.message;
-    if (!message?.text || !isAuthorized(message.chat.id)) {
+    if (body.callback_query) {
+      const cq        = body.callback_query;
+      const chatId    = cq.message?.chat.id ?? cq.from.id;
+      const messageId = cq.message?.message_id;
+
+      if (!isAuthorized(chatId)) {
+        await answerCallbackQuery(cq.id, '🚫 Unauthorized');
+        return NextResponse.json({ ok: true });
+      }
+
+      const [action, oppId] = (cq.data ?? '').split(':');
+      if (!oppId || !messageId) { await answerCallbackQuery(cq.id, '⚠️ Invalid'); return NextResponse.json({ ok: true }); }
+
+      if      (action === 'apply')         await handleApply(oppId, cq.id, messageId);
+      else if (action === 'skip')          await handleSkip(oppId, cq.id, messageId);
+      else if (action === 'later')         await handleLater(oppId, cq.id, messageId);
+      else if (action === 'confirm_apply') await handleConfirmApply(oppId, cq.id, messageId);
+      else if (action === 'cancel')        await handleCancel(oppId, cq.id, messageId);
+      else                                 await answerCallbackQuery(cq.id, 'Unknown action');
+
       return NextResponse.json({ ok: true });
     }
 
-    const text = message.text.trim();
-    const [rawCmd, ...argParts] = text.split(' ');
-    const cmd  = rawCmd.toLowerCase().split('@')[0]; // strip bot name if present
-    const args = argParts.join(' ');
+    const message = body.message;
+    if (!message?.text || !isAuthorized(message.chat.id)) return NextResponse.json({ ok: true });
 
-    const reply = await handleCommand(cmd, args);
+    const [rawCmd, ...argParts] = message.text.trim().split(' ');
+    const reply = await handleCommand(rawCmd.toLowerCase().split('@')[0], argParts.join(' '));
     await sendTelegram(reply);
-
     return NextResponse.json({ ok: true });
+
   } catch (err) {
     console.error('[telegram webhook]', err);
-    return NextResponse.json({ ok: true }); // always 200 to Telegram
+    return NextResponse.json({ ok: true });
   }
 }
 
-// Telegram verifies the webhook with a GET
 export async function GET() {
   return NextResponse.json({ ok: true, service: 'MAX-DEPLOY Telegram Webhook' });
 }
