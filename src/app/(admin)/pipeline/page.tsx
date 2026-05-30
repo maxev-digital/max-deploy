@@ -16,6 +16,7 @@ type Opportunity = {
   classification: string | null;
   lastActivity: string | null;
   followUpDue: string | null;
+  appliedAt: string | null;
   source: string | null;
   notes: string | null;
   createdAt: string;
@@ -73,6 +74,19 @@ export default function PipelinePage() {
   const bd  = 'rgba(255,255,255,0.07)';
   const dim = 'rgba(255,255,255,0.35)';
 
+  const daysAgo = (date: string | null) => {
+    if (!date) return null;
+    return Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
+  };
+
+  const urgencyColor = (opp: Opportunity): string => {
+    const d = daysAgo(opp.lastActivity ?? opp.appliedAt);
+    if (d === null) return 'rgba(255,255,255,0.15)';
+    if (d < 7)  return '#14B8AD'; // green — fresh
+    if (d < 14) return '#D08E14'; // yellow — needs attention
+    return '#E05252';             // red — stale
+  };
+
   const isStale = (lastActivity: string | null) => {
     if (!lastActivity) return false;
     return new Date().getTime() - new Date(lastActivity).getTime() > 14 * 24 * 60 * 60 * 1000;
@@ -119,34 +133,36 @@ export default function PipelinePage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {stageOpps.length === 0 ? (
                     <div style={{ padding: '20px 12px', borderRadius: 8, border: `1px dashed ${bd}`, fontSize: '0.73rem', color: dim, textAlign: 'center' }}>Empty</div>
-                  ) : stageOpps.map(opp => (
+                  ) : stageOpps.map(opp => {
+                    const urg  = urgencyColor(opp);
+                    const days = daysAgo(opp.lastActivity ?? opp.appliedAt);
+                    const followUpOverdue = opp.followUpDue && new Date(opp.followUpDue) <= new Date();
+                    return (
                     <div key={opp.id} style={{
                       background: 'rgba(255,255,255,0.03)',
                       border: `1px solid ${bd}`,
-                      borderTop: `2px solid ${color}`,
+                      borderLeft: `3px solid ${urg}`,
                       borderRadius: 8,
-                      padding: '12px',
+                      padding: '11px',
                     }}>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF', marginBottom: 3, lineHeight: 1.3 }}>{opp.company}</div>
-                      <div style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.55)', marginBottom: 8, lineHeight: 1.3 }}>{opp.role}</div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', gap: 5 }}>
+                      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF', marginBottom: 2, lineHeight: 1.3 }}>{opp.company}</div>
+                      <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.52)', marginBottom: 7, lineHeight: 1.3 }}>{opp.role}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+                        <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
                           {opp.fitScore !== null && (
                             <span style={{ fontSize: '0.7rem', fontWeight: 800, color: FIT_COLOR(opp.fitScore) }}>{opp.fitScore}</span>
                           )}
                           {opp.salaryMin && (
-                            <span style={{ fontSize: '0.7rem', color: dim }}>${(opp.salaryMin / 1000).toFixed(0)}k+</span>
+                            <span style={{ fontSize: '0.68rem', color: dim }}>${(opp.salaryMin / 1000).toFixed(0)}k+</span>
                           )}
                         </div>
-                        {isStale(opp.lastActivity) && (
-                          <span title="No activity in 14+ days" style={{ fontSize: '0.65rem', color: '#E05252', display: 'flex', alignItems: 'center', gap: 3 }}>
-                            <Clock size={10} /> stale
-                          </span>
-                        )}
+                        <span style={{ fontSize: '0.62rem', color: urg, fontWeight: 600 }}>
+                          {days !== null ? `${days}d` : ''}
+                        </span>
                       </div>
-                      {opp.followUpDue && new Date(opp.followUpDue) <= new Date() && (
-                        <div style={{ marginTop: 6, fontSize: '0.65rem', color: '#D08E14', fontWeight: 600 }}>
-                          Follow-up due
+                      {followUpOverdue && (
+                        <div style={{ fontSize: '0.62rem', color: '#D08E14', fontWeight: 600, marginBottom: 5, display: 'flex', alignItems: 'center', gap: 3 }}>
+                          <Clock size={9} /> Follow-up due
                         </div>
                       )}
                       <select
@@ -155,9 +171,12 @@ export default function PipelinePage() {
                         onChange={e => moveStage(opp.id, e.target.value)}
                       >
                         {STAGES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                      <option value="accepted">Accepted</option>
+                      <option value="rejected">Rejected</option>
                       </select>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );
