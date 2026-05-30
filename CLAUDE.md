@@ -1,5 +1,103 @@
 # MAX-DEPLOY — Career Operations Platform
 
+---
+
+## CURRENT BUILD STATUS — Last Updated 2026-05-30
+
+### Infrastructure: LIVE
+- **URL:** max-ev-holdings.com (Nginx → PM2 id 34, port 3200)
+- **Workers:** PM2 id 36 (scorer, RSS poller, ATS poller, briefing, follow-up scheduler, IMAP IDLE)
+- **DB:** PostgreSQL `max_deploy` on localhost:5436 (Docker container `maxev-admin-db`)
+- **Auth:** NextAuth credentials — `info@max-ev-holdings.com` / admin password hash in .env
+- **Email:** IMAP IDLE live on `info@max-ev-holdings.com` (Hostinger). SMTP sending configured port 465.
+- **AI:** Haiku for scoring (automated), Sonnet for cover letters/briefing/chat (on-demand)
+- **Notifications:** Telegram + Slack alerts wired for high-score opportunities
+
+### Data: LIVE
+- **690 opportunities** in DB — 217+ scored, all have JD text
+- **35 target companies** in ATS watchlist (Anthropic, OpenAI, Stripe, Figma, Notion, Cursor, LangChain, Sourcegraph, etc.)
+- **3 RSS feeds** (WWR ×2, Remotive)
+- **0 contacts, 0 contracts, 0 invoices** — not yet entered
+
+### Pages Built (all 13 live at max-ev-holdings.com):
+dashboard · inbox · pipeline · companies · contacts · intelligence · outreach · email · contracts · invoices · earnings · monitor · settings
+
+### Workers Running (automatic, no action needed):
+| Worker | Schedule | Model |
+|---|---|---|
+| Opportunity scorer | Every 15 min, 25/batch | Haiku (cheap) |
+| RSS poller | Every 6h | None |
+| ATS poller | Daily 3 AM | None |
+| Daily briefing | Daily 6 AM | Sonnet (1 call) |
+| Follow-up scheduler | Daily 7 AM | None |
+| IMAP IDLE monitor | Persistent | None |
+
+---
+
+## CURRENT FOCUS: Application Pipeline — Fully Automated / Max HITL
+
+**Goal:** One-click morning review. Scorer surfaces top opportunities. One click drafts a cover letter. One click marks Applied and logs it. Claude does the work. Will makes the calls.
+
+### Phase 1 — Inbox → Apply Flow (BUILD THIS FIRST)
+Priority order within this phase:
+
+1. **Cover letter button on inbox/pipeline cards** *(next)*
+   - "Draft Cover Letter" button on each scored opportunity card
+   - Calls `POST /api/opportunities/[id]/cover-letter`
+   - Opens `/cover-letter/[id]` in new tab
+   - FDE roles auto-get the 7-step methodology callout (already wired in API)
+   - API + page + lib already built — just needs UI button on cards
+
+2. **Apply action** *(next)*
+   - "Apply" button on inbox card: moves stage inbox → applied, sets appliedAt timestamp
+   - Logs to OutreachLog (type: application, direction: sent)
+   - Prompts for contact name/email (optional quick-add)
+   - Already have `PATCH /api/opportunities/[id]` — just needs the UI action
+
+3. **Resume selection on Apply** *(next)*
+   - When Apply is clicked: modal asks "Which resume?" — FDE (default) or Slingshot
+   - Stores `resumeVariant` on the opportunity record
+   - Links to PDF download: `/files/resumes/will-austin-fde-resume.pdf` (hosted on maxev-admin-prod VPS)
+
+4. **Inbox filter by score / action** *(next)*
+   - Filter bar: show only apply_now · apply_with_note · 70+ score · unscored
+   - Collapses the firehose into the signal — this is the 10-minute morning review
+
+5. **Skip / Target actions** *(next)*
+   - Skip: marks stage = rejected, removes from inbox
+   - Target: moves to pipeline at "target" stage for future application
+
+### Phase 2 — Email Parser (BUILD AFTER PHASE 1)
+Converts recruiter cold outreach hitting IMAP inbox into opportunity records.
+- IMAP IDLE already notifies on new mail (email-idle.ts)
+- Need: email-parser worker that reads new EmailMessage records, calls Haiku to classify + extract, creates Opportunity if it's a job lead
+- High value — captures warm inbound recruiter leads automatically
+
+### Phase 3 — Indeed RSS (LOW EFFORT, HIGH VALUE)
+User needs to go to Indeed.com → Saved Searches → copy the RSS URL for each saved search.
+Searches to set up: "Forward Deployed Engineer remote", "AI Engineer Texas", "Applied AI engineer", "Claude Anthropic engineer"
+Add via Settings → Streams page.
+
+### Phase 4 — Bookmarklet (BUILD AFTER PHASE 2)
+JS snippet that sends current page URL to `POST /api/opportunities/scrape`.
+API already built (`/src/app/api/opportunities/scrape/route.ts`).
+Need: expose the bookmarklet JS snippet on the `/bookmarklet` page.
+
+### Phase 5 — Contracts + Earnings (LATER — not current focus)
+Enter current freelance work (Paloma Home Services, Roof Works of Texas) to activate Earnings page.
+Stripe payment links, Plaid bank monitoring — defer until Phase 1-4 done.
+
+---
+
+## DEPLOY RULES (read before every session)
+- **VPS is source of truth** — another Claude instance may have edited VPS directly. Always SCP from VPS before editing locally.
+- **Deploy:** SCP files to VPS → build on VPS → `pm2 restart 34` (app) or `pm2 restart 36` (workers)
+- **Git:** This project DOES use git. After VPS changes are pulled locally: `git add -A && git commit && git push origin master`
+- **No .env in git** — credentials stay on VPS only
+- **Build command:** `cd /var/www/max-deploy && npm run build` (then restart PM2 34)
+
+---
+
 ## What This Is
 
 MAX-DEPLOY is an AI-native career operations platform for engineers who treat their career like a business — multiple revenue streams, concurrent engagements, always-on opportunity pipeline, and Claude-powered intelligence running daily in the background.
