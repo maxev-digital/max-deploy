@@ -1,7 +1,9 @@
 /**
- * Email parser — classifies inbound emails as job leads / recruiter outreach.
- * Runs every 30 min. Reads new email_messages, calls Haiku to classify,
- * creates Opportunity + Contact records for job leads.
+ * Email parser — two modes:
+ * 1. Job alert emails (Indeed, LinkedIn, Google Alerts forwarded to inbox)
+ *    → extracts each individual job listing, creates one Opportunity per job
+ * 2. Recruiter outreach / personal emails
+ *    → classifies and creates one Opportunity for the lead
  */
 
 import Anthropic from '@anthropic-ai/sdk';
@@ -10,21 +12,72 @@ import { sendTelegramButtons, tgBold, tgItalic, tgCode } from '../lib/telegram';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-// Skip obvious non-lead senders
+// Senders that are never job leads
 const SKIP_PATTERNS = [
-  'noreply', 'no-reply', 'donotreply', 'notifications@', 'alerts@',
-  'support@', 'help@', 'billing@', 'invoice@', 'newsletter@',
-  'mailer@', 'updates@', 'info@linkedin', '@greenhouse.io', '@lever.co',
+  'noreply@', 'no-reply@', 'donotreply@',
+  'support@', 'help@', 'billing@', 'invoice@',
+  'mailer@', '@greenhouse.io', '@lever.co',
 ];
 
-function shouldSkip(fromEmail: string, subject: string): boolean {
+// Patterns that identify job ALERT emails (batch listings, not recruiter outreach)
+const JOB_ALERT_SENDERS = ['@indeed.com', '@linkedin.com', '@ziprecruiter.com', '@simplyhired.com'];
+const JOB_ALERT_SUBJECTS = ['job alert', 'new jobs for you', 'jobs you may like', 'recommended jobs', 'new job recommendations', 'jobs matching', 'new forward deployed', 'new ai engineer'];
+
+function isJobAlert(fromEmail: string, subject: string): boolean {
   const em = fromEmail.toLowerCase();
   const su = (subject ?? '').toLowerCase();
-  if (SKIP_PATTERNS.some(p => em.includes(p))) return true;
-  // Skip automated job alert emails (not recruiter outreach)
-  if (su.startsWith('job alert') || su.startsWith('jobs you may like') || su.startsWith('recommended jobs')) return true;
-  return false;
+  return JOB_ALERT_SENDERS.some(s => em.includes(s)) ||
+         JOB_ALERT_SUBJECTS.some(s => su.includes(s));
 }
+
+function shouldSkip(fromEmail: string): boolean {
+  const em = fromEmail.toLowerCase();
+  return SKIP_PATTERNS.some(p => em.includes(p));
+}
+
+// ─── Mode 1: Extract jobs from a job alert email ───────────────────────────
+
+interface ExtractedJob {
+  company: string;
+  role: string;
+  location: string | null;
+  salary: string | null;
+  applyUrl: string | null;
+}
+
+async function extractJobsFromAlert(subject: string, body: string): Promise<ExtractedJob[]> {
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      messages: [{
+        role: 'user',
+        content: `Extract all individual job listings from this job alert email.
+
+SUBJECT: ${subject}
+BODY:
+${body.slice(0, 3000)}
+
+Return ONLY valid JSON array. For each job include:
+{
+  "company": "company name",
+  "role": "exact job title",
+  "location": "city, state or Remote or null",
+  "salary": "salary range as string or null",
+  "applyUrl": "direct job URL if present in email or null"
+}
+
+Return [] if no jobs found. Include ALL jobs listed in the email.`,
+      }],
+    });
+
+    const raw = (msg.content[0] as { type: string; text: string }).text.trim();
+    const parsed = JSON.parse(raw.replace(/^```json\n?/, '').replace(/\n?```$/, ''));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch { return []; }
+}
+
+// ─── Mode 2: Classify a personal/recruiter email ──────────────────────────
 
 interface ParsedEmail {
   isJobLead: boolean;
@@ -44,33 +97,34 @@ async function classifyEmail(from: string, subject: string, body: string): Promi
       max_tokens: 400,
       messages: [{
         role: 'user',
-        content: `Classify this email as a job lead or not. The recipient is Will Austin, an AI/FDE engineer actively job searching.
+        content: `Classify this email for Will Austin, an AI/FDE engineer actively job searching.
 
 FROM: ${from}
 SUBJECT: ${subject}
-BODY PREVIEW: ${body.slice(0, 800)}
+BODY: ${body.slice(0, 800)}
 
 Return ONLY valid JSON:
 {
-  "isJobLead": <true if recruiter outreach, job offer, or interview request — false otherwise>,
+  "isJobLead": <true if recruiter outreach, job offer, or interview request>,
   "type": "<recruiter_outreach|job_alert|interview_request|not_relevant>",
   "company": "<company name or null>",
-  "role": "<job title mentioned or null>",
+  "role": "<job title or null>",
   "salary": "<salary if mentioned or null>",
-  "contactName": "<recruiter/sender name or null>",
-  "contactEmail": "<reply-to email or sender email>",
+  "contactName": "<recruiter name or null>",
+  "contactEmail": "<sender email>",
   "summary": "<one sentence summary>"
 }`,
       }],
     });
 
-    const raw  = (msg.content[0] as { type: string; text: string }).text.trim();
+    const raw = (msg.content[0] as { type: string; text: string }).text.trim();
     return JSON.parse(raw.replace(/^```json\n?/, '').replace(/\n?```$/, ''));
   } catch { return null; }
 }
 
+// ─── Main ──────────────────────────────────────────────────────────────────
+
 export async function parseInboundEmails() {
-  // Process emails from the last 35 min (slight overlap ensures nothing missed)
   const since = new Date(Date.now() - 35 * 60 * 1000);
 
   const messages = await prisma.emailMessage.findMany({
@@ -82,39 +136,86 @@ export async function parseInboundEmails() {
   console.log(`[email-parser] Processing ${messages.length} messages...`);
 
   let created = 0;
+
   for (const msg of messages) {
-    // Skip if already processed (dedup via sourceCompanySlug storing messageId)
+    if (shouldSkip(msg.fromEmail)) continue;
+
+    const bodyText = msg.bodyText ?? msg.snippet ?? '';
+    const subject  = msg.subject ?? '';
+
+    // ── Mode 1: Job alert email — extract individual listings ──
+    if (isJobAlert(msg.fromEmail, subject)) {
+      const jobs = await extractJobsFromAlert(subject, bodyText);
+      console.log(`[email-parser] Job alert from ${msg.fromEmail} — extracted ${jobs.length} jobs`);
+
+      for (const job of jobs) {
+        if (!job.role || !job.company) continue;
+
+        // Dedup: check by applyUrl or by company+role combo
+        const dupKey = job.applyUrl ?? `${job.company}|${job.role}`;
+        const exists = await prisma.opportunity.findFirst({
+          where: job.applyUrl
+            ? { applyUrl: job.applyUrl }
+            : { source: 'email_job_alert', sourceCompanySlug: dupKey },
+        });
+        if (exists) continue;
+
+        await prisma.opportunity.create({
+          data: {
+            company:           job.company,
+            role:              job.role,
+            stage:             'inbox',
+            source:            'email_job_alert',
+            sourceCompanySlug: job.applyUrl ?? dupKey,
+            applyUrl:          job.applyUrl ?? null,
+            notes:             [job.location, job.salary].filter(Boolean).join(' · ') || null,
+            lastActivity:      new Date(),
+          },
+        });
+        created++;
+      }
+
+      // Send one summary Telegram if jobs found
+      if (jobs.length > 0) {
+        const source = msg.fromEmail.includes('indeed') ? 'Indeed'
+                     : msg.fromEmail.includes('linkedin') ? 'LinkedIn'
+                     : msg.fromEmail.includes('ziprecruiter') ? 'ZipRecruiter'
+                     : 'Job Alert';
+        await sendTelegramButtons(
+          `📨 ${tgBold(`${source} Alert`)} — ${tgCode(String(jobs.length))} new jobs\n${tgItalic(subject)}\n\nAll added to inbox → max-ev-holdings.com/inbox`,
+          [[{ text: '📥 View Inbox', callback_data: 'open_pipeline' }]],
+          true // silent
+        );
+      }
+      continue;
+    }
+
+    // ── Mode 2: Personal/recruiter email — classify as lead ──
     const exists = await prisma.opportunity.findFirst({
       where: { source: 'recruiter_inbound', sourceCompanySlug: msg.id },
     });
     if (exists) continue;
 
-    if (shouldSkip(msg.fromEmail, msg.subject ?? '')) continue;
-
-    const bodyText = msg.bodyText ?? msg.snippet ?? '';
     const classified = await classifyEmail(
       `${msg.fromName ?? ''} <${msg.fromEmail}>`,
-      msg.subject ?? '(no subject)',
+      subject,
       bodyText,
     );
-
     if (!classified?.isJobLead) continue;
 
-    // Create opportunity record
     const opp = await prisma.opportunity.create({
       data: {
         company:           classified.company ?? msg.fromName ?? msg.fromEmail.split('@')[1] ?? 'Unknown',
-        role:              classified.role ?? msg.subject ?? 'Recruiter Outreach',
+        role:              classified.role ?? subject ?? 'Recruiter Outreach',
         stage:             'inbox',
         source:            'recruiter_inbound',
-        sourceCompanySlug: msg.id, // dedup key
+        sourceCompanySlug: msg.id,
         jdText:            bodyText.slice(0, 4000),
         notes:             classified.summary,
         lastActivity:      new Date(),
       },
     });
 
-    // Create contact record
     if (classified.contactName || classified.contactEmail) {
       await prisma.contact.create({
         data: {
@@ -128,10 +229,8 @@ export async function parseInboundEmails() {
 
     created++;
 
-    // Telegram alert with respond/skip buttons
-    const isInterview = classified.type === 'interview_request';
-    const icon        = isInterview ? '📅' : '📨';
-    const typeLabel   = isInterview ? 'Interview Request' : 'Recruiter Inbound';
+    const icon      = classified.type === 'interview_request' ? '📅' : '📨';
+    const typeLabel = classified.type === 'interview_request' ? 'Interview Request' : 'Recruiter Inbound';
 
     await sendTelegramButtons(
       [
@@ -147,9 +246,7 @@ export async function parseInboundEmails() {
         { text: '⏭ Skip',    callback_data: `skip:${opp.id}`    },
       ]]
     );
-
-    console.log(`[email-parser] Created opportunity: ${opp.company} — ${opp.role} (${classified.type})`);
   }
 
-  if (created > 0) console.log(`[email-parser] Created ${created} opportunities from inbound email.`);
+  if (created > 0) console.log(`[email-parser] Created ${created} opportunities.`);
 }
