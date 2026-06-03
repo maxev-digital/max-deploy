@@ -22,6 +22,7 @@ jobs:
       - name: Build
         run: |
           cd /var/www/max-deploy
+          npx prisma generate
           npm run build
 
       - name: Restart app
