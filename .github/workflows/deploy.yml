@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd /var/www/max-deploy
-          npm ci --omit=dev
+          npm ci --omit=dev --legacy-peer-deps
 
       - name: Build
         run: |
