@@ -6,22 +6,25 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Pull latest
+        run: |
+          cd /var/www/max-deploy
+          git pull origin master
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            set -e
-            cd /var/www/max-deploy
-            git pull origin master
-            npm ci --omit=dev
-            npm run build
-            pm2 restart max-deploy
-            echo "Deploy complete at $(date)"
+      - name: Install dependencies
+        run: |
+          cd /var/www/max-deploy
+          npm ci --omit=dev
+
+      - name: Build
+        run: |
+          cd /var/www/max-deploy
+          npm run build
+
+      - name: Restart app
+        run: pm2 restart max-deploy
+
+      - name: Done
+        run: echo "Deploy complete at $(date)"
