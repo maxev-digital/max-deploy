@@ -56,141 +56,112 @@ DISCOVER → SCORE → NOTIFY → AUTHORIZE → ACT → LOG → MONITOR
 
 ---
 
-## CURRENT BUILD STATUS — Last Updated 2026-05-30
+## CURRENT BUILD STATUS — Last Updated 2026-06-03
 
 ### Infrastructure: LIVE
-- **URL:** max-ev-holdings.com (Nginx → PM2 id 34, port 3200)
-- **Workers:** PM2 id 36 (scorer, RSS poller, ATS poller, briefing, follow-up scheduler, IMAP IDLE)
+- **URL:** max-ev-holdings.com (Nginx → PM2 id 32, port 3200)
+- **Workers:** PM2 id 33 (all background workers)
 - **DB:** PostgreSQL `max_deploy` on localhost:5436 (Docker container `maxev-admin-db`)
-- **Auth:** NextAuth credentials — `info@max-ev-holdings.com` / admin password hash in .env
-- **Email:** IMAP IDLE live on `info@max-ev-holdings.com` (Hostinger). SMTP sending configured port 465.
-- **AI:** Haiku for scoring (automated), Sonnet for cover letters/briefing/chat (on-demand)
-- **Notifications:** Telegram + Slack alerts wired for high-score opportunities
+- **Auth:** NextAuth credentials — `info@max-ev-holdings.com` / admin password in .env
+- **Email:** IMAP IDLE live on `info@max-ev-holdings.com` (Hostinger). SMTP sending configured port 465. Pre-filter added: `isJobRelevant()` gates saves to DB — vendor domains, marketing subjects, system noise all dropped before write.
+- **AI:** Haiku for scoring/classification (automated), Sonnet for cover letters/briefing/chat (on-demand)
+- **Notifications:** Telegram full HITL loop + Slack alerts fully wired
 
-### Data: LIVE
-- **690 opportunities** in DB — 217+ scored, all have JD text
-- **35 target companies** in ATS watchlist (Anthropic, OpenAI, Stripe, Figma, Notion, Cursor, LangChain, Sourcegraph, etc.)
-- **3 RSS feeds** (WWR ×2, Remotive)
-- **0 contacts, 0 contracts, 0 invoices** — not yet entered
+### Data: LIVE (as of 2026-06-03)
+- **2,164 opportunities** in DB — 2,144 scored (99%), 305 high-fit (70+), 72 cover letters built
+- **198 target companies** in watchlist (Greenhouse ATS = dominant source: 1,859 opps)
+- **12 RSS feeds** active (WWR ×2, Remotive ×2, RemoteOK, Indeed ×7 — Indeed feeds 429/404 blocked, rest working)
+- **7 contacts, 198 companies, 2 contracts, 0 invoices**
+- **Source breakdown:** greenhouse 1,859 · wwr 78 · smart-apply 55 · arbeitnow 47 · remotive 26 · recruiter_inbound 7 · email_job_alert 1 (email fix deployed 2026-06-03)
 
-### Pages Built (all 13 live at max-ev-holdings.com):
-dashboard · inbox · pipeline · companies · contacts · intelligence · outreach · email · contracts · invoices · earnings · monitor · settings
+### Pages Built (22 live at max-ev-holdings.com):
+**Admin:** dashboard · inbox · pipeline · companies · contacts · intelligence · outreach · email · contracts · invoices · earnings · monitor · settings · architecture · ce · learn · template
+**Root:** /bookmarklet · /cover-letter/[id] · /onboarding · /login · / (redirect)
 
 ### Workers Running (automatic, no action needed):
 | Worker | Schedule | Model |
 |---|---|---|
-| Opportunity scorer | Every 15 min, 25/batch | Haiku (cheap) |
+| Opportunity scorer | Every 15 min, 25/batch | Haiku |
+| Scorer lite (title-only) | Hourly + startup | None (regex) |
 | RSS poller | Every 6h | None |
 | ATS poller | Daily 3 AM | None |
-| Daily briefing | Daily 6 AM | Sonnet (1 call) |
-| Follow-up scheduler | Daily 7 AM | None |
-| IMAP IDLE monitor | Persistent | None |
+| Job board sweep | 7 AM + 5 PM Central | None |
+| Company sync | Daily 4 AM | None |
+| Daily briefing | 6 AM Central | Sonnet (1 call) |
+| Follow-up scheduler | 7 AM Central | None |
+| IMAP IDLE monitor | Persistent push | None |
+| Email parser | Every 30 min | Haiku |
+
+### Scorer Thresholds
+- **ALERT_THRESHOLD = 50** → Telegram notification with `[Apply] [Skip] [Later]` inline buttons
+- **CL_THRESHOLD = 80** → auto-generate cover letter (Sonnet), send PDF via Telegram
+- Score 50-79 → alert fires, cover letter on-demand only (user taps Apply)
+- Score < 50 → no alert, visible in inbox with filter
 
 ---
 
-## BUILD PLAN — Ordered by Priority
+## BUILD STATUS BY PHASE
 
-### Phase 1 — Telegram HITL Authorization Loop ← BUILD THIS FIRST
-**This is the core of the autonomous agent. Without it, Will must be at his PC for everything.**
+### Phase 1 — Telegram HITL Authorization Loop ✅ COMPLETE
+Full inline button loop live. `/api/telegram/webhook` handles:
+- `apply:{id}` → Sonnet drafts cover letter → generates Chromium PDF → sends PDF + resume as Telegram documents → `[Mark Applied] [Cancel]`
+- `skip:{id}` → stage = rejected
+- `later:{id}` → snooze 48h, sets followUpDue
+- `confirm_apply:{id}` → stage = applied, OutreachLog entry, Day 7 + Day 14 tasks created
+- `respond:{id}` → Sonnet drafts recruiter reply, sends to Telegram
+- `followup:{id}` → Sonnet drafts follow-up email
+- `skip_followup:{id}` → snooze 7d
+- `cancel:{id}` → restore apply buttons
 
-The Telegram bot already has TOKEN + CHAT_ID configured and the webhook route exists (`/api/telegram/webhook`). What's missing is inline keyboard buttons and the callback handler that triggers actions.
+Text commands: `/inbox` `/pipeline` `/tasks` `/followups` `/earnings` `/brief`
 
-**1a. Telegram inline buttons on high-score alerts**
-- When scorer finds fitScore 80+ + recommendedAction = apply_now:
-  - Current: sends a plain text alert
-  - Needed: sends message WITH inline keyboard `[✅ Apply] [⏭ Skip] [🕐 Later]`
-- Telegram bot API: `inline_keyboard` in `reply_markup`
-- Callback data format: `apply:{opportunityId}` / `skip:{opportunityId}` / `later:{opportunityId}`
-
-**1b. Webhook callback handler**
-- `/api/telegram/webhook` receives `callback_query` events (not just messages)
-- `apply:{id}` → draft cover letter (Claude Sonnet) → send follow-up Telegram with cover letter link + `[✅ Confirm Apply] [✏️ Edit First]`
-- `skip:{id}` → mark stage = rejected, send confirmation
-- `later:{id}` → snooze 48h, reschedule alert
-
-**1c. Apply confirmation flow**
-- After cover letter drafted: Telegram sends `"Cover letter ready for [Company]. Review: max-ev-holdings.com/cover-letter/[id] — Apply?" [✅ Mark Applied] [✏️ Edit]`
-- `[✅ Mark Applied]` → sets stage = applied, appliedAt = now, creates OutreachLog entry, schedules Day 7 follow-up task
-
-**What Will does:** Gets a Telegram notification on his phone. Reads the 3-line summary. Taps [Apply]. Gets a second message with the cover letter link. Reviews it in browser. Taps [Mark Applied]. Done. PC optional throughout.
+Scorer fires Telegram alert at score ≥ 50 with `[Apply] [Skip] [Later]` buttons.
+Cover letter auto-generated + sent at score ≥ 80.
 
 ---
 
-### Phase 2 — Inbox UI: Cover Letter + Apply + Filter
-**For when Will IS at the dashboard — makes it fast.**
-
-**2a. Cover letter button on inbox/pipeline cards**
-- "Cover Letter" button → calls `POST /api/opportunities/[id]/cover-letter` → opens `/cover-letter/[id]` in new tab
-- API + page + lib already built (`src/lib/cover-letter.ts`, API route, preview page)
-- Just needs the button wired into the inbox card UI
-
-**2b. Apply / Skip / Target quick actions on cards**
-- [Apply] → modal: resume variant (FDE default / Slingshot) → sets stage = applied, logs OutreachLog
-- [Skip] → stage = rejected, removed from inbox
-- [Target] → stage = target, stays in pipeline for later
-
-**2c. Inbox filter bar**
-- Filter buttons: All · Apply Now · 70+ Score · Unscored · FDE Only
-- Collapses the 690-opportunity firehose into the 10-20 items that matter today
+### Phase 2 — Inbox UI ✅ COMPLETE
+Cover letter button, Apply/Skip/Target quick actions, filter bar all live on inbox and pipeline pages.
 
 ---
 
-### Phase 3 — Email Parser: Recruiter Inbound → Opportunities
-**Closes the inbound loop. Warm leads hitting the inbox become tracked pipeline records.**
+### Phase 3 — Email Parser ✅ COMPLETE (fixed 2026-06-03)
+Three bugs fixed:
+1. Subdomain matching: `donotreply@match.indeed.com` now correctly identified as Indeed domain via `emailMatchesDomain()`
+2. ATS platforms (greenhouse.io, lever.co) removed from hard-skip — now only skip automated confirmations, keep interview signals
+3. `shouldSkip()` signature updated to pass subject for context-aware filtering
 
-- IMAP IDLE already notifies on new mail and saves to `email_messages` table
-- Need: worker that reads unprocessed `email_messages`, calls Haiku to classify:
-  - Is this a job lead / recruiter outreach? (yes/no)
-  - If yes: extract company, role, salary, contact name, contact email, source
-  - Creates `Opportunity` record (stage = inbox, source = recruiter_inbound)
-  - Creates `Contact` record linked to opportunity
-  - Triggers Telegram alert: "📨 Recruiter inbound — [Name] at [Company] re: [Role] [View] [Respond] [Skip]"
-- Runs: on each new email_message (triggered by IMAP IDLE notification)
+IMAP pre-filter added (`isJobRelevant()` in email-idle.ts): vendor domains, marketing subjects, system noise dropped before DB write. Telegram alerts only fire on job-relevant emails.
 
 ---
 
-### Phase 4 — Indeed Personal RSS + Bookmarklet
-**Low effort, high value. Completes the discovery layer.**
-
-**4a. Indeed personal RSS** (Will does this manually — 10 min)
-- Go to Indeed.com → Saved Searches → create 4-5 searches → copy RSS URL for each
-- Searches: "Forward Deployed Engineer remote", "AI Engineer Texas remote", "Applied AI engineer", "Claude Anthropic engineer", "FDE $150K"
-- Add via Settings → Streams page (already built)
-
-**4b. Bookmarklet**
-- `/bookmarklet` page already exists — needs to display the JS drag-to-bookmarks snippet
-- JS snippet: `javascript:(function(){fetch('https://max-ev-holdings.com/api/opportunities/scrape',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:location.href})}).then(r=>r.json()).then(d=>alert('Added: '+d.role+' at '+d.company+' — Score: '+d.fitScore))})()`
-- Scrape API already built and working
+### Phase 4 — Discovery Layer ✅ COMPLETE
+- `/bookmarklet` page live with drag-to-bookmark JS snippet
+- 12 RSS feeds configured (WWR ×2, Remotive ×2, RemoteOK, Indeed ×7)
+- **Note:** Indeed RSS feeds all 429/404 blocked by Indeed. Email forwarding is the only working Indeed channel. Gmail filter configured to forward job alert domains to info@max-ev-holdings.com.
+- Job board sweep worker live: FwdDeploy · RemoteOK · Remotive · Arbeitnow · Wellfound — runs 7 AM + 5 PM Central
+- ATS poller: 198 companies, Greenhouse dominant (1,859 opps)
 
 ---
 
-### Phase 5 — Follow-up Automation via Telegram
-**Closes the loop on applications already submitted.**
-
-- Follow-up scheduler already runs daily 7 AM and creates tasks
-- Need: when task is created for Day 7/14 follow-up, send Telegram with draft follow-up email
-  - "📋 Follow-up due: [Company] — [Role] (applied X days ago) [View Draft] [Send] [Skip]"
-- Draft email API already built (`/api/ai/draft-email`)
-- [Send] → SMTP send via `/api/outreach/[id]/send`
+### Phase 5 — Follow-up Automation ✅ COMPLETE
+Follow-up scheduler runs 7 AM Central. Sends Telegram `[Draft Follow-up] [Skip]` buttons for all due follow-ups. Draft fires Sonnet on tap. Follow-up tasks auto-created at Day 7 + Day 14 on confirm_apply.
 
 ---
 
-### Phase 6 — Freelance / Contract Parallel Stream
-**Not current focus. Build after Phases 1-3 proven.**
-
-- Add Upwork RSS feed (saved search URL from Upwork)
-- Add Contra API feed
-- Enter current active contracts (Paloma, Roof Works) → activates Earnings page
-- Contracts/Invoices/Earnings system already built — just needs data entry
+### Phase 6 — Freelance / Contract Parallel Stream 🔶 PARTIAL
+- Contracts/Invoices/Earnings pages built and live
+- 2 contracts in DB (Paloma, Roof Works) — MRR wired
+- 0 invoices entered yet
+- Upwork RSS + Contra not yet configured
 
 ---
 
-### Phase 7 — Interview + Offer Management
-**Not current focus. Build after pipeline is generating interview activity.**
-
-- IMAP parser detects interview-related keywords → Telegram alert
-- Offer comparison engine (already in CLAUDE.md spec)
-- Calendar integration for scheduling
+### Phase 7 — Interview + Offer Management 🔶 PARTIAL
+- ATS email responses detected via INTERVIEW_SUBJECTS pattern matching
+- Telegram alert fires on interview-signal emails
+- Offer comparison engine spec in place, not yet built
+- Calendar integration not started
 
 ---
 

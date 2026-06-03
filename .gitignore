@@ -6,3 +6,6 @@ node_modules/
 *.log
 .DS_Store
 prisma/migrations/
+configs/
+cover-letters/
+cover-letter-preview.html

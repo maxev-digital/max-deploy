@@ -2,6 +2,9 @@
  * IMAP IDLE monitor — persistent connection, zero polling.
  * The server pushes a notification the moment new mail arrives.
  * Syncs to DB immediately on notification, then re-enters IDLE.
+ *
+ * Uses source:true in fetch to avoid nested download() calls that
+ * conflict with an open fetch stream and hang indefinitely.
  */
 
 import { ImapFlow } from 'imapflow';
@@ -17,22 +20,44 @@ async function syncNewMessages(client: ImapFlow, accountId: string) {
   const account = await prisma.emailAccount.findUnique({ where: { id: accountId } });
   if (!account) return;
 
-  const since = account.lastSyncAt ?? new Date(Date.now() - 30 * 86400000);
+  // Use UID-based tracking instead of date-based SINCE.
+  // IMAP SINCE uses INTERNALDATE (server delivery date), which can differ from the
+  // email's Date header. Using the highest known UID avoids timezone/date-mismatch bugs.
+  const maxUidRow = await prisma.emailMessage.aggregate({
+    where: { accountId, uid: { gt: 0 } },
+    _max: { uid: true },
+  });
+  const knownMaxUid = maxUidRow._max.uid ?? 0;
 
   try {
     const lock = await client.getMailboxLock('INBOX');
     let synced = 0;
     try {
-      const uids = await client.search({ since }, { uid: true });
+      // Search for UIDs strictly greater than highest we've seen, or all if inbox is fresh
+      const searchCriteria = knownMaxUid > 0
+        ? { uid: `${knownMaxUid + 1}:*` }
+        : { all: true };
+      const uids = await client.search(searchCriteria as any, { uid: true });
+      console.log(`[idle] UID search (knownMax=${knownMaxUid}) => UIDs: ${JSON.stringify(uids)}`);
       if (!uids || !Array.isArray(uids) || uids.length === 0) return;
 
-      const uidRange = (uids as number[]).slice(-30).join(',');
-      for await (const msg of client.fetch(uidRange, { uid: true, envelope: true }, { uid: true })) {
+      // Filter to only truly new UIDs (server may return * which includes last msg)
+      const newUids = (uids as number[]).filter(u => u > knownMaxUid);
+      if (newUids.length === 0) return;
+      const uidRange = newUids.slice(-30).join(',');
+
+      // Use source:true to get the full message body in one FETCH command.
+      // Calling download() inside a for-await fetch loop issues a nested IMAP
+      // command while the stream is still open, which hangs the connection.
+      for await (const msg of client.fetch(uidRange, { uid: true, source: true }, { uid: true })) {
+        const hasSource = !!((msg as any).source);
+        console.log(`[idle] UID ${msg.uid} hasSource=${hasSource}`);
         try {
-          const raw    = await client.download(String(msg.uid), undefined, { uid: true });
-          const parsed = await simpleParser(raw.content);
+          const parsed = await simpleParser((msg as any).source);
           const mid    = parsed.messageId ?? `uid-${msg.uid}-${accountId}`;
-          if (await prisma.emailMessage.findUnique({ where: { messageId: mid } })) continue;
+          const exists = await prisma.emailMessage.findUnique({ where: { messageId: mid } });
+          console.log(`[idle] UID ${msg.uid} mid=${mid} alreadyInDB=${!!exists}`);
+          if (exists) continue;
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const from = parsed.from as any;
@@ -65,15 +90,16 @@ async function syncNewMessages(client: ImapFlow, accountId: string) {
             },
           });
           synced++;
-        } catch { /* skip malformed */ }
+        } catch (e) {
+          console.error(`[idle] UID ${msg.uid} parse/save error:`, (e as Error).message);
+        }
       }
     } finally { lock.release(); }
 
     if (synced > 0) {
-      await prisma.emailAccount.update({ where: { id: accountId }, data: { lastSyncAt: new Date() } });
+      await prisma.emailAccount.update({ where: { id: accountId }, data: { lastSyncAt: new Date(), lastUid: knownMaxUid + synced } });
       console.log(`[idle] Synced ${synced} new message(s) for ${account.email}`);
 
-      // Get the newest message for the notification
       const newest = await prisma.emailMessage.findFirst({
         where: { accountId, folder: 'INBOX', isRead: false },
         orderBy: { receivedAt: 'desc' },
@@ -85,7 +111,7 @@ async function syncNewMessages(client: ImapFlow, accountId: string) {
 
         await sendTelegram(
           `📧 ${tgBold('New Email')} — ${from}\n<i>${subject}</i>\n${snippet.slice(0, 100)}${snippet.length > 100 ? '…' : ''}`,
-          true // silent notification
+          true
         );
         await slackAlert(
           `📧 New Email — ${from}`,
@@ -109,29 +135,35 @@ async function idleLoop(account: { id: string; email: string; imapHost: string; 
       logger: false,
     });
 
+    client.on('error', (err: Error) => {
+      console.error(`[idle] Socket error for ${account.email}:`, err.message);
+    });
+
     try {
       await client.connect();
-      await client.getMailboxLock('INBOX');
 
-      // Do an initial sync in case anything arrived while we were disconnected
+      // Initial sync — syncNewMessages manages its own lock
       await syncNewMessages(client, account.id);
 
       console.log(`[idle] Entering IDLE for ${account.email}`);
 
-      // IDLE loop — re-enters every IDLE_TIMEOUT ms to prevent server drop
+      // IDLE loop — acquire and release lock per iteration so syncNewMessages can also lock
       while (true) {
-        // client.idle() resolves when the server sends EXISTS (new mail) or a timeout
-        const idleResult = await Promise.race([
-          client.idle(),
-          new Promise<'timeout'>(res => setTimeout(() => res('timeout'), IDLE_TIMEOUT)),
-        ]);
+        const lock = await client.getMailboxLock('INBOX');
+        let idleResult: unknown;
+        try {
+          idleResult = await Promise.race([
+            client.idle(),
+            new Promise<'timeout'>(res => setTimeout(() => res('timeout'), IDLE_TIMEOUT)),
+          ]);
+        } finally {
+          lock.release();
+        }
 
         if (idleResult !== 'timeout') {
-          // Server pushed a notification — sync immediately
           console.log(`[idle] New mail notification for ${account.email}`);
           await syncNewMessages(client, account.id);
         }
-        // Whether timeout or notification, loop and re-enter IDLE
       }
     } catch (e) {
       console.error(`[idle] Connection error for ${account.email}:`, (e as Error).message);
@@ -139,7 +171,6 @@ async function idleLoop(account: { id: string; email: string; imapHost: string; 
       try { await client.logout(); } catch {}
     }
 
-    // Wait before reconnecting
     console.log(`[idle] Reconnecting ${account.email} in ${RECONNECT_DELAY / 1000}s...`);
     await new Promise(res => setTimeout(res, RECONNECT_DELAY));
   }
@@ -151,7 +182,6 @@ export async function startEmailIdleMonitors() {
     console.log('[idle] No active email accounts — skipping IDLE monitors');
     return;
   }
-  // Start a persistent IDLE loop for each account (non-blocking)
   for (const account of accounts) {
     idleLoop(account).catch(e => console.error('[idle] Fatal error:', e));
   }

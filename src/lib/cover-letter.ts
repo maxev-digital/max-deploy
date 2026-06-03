@@ -17,7 +17,7 @@ export interface CoverLetterConfig {
 
 const CANDIDATE = {
   name:     'Will Austin',
-  email:    'gte.apw@gmail.com',
+  email:    'info@max-ev-holdings.com',
   phone:    '214-232-0222',
   location: 'Little Elm, TX',
   remote:   'Remote USA',
@@ -103,23 +103,6 @@ ${CSS}
 ${bullets}
   </ul>
 </div>
-${cfg.showFdeFramework ? `<div class="callout" style="border-left-color:var(--blue3);margin-top:8px;background:#F0F7FF;">
-  <div class="callout-label" style="color:var(--blue2);">My FDE Operating Framework &mdash; 7 Steps, Always in This Order</div>
-  <ul>
-    <li><strong>1. Discovery &amp; Business Alignment &mdash;</strong> 15&ndash;30 min structured session: separate what stakeholders think they need from what they actually need. Output: one clear problem statement + measurable success criteria.</li>
-    <li><strong>2. Rapid Scoping &mdash;</strong> Turn discovery into a tight scope. Define &ldquo;Done,&rdquo; identify the smallest valuable slice (v0.5&ndash;v1), agree on acceptance criteria. I ship a rough working v1 this week over a perfect version next month.</li>
-    <li><strong>3. Architecture &amp; Context &mdash;</strong> High-level system design + CLAUDE.md-style context file: data flow, integrations, tech decisions, business rules, multi-model routing strategy. This prevents AI slop and gives the entire build strong foundations.</li>
-    <li><strong>4. Agentic Build &mdash;</strong> Claude Code as primary environment, MCP protocol, structured output (Zod), HITL checkpoints. Small, shippable increments. I own frontend, backend, integrations, deployment, and observability end-to-end.</li>
-    <li><strong>5&ndash;7. Validate &rarr; Deploy &rarr; Iterate &mdash;</strong> Working software in front of users same-day or next-day. Deploy early to production (real data &gt; staging). Daily/weekly iteration driven by actual usage and business outcomes.</li>
-  </ul>
-</div>` : `<div class="callout" style="border-left-color:var(--navy3);margin-top:8px;">
-  <div class="callout-label" style="color:var(--navy3);">As requested</div>
-  <ul>
-    <li><strong>Live showcase platform &mdash;</strong> ${CANDIDATE.demo}</li>
-    <li><strong>GitHub &mdash;</strong> ${CANDIDATE.github}</li>
-    <li><strong>Production highlights &mdash;</strong> MAX EV Digital (enterprise AI platform, 14 live endpoints) &middot; Client deliveries in construction services, home services, and advertising technology</li>
-  </ul>
-</div>`}
 <div class="closing">
   <div class="closing-line">${cfg.closingLine}</div>
   <div class="sig-name">${CANDIDATE.name}</div>

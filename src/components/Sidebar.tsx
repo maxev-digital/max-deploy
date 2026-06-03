@@ -8,7 +8,8 @@ import {
   LayoutDashboard, Inbox, GitBranch, Building2, Users,
   Sparkles, Activity, Mail, FileText, Receipt,
   DollarSign, Settings, LogOut, Sun, Moon,
-  PanelLeftClose, PanelLeftOpen, MailOpen,
+  PanelLeftClose, PanelLeftOpen, MailOpen, BookOpen,
+  Cpu, GraduationCap, Layout, Target,
 } from 'lucide-react';
 
 type Counts = {
@@ -49,8 +50,9 @@ const nav = [
   {
     group: 'Intelligence',
     items: [
-      { label: 'AI Hub',   href: '/intelligence', icon: Sparkles },
-      { label: 'Outreach', href: '/outreach',     icon: Mail },
+      { label: 'AI Hub',      href: '/intelligence', icon: Sparkles },
+      { label: 'Prep Studio', href: '/prep',        icon: Target },
+      { label: 'Outreach',    href: '/outreach',    icon: Mail },
       { label: 'Email',    href: '/email',         icon: MailOpen },
     ],
   },
@@ -65,8 +67,12 @@ const nav = [
   {
     group: 'System',
     items: [
-      { label: 'Tasks',    href: '/tasks',    icon: Activity },
-      { label: 'Settings', href: '/settings', icon: Settings },
+      { label: 'Architecture', href: '/architecture', icon: Cpu },
+      { label: 'Learn',        href: '/learn',        icon: BookOpen },
+      { label: 'CE / Skills',  href: '/ce',           icon: GraduationCap },
+      { label: 'Template',     href: '/template',     icon: Layout },
+      { label: 'Tasks',        href: '/tasks',        icon: Activity },
+      { label: 'Settings',     href: '/settings',     icon: Settings },
     ],
   },
 ];

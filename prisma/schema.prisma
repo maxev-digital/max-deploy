@@ -30,6 +30,7 @@ model Opportunity {
   notes             String?
   lastActivity      DateTime?
   followUpDue       DateTime?
+  workType          String?   // full_time | part_time | contract | freelance
   appliedAt         DateTime?
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
@@ -88,14 +89,26 @@ model OutreachLog {
 }
 
 model RssFeed {
-  id           String   @id @default(cuid())
-  name         String
-  url          String   @unique
-  source       String
-  active       Boolean  @default(true)
-  lastPolled   DateTime?
-  lastItemDate DateTime?
-  createdAt    DateTime @default(now())
+  id                  String   @id @default(cuid())
+  name                String
+  url                 String   @unique
+  source              String
+  active              Boolean  @default(true)
+  lastPolled          DateTime?
+  lastItemDate        DateTime?
+  lastError           String?
+  consecutiveFailures Int      @default(0)
+  createdAt           DateTime @default(now())
+}
+
+model FeedTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  source      String
+  category    String
+  description String?
+  createdAt   DateTime @default(now())
 }
 
 model Offer {
@@ -138,6 +151,7 @@ model Contract {
   createdAt         DateTime   @default(now())
   milestones        Milestone[]
   invoices          Invoice[]
+  timeLogs          TimeLog[]
 }
 
 model Milestone {
@@ -246,10 +260,12 @@ model EmailMessage {
 
 model TimeLog {
   id          String   @id @default(cuid())
+  contract    Contract @relation(fields: [contractId], references: [id])
   contractId  String
   date        DateTime
   hours       Float
   description String?
+  invoiced    Boolean  @default(false)
   createdAt   DateTime @default(now())
 }
 
@@ -258,4 +274,45 @@ model BriefingCache {
   briefing    String
   vitals      Json
   generatedAt DateTime @default(now())
+}
+
+model PromptTemplate {
+  id        String   @id @default("default")
+  content   Json
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@map("prompt_templates")
+}
+
+model UserProfile {
+  id             String   @id @default(cuid())
+  userId         String   @default("1") @unique
+  name           String?
+  email          String?
+  targetTitle    String?
+  targetTitles   String[]
+  salaryFloor    Int?
+  geoPref        String?
+  workType       String?
+  skills         String[]
+  industries     String[]
+  dealBreakers   String?
+  profileSummary String?
+  resumePrimary  String?
+  resumeAlt      String?
+  imapHost       String?
+  imapPort       Int?
+  imapUser       String?
+  imapPassEnc    String?
+  smtpHost       String?
+  smtpPort       Int?
+  smtpUser       String?
+  smtpPassEnc    String?
+  fromName       String?
+  onboardingDone Boolean  @default(false)
+  onboardingStep Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("user_profiles")
 }
