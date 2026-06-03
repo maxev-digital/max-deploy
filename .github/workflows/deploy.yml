@@ -11,7 +11,8 @@ jobs:
       - name: Pull latest
         run: |
           cd /var/www/max-deploy
-          git pull origin master
+          git fetch origin master
+          git reset --hard origin/master
 
       - name: Install dependencies
         run: |
