@@ -37,6 +37,7 @@ model Opportunity {
   contacts          Contact[]
   outreachLogs      OutreachLog[]
   offer             Offer?
+  calendarEvents    CalendarEvent[]
 }
 
 model TargetCompany {
@@ -99,6 +100,12 @@ model RssFeed {
   lastError           String?
   consecutiveFailures Int      @default(0)
   createdAt           DateTime @default(now())
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
 }
 
 model FeedTemplate {
@@ -282,6 +289,25 @@ model PromptTemplate {
   updatedAt DateTime @updatedAt @default(now())
 
   @@map("prompt_templates")
+}
+
+model CalendarEvent {
+  id            String      @id @default(cuid())
+  title         String
+  startAt       DateTime
+  endAt         DateTime?
+  allDay        Boolean     @default(false)
+  location      String?
+  description   String?
+  type           String      @default("other") // interview | screening | deadline | follow_up | other
+  source         String?
+  emailMessageId String?
+  opportunity    Opportunity? @relation(fields: [opportunityId], references: [id])
+  opportunityId  String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@map("calendar_events")
 }
 
 model UserProfile {
