@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { RefreshCw, Loader2, Plus, ExternalLink, FileText, CheckCircle, BookmarkPlus, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { RefreshCw, Loader2, Plus, ExternalLink, FileText, CheckCircle, BookmarkPlus, X, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 
 type Opportunity = {
   id: string; company: string; role: string; stage: string;
@@ -17,18 +17,27 @@ type Opportunity = {
   createdAt: string;
 };
 
-type Filter = 'all' | 'apply_now' | '70plus' | 'fde' | 'solutions' | 'csm' | 'marketing' | 'unscored';
+type Filter = 'all' | 'apply_now' | '70plus' | 'applied_ai' | 'fde' | 'ai_engineer' | 'director' | 'fullstack' | 'solutions' | 'csm' | 'contract' | 'marketing' | 'unscored';
 
-const FILTERS: { key: Filter; label: string }[] = [
-  { key: 'all',       label: 'All'       },
-  { key: 'apply_now', label: 'Apply Now' },
-  { key: '70plus',    label: '70+ Score' },
-  { key: 'fde',       label: 'FDE'       },
-  { key: 'solutions', label: 'Solutions' },
-  { key: 'csm',       label: 'CSM'       },
-  { key: 'marketing', label: 'Marketing' },
-  { key: 'unscored',  label: 'Unscored'  },
+const FILTERS: { key: Filter; label: string; color?: string }[] = [
+  { key: 'all',         label: 'All'                            },
+  { key: 'apply_now',   label: 'Apply Now',   color: '#14B8AD' },
+  { key: '70plus',      label: '70+ Score',   color: '#2563EB' },
+  { key: 'applied_ai',  label: 'Applied AI',  color: '#14B8AD' },
+  { key: 'fde',         label: 'FDE'                           },
+  { key: 'ai_engineer', label: 'AI Engineer'                   },
+  { key: 'director',    label: 'Director'                      },
+  { key: 'fullstack',   label: 'Full Stack'                    },
+  { key: 'solutions',   label: 'Solutions'                     },
+  { key: 'csm',         label: 'CSM'                           },
+  { key: 'contract',    label: 'Contract'                      },
+  { key: 'marketing',   label: 'Marketing'                     },
+  { key: 'unscored',    label: 'Unscored'                      },
 ];
+
+const DEMO_COLOR: Record<string, string> = {
+  build: '#14B8AD', marginal: '#D08E14', skip: '#6B7280',
+};
 
 const ACTION_COLOR: Record<string, string> = {
   apply_now: '#14B8AD', apply_with_note: '#2563EB',
@@ -37,15 +46,22 @@ const ACTION_COLOR: Record<string, string> = {
 const FIT_COLOR = (s: number) => s >= 80 ? '#14B8AD' : s >= 65 ? '#2563EB' : s >= 50 ? '#D08E14' : '#E05252';
 
 function filterOpps(opps: Opportunity[], f: Filter): Opportunity[] {
+  const cl = (o: Opportunity) => (o.classification ?? '').toLowerCase();
   switch (f) {
-    case 'apply_now':  return opps.filter(o => o.recommendedAction === 'apply_now');
-    case '70plus':     return opps.filter(o => (o.fitScore ?? 0) >= 70);
-    case 'fde':        return opps.filter(o => (o.classification ?? '').toLowerCase().includes('fde'));
-    case 'solutions':  return opps.filter(o => (o.classification ?? '').toLowerCase().includes('solutions'));
-    case 'csm':        return opps.filter(o => (o.classification ?? '').toLowerCase().includes('csm'));
-    case 'marketing':  return opps.filter(o => (o.classification ?? '').toLowerCase().includes('marketing'));
-    case 'unscored':   return opps.filter(o => o.fitScore === null);
-    default:           return opps;
+    case 'apply_now':   return opps.filter(o => o.recommendedAction === 'apply_now');
+    case '70plus':      return opps.filter(o => (o.fitScore ?? 0) >= 70);
+    // Applied AI = FDE + AI_Engineer + Contract — mirrors "Applied AI / FDE" sector on public hub
+    case 'applied_ai':  return opps.filter(o => ['fde','ai_engineer','contract'].some(k => cl(o).includes(k)));
+    case 'fde':         return opps.filter(o => cl(o) === 'fde' || cl(o).includes('fde'));
+    case 'ai_engineer': return opps.filter(o => cl(o) === 'ai_engineer' || cl(o).includes('ai_engineer'));
+    case 'director':    return opps.filter(o => cl(o) === 'director' || cl(o).includes('director'));
+    case 'fullstack':   return opps.filter(o => cl(o) === 'fullstack' || cl(o).includes('fullstack'));
+    case 'solutions':   return opps.filter(o => cl(o).includes('solutions'));
+    case 'csm':         return opps.filter(o => cl(o).includes('csm'));
+    case 'contract':    return opps.filter(o => cl(o) === 'contract' || cl(o).includes('contract'));
+    case 'marketing':   return opps.filter(o => cl(o).includes('marketing'));
+    case 'unscored':    return opps.filter(o => o.fitScore === null);
+    default:            return opps;
   }
 }
 
@@ -59,6 +75,9 @@ export default function InboxPage() {
   const [pasteLoading, setPasteLoading] = useState(false);
   const [pasteError, setPasteError]     = useState('');
   const [clLoading, setClLoading]       = useState<string | null>(null);
+  const [clError, setClError]           = useState<string | null>(null);
+  const [demoLoading, setDemoLoading]   = useState<string | null>(null);
+  const [sweepLoading, setSweepLoading] = useState(false);
 
   const [applyModal, setApplyModal]     = useState<Opportunity | null>(null);
   const [resumeVariant, setResumeVariant] = useState<'fde' | 'slingshot'>('fde');
@@ -96,10 +115,16 @@ export default function InboxPage() {
   async function draftCoverLetter(opp: Opportunity) {
     const hasCL = !!opp.coverLetterUrl || !!(opp.analysisJson as Record<string,unknown>)?.coverLetterHtml;
     if (hasCL) { window.open(`/cover-letter/${opp.id}`, '_blank'); return; }
-    setClLoading(opp.id);
+    setClLoading(opp.id); setClError(null);
     const res = await fetch(`/api/opportunities/${opp.id}/cover-letter`, { method: 'POST' });
     setClLoading(null);
-    if (res.ok) window.open(`/cover-letter/${opp.id}`, '_blank');
+    if (res.ok) {
+      await load();
+      window.open(`/cover-letter/${opp.id}`, '_blank');
+    } else {
+      const body = await res.json().catch(() => ({}));
+      setClError(body.error ?? 'Cover letter generation failed — try again.');
+    }
   }
 
   function openApplyModal(opp: Opportunity) {
@@ -118,6 +143,24 @@ export default function InboxPage() {
     });
     setOpps(prev => prev.filter(o => o.id !== applyModal.id));
     setApplyModal(null); setApplying(false);
+  }
+
+  async function analyzeDemoOpp(id: string) {
+    setDemoLoading(id);
+    await fetch('/api/ai/demo-opportunity', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ oppId: id }),
+    });
+    await load(); setDemoLoading(null);
+  }
+
+  async function sweepDemo() {
+    setSweepLoading(true);
+    await fetch('/api/ai/demo-opportunity', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ batch: true }),
+    });
+    await load(); setSweepLoading(false);
   }
 
   async function handlePaste(e: React.FormEvent) {
@@ -145,9 +188,15 @@ export default function InboxPage() {
             {visible.length} of {opps.length} — sorted by fit score
           </p>
         </div>
-        <button className="btn btn-ghost btn-sm" onClick={load} disabled={loading}>
-          <RefreshCw size={13} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} /> Refresh
-        </button>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button className="btn btn-ghost btn-sm" onClick={sweepDemo} disabled={sweepLoading} style={{ color: '#C084FC' }}>
+            {sweepLoading ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Zap size={13} />}
+            {sweepLoading ? 'Sweeping...' : 'Sweep Demo'}
+          </button>
+          <button className="btn btn-ghost btn-sm" onClick={load} disabled={loading}>
+            <RefreshCw size={13} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} /> Refresh
+          </button>
+        </div>
       </div>
 
       {/* Filter bar */}
@@ -155,12 +204,15 @@ export default function InboxPage() {
         {FILTERS.map(f => {
           const count  = f.key === 'all' ? opps.length : filterOpps(opps, f.key).length;
           const active = filter === f.key;
+          const accent = f.color ?? '#2563EB';
           return (
             <button key={f.key} onClick={() => setFilter(f.key)} style={{
               padding: '5px 12px', borderRadius: 20, fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer',
-              border: active ? '1px solid #2563EB' : '1px solid rgba(255,255,255,0.1)',
-              background: active ? 'rgba(37,99,235,0.2)' : 'rgba(255,255,255,0.04)',
-              color: active ? '#93C5FD' : dim, transition: 'all 0.15s',
+              border: active ? `1px solid ${accent}` : '1px solid rgba(255,255,255,0.1)',
+              background: active ? `${accent}22` : 'rgba(255,255,255,0.04)',
+              color: active ? (f.color ? '#fff' : '#93C5FD') : count > 0 ? dim : 'rgba(255,255,255,0.18)',
+              transition: 'all 0.15s',
+              opacity: count === 0 && f.key !== 'all' ? 0.45 : 1,
             }}>
               {f.label} <span style={{ opacity: 0.65 }}>({count})</span>
             </button>
@@ -220,6 +272,20 @@ export default function InboxPage() {
                     )}
                   </div>
 
+                  {/* Demo verdict pill */}
+                  {(() => {
+                    const demo = (opp.analysisJson as Record<string,unknown>)?.demoAnalysis as Record<string,unknown> | undefined;
+                    if (!demo?.verdict) return <div style={{ flexShrink: 0, minWidth: 38 }} />;
+                    const v = demo.verdict as string;
+                    const c = DEMO_COLOR[v] ?? '#6B7280';
+                    return (
+                      <div style={{ flexShrink: 0, textAlign: 'center', minWidth: 38, cursor: 'pointer' }} onClick={() => setExpanded(isExp ? null : opp.id)} title={demo.name as string ?? ''}>
+                        <div style={{ fontSize: '0.68rem', fontWeight: 900, color: c, lineHeight: 1, textTransform: 'uppercase', letterSpacing: '0.03em' }}>{v}</div>
+                        <div style={{ fontSize: '0.52rem', color: dim }}>demo</div>
+                      </div>
+                    );
+                  })()}
+
                   {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 2, flexWrap: 'wrap' }}>
@@ -255,6 +321,13 @@ export default function InboxPage() {
                     </button>
                     <button
                       className="btn btn-sm"
+                      style={{ background: 'rgba(147,51,234,0.08)', color: '#C084FC', border: '1px solid rgba(147,51,234,0.15)', gap: 3, padding: '4px 8px' }}
+                      onClick={() => analyzeDemoOpp(opp.id)} disabled={demoLoading === opp.id} title="Analyze Demo Opportunity"
+                    >
+                      {demoLoading === opp.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : <Zap size={11} />} Demo
+                    </button>
+                    <button
+                      className="btn btn-sm"
                       style={{ background: 'rgba(20,184,173,0.1)', color: '#14B8AD', border: '1px solid rgba(20,184,173,0.2)', gap: 3, padding: '4px 8px' }}
                       onClick={() => openApplyModal(opp)}
                     >
@@ -274,38 +347,90 @@ export default function InboxPage() {
                 </div>
 
                 {/* Expanded */}
-                {isExp && anal && (
+                {isExp && (
                   <div style={{ padding: '0 15px 13px', borderTop: `1px solid ${bd}` }}>
-                    <div style={{ paddingTop: 11, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                      <div>
-                        <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 6 }}>Strengths</div>
-                        {(anal.matchStrengths ?? []).map((s, i) => (
-                          <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
-                            <span style={{ color: '#14B8AD', fontSize: '0.68rem', flexShrink: 0 }}>+</span>
-                            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>{s}</span>
+                    {anal && (
+                      <>
+                        <div style={{ paddingTop: 11, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                          <div>
+                            <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 6 }}>Strengths</div>
+                            {(anal.matchStrengths ?? []).length === 0 ? (
+                              <div style={{ fontSize: '0.7rem', color: '#475569', fontStyle: 'italic' }}>No JD on file — rescore to generate</div>
+                            ) : (anal.matchStrengths ?? []).map((s, i) => (
+                              <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
+                                <span style={{ color: '#14B8AD', fontSize: '0.68rem', flexShrink: 0 }}>+</span>
+                                <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>{s}</span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 6 }}>Gaps</div>
-                        {(anal.gaps ?? []).length === 0 ? (
-                          <div style={{ fontSize: '0.7rem', color: '#14B8AD' }}>No material gaps.</div>
-                        ) : (anal.gaps ?? []).map((g, i) => (
-                          <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
-                            <span style={{ color: '#D08E14', fontSize: '0.68rem', flexShrink: 0 }}>—</span>
-                            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>{g}</span>
+                          <div>
+                            <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C8C8C8', textTransform: 'uppercase', marginBottom: 6 }}>Gaps</div>
+                            {(anal.gaps ?? []).length === 0 ? (
+                              <div style={{ fontSize: '0.7rem', color: '#475569', fontStyle: 'italic' }}>No JD on file — rescore to generate</div>
+                            ) : (anal.gaps ?? []).map((g, i) => (
+                              <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
+                                <span style={{ color: '#D08E14', fontSize: '0.68rem', flexShrink: 0 }}>—</span>
+                                <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>{g}</span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                    {anal.salaryAssessment && <div style={{ marginTop: 7, fontSize: '0.7rem', color: dim }}><strong style={{ color: '#C8C8C8' }}>Salary: </strong>{anal.salaryAssessment}</div>}
-                    {anal.reasoning && <div style={{ marginTop: 5, fontSize: '0.7rem', color: dim, lineHeight: 1.5 }}><strong style={{ color: '#C8C8C8' }}>Reasoning: </strong>{anal.reasoning}</div>}
-                    <div style={{ marginTop: 9, display: 'flex', gap: 7 }}>
-                      {opp.applyUrl && <a href={opp.applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm" style={{ fontSize: '0.68rem' }}><ExternalLink size={11} /> Open Application</a>}
-                      <button className="btn btn-ghost btn-sm" style={{ fontSize: '0.68rem' }} onClick={() => draftCoverLetter(opp)} disabled={clLoading === opp.id}>
-                        <FileText size={11} /> {hasCL ? 'View Cover Letter' : 'Draft Cover Letter'}
-                      </button>
-                    </div>
+                        </div>
+                        {anal.salaryAssessment && <div style={{ marginTop: 7, fontSize: '0.7rem', color: dim }}><strong style={{ color: '#C8C8C8' }}>Salary: </strong>{anal.salaryAssessment}</div>}
+                        {anal.reasoning && <div style={{ marginTop: 5, fontSize: '0.7rem', color: dim, lineHeight: 1.5 }}><strong style={{ color: '#C8C8C8' }}>Reasoning: </strong>{anal.reasoning}</div>}
+                        <div style={{ marginTop: 9, display: 'flex', gap: 7, flexWrap: 'wrap', alignItems: 'center' }}>
+                          {opp.applyUrl && <a href={opp.applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm" style={{ fontSize: '0.68rem' }}><ExternalLink size={11} /> Open Application</a>}
+                          <button className="btn btn-ghost btn-sm" style={{ fontSize: '0.68rem' }} onClick={() => draftCoverLetter(opp)} disabled={clLoading === opp.id}>
+                            {clLoading === opp.id
+                              ? <><Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> Generating...</>
+                              : <><FileText size={11} /> {hasCL ? 'View Cover Letter' : 'Draft Cover Letter'}</>}
+                          </button>
+                          {clError && clLoading === null && (
+                            <span style={{ fontSize: '0.65rem', color: '#E05252' }}>{clError}</span>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Demo analysis panel */}
+                    {(() => {
+                      const demo = (opp.analysisJson as Record<string,unknown>)?.demoAnalysis as Record<string,unknown> | undefined;
+                      if (!demo) return (
+                        <div style={{ marginTop: anal ? 10 : 11, paddingTop: anal ? 10 : 0, borderTop: anal ? `1px solid ${bd}` : 'none' }}>
+                          <button
+                            className="btn btn-ghost btn-sm"
+                            style={{ fontSize: '0.68rem', color: '#C084FC' }}
+                            onClick={() => analyzeDemoOpp(opp.id)} disabled={demoLoading === opp.id}
+                          >
+                            {demoLoading === opp.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : <Zap size={11} />}
+                            {demoLoading === opp.id ? 'Analyzing...' : 'Analyze Demo Opportunity'}
+                          </button>
+                        </div>
+                      );
+                      const v = demo.verdict as string;
+                      return (
+                        <div style={{ marginTop: anal ? 10 : 11, padding: '10px 12px', background: 'rgba(147,51,234,0.06)', border: '1px solid rgba(147,51,234,0.15)', borderRadius: 7 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                            <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', color: '#C084FC', textTransform: 'uppercase' }}>Demo</span>
+                            <span style={{ fontSize: '0.62rem', fontWeight: 700, color: DEMO_COLOR[v] ?? '#6B7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{v}</span>
+                            {demo.daysToBuild && <span style={{ fontSize: '0.6rem', color: dim }}>{demo.daysToBuild as number}d build</span>}
+                            {demo.businessPotential && <span style={{ fontSize: '0.6rem', color: dim }}>· {demo.businessPotential as string} biz potential</span>}
+                            {demo.novelty && <span style={{ fontSize: '0.6rem', color: dim }}>· {demo.novelty as string}</span>}
+                          </div>
+                          {demo.name && <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFF', marginBottom: 3 }}>{demo.name as string}</div>}
+                          {demo.elevator && <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.65)', marginBottom: 5, lineHeight: 1.4 }}>{demo.elevator as string}</div>}
+                          {demo.whatTheyreBuilding && <div style={{ fontSize: '0.7rem', color: dim, marginBottom: 4, lineHeight: 1.4 }}><strong style={{ color: '#C8C8C8' }}>They&rsquo;re building: </strong>{demo.whatTheyreBuilding as string}</div>}
+                          {demo.verdictReason && <div style={{ fontSize: '0.7rem', color: dim, marginBottom: 4 }}><strong style={{ color: '#C8C8C8' }}>Verdict: </strong>{demo.verdictReason as string}</div>}
+                          {demo.businessCase && <div style={{ fontSize: '0.7rem', color: dim, lineHeight: 1.4 }}><strong style={{ color: '#C8C8C8' }}>Biz case: </strong>{demo.businessCase as string}</div>}
+                          {(demo.coreFeatures as string[] | undefined)?.length ? (
+                            <div style={{ marginTop: 6, display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                              {(demo.coreFeatures as string[]).map((f, i) => (
+                                <span key={i} style={{ fontSize: '0.6rem', background: 'rgba(147,51,234,0.12)', color: '#C084FC', borderRadius: 4, padding: '2px 6px' }}>{f}</span>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })()}
                   </div>
                 )}
               </div>

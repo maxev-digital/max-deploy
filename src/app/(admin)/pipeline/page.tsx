@@ -54,8 +54,9 @@ const FIT_COLOR = (score: number) => {
 export default function PipelinePage() {
   const [opps, setOpps]         = useState<Opportunity[]>([]);
   const [loading, setLoading]   = useState(true);
-  const [view, setView]         = useState<'kanban' | 'table'>('kanban');
+  const [view, setView]         = useState<'kanban' | 'table' | 'rejected'>('kanban');
   const [filter, setFilter]     = useState('');
+  const [rejectedOpps, setRejectedOpps] = useState<Opportunity[]>([]);
 
   // Interview prep panel state
   const [prepOpp, setPrepOpp]         = useState<Opportunity | null>(null);
@@ -66,10 +67,17 @@ export default function PipelinePage() {
 
   async function load() {
     setLoading(true);
-    const res = await fetch('/api/opportunities?stage=active');
-    if (res.ok) {
-      const data = await res.json();
+    const [activeRes, rejRes] = await Promise.all([
+      fetch('/api/opportunities?stage=active'),
+      fetch('/api/opportunities?stage=rejected'),
+    ]);
+    if (activeRes.ok) {
+      const data = await activeRes.json();
       setOpps(data.opportunities ?? []);
+    }
+    if (rejRes.ok) {
+      const data = await rejRes.json();
+      setRejectedOpps(data.opportunities ?? []);
     }
     setLoading(false);
   }
@@ -157,12 +165,17 @@ export default function PipelinePage() {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
         <div>
           <div style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', letterSpacing: '0.04em', color: '#FFFFFF', lineHeight: 1 }}>Pipeline</div>
-          <p style={{ fontSize: '0.82rem', color: dim, marginTop: 4 }}>{filtered.length} active applications</p>
+          <p style={{ fontSize: '0.82rem', color: dim, marginTop: 4 }}>
+            {view === 'rejected' ? `${rejectedOpps.length} rejections` : `${filtered.length} active applications`}
+          </p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input className="input" style={{ width: 220 }} placeholder="Filter by company or role..." value={filter} onChange={e => setFilter(e.target.value)} />
           <button className={`btn btn-sm ${view === 'kanban' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setView('kanban')}>Kanban</button>
           <button className={`btn btn-sm ${view === 'table' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setView('table')}>Table</button>
+          <button className={`btn btn-sm ${view === 'rejected' ? '' : 'btn-secondary'}`} style={view === 'rejected' ? { background: '#E0525218', color: '#E05252', border: '1px solid #E0525240' } : {}} onClick={() => setView('rejected')}>
+            Rejected {rejectedOpps.length > 0 && <span style={{ marginLeft: 4, background: '#E0525230', color: '#E05252', borderRadius: 10, padding: '1px 6px', fontSize: '0.65rem', fontWeight: 700 }}>{rejectedOpps.length}</span>}
+          </button>
           <button className="btn btn-ghost btn-sm" onClick={load} disabled={loading}>
             <RefreshCw size={13} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} />
           </button>
@@ -252,6 +265,49 @@ export default function PipelinePage() {
           })}
         </div>
       ) : (
+        view === 'rejected' ? (
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Company</th><th>Role</th><th>Fit</th><th>Source</th><th>Rejected</th><th>Reason / Note</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {rejectedOpps.length === 0 ? (
+                <tr><td colSpan={7} style={{ textAlign: 'center', color: dim, fontStyle: 'italic', padding: '30px' }}>No rejections on record.</td></tr>
+              ) : rejectedOpps.filter(o => !filter || o.company.toLowerCase().includes(filter.toLowerCase()) || o.role.toLowerCase().includes(filter.toLowerCase())).map(opp => {
+                const autoNote = opp.notes?.split('\n').find(l => l.includes('[Auto-detected'));
+                const manualNote = opp.notes && !opp.notes.includes('[Auto-detected') ? opp.notes : null;
+                const displayNote = autoNote ?? manualNote ?? '—';
+                return (
+                  <tr key={opp.id}>
+                    <td style={{ fontWeight: 600, color: '#FFFFFF' }}>{opp.company}</td>
+                    <td>{opp.role}</td>
+                    <td>{opp.fitScore !== null ? <span style={{ fontWeight: 700, color: FIT_COLOR(opp.fitScore) }}>{opp.fitScore}</span> : '—'}</td>
+                    <td style={{ fontSize: '0.78rem', color: dim }}>{opp.source ?? '—'}</td>
+                    <td style={{ fontSize: '0.78rem', color: dim, whiteSpace: 'nowrap' }}>
+                      {opp.lastActivity ? formatDistanceToNow(new Date(opp.lastActivity), { addSuffix: true }) : '—'}
+                    </td>
+                    <td style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.45)', maxWidth: 320 }}>{displayNote.slice(0, 120)}</td>
+                    <td>
+                      <select
+                        style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${bd}`, borderRadius: 5, color: '#C8C8C8', fontSize: '0.72rem', padding: '4px 6px', cursor: 'pointer' }}
+                        value="rejected"
+                        onChange={e => moveStage(opp.id, e.target.value)}
+                      >
+                        <option value="rejected">Rejected</option>
+                        {STAGES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                        <option value="withdrawn">Withdrawn</option>
+                      </select>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        ) : (
         <div className="table-wrap">
           <table>
             <thead>
@@ -306,6 +362,7 @@ export default function PipelinePage() {
             </tbody>
           </table>
         </div>
+        )
       )}
 
       {/* Interview Prep slide-out panel */}

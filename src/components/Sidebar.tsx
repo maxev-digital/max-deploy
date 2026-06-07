@@ -9,7 +9,7 @@ import {
   Sparkles, Activity, Mail, FileText, Receipt,
   DollarSign, Settings, LogOut, Sun, Moon,
   PanelLeftClose, PanelLeftOpen, MailOpen, BookOpen,
-  Cpu, GraduationCap, Layout, Target,
+  Cpu, GraduationCap, Layout, Target, CalendarDays,
 } from 'lucide-react';
 
 type Counts = {
@@ -35,6 +35,7 @@ const nav = [
     group: 'Command',
     items: [
       { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { label: 'Calendar',  href: '/calendar',  icon: CalendarDays },
       { label: 'Inbox',     href: '/inbox',     icon: Inbox },
       { label: 'Pipeline',  href: '/pipeline',  icon: GitBranch },
       { label: 'Monitor',   href: '/monitor',   icon: Activity },
@@ -140,10 +141,7 @@ export default function Sidebar() {
     <aside className="admin-sidebar" style={{ width: w, minWidth: w, transition: 'width 0.22s ease' }}>
       <div className="sidebar-logo" style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'space-between' }}>
         {!collapsed && (
-          <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', letterSpacing: '0.06em', color: '#2563EB', lineHeight: 1 }}>MAX-DEPLOY</div>
-            <div style={{ fontSize: '0.58rem', color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 2 }}>Career OS</div>
-          </div>
+          <img src="/DEPLOYED_Logo.png" alt="MAX-DEPLOY" style={{ height: 36, width: 'auto', display: 'block' }} />
         )}
         <button
           type="button"
