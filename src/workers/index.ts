@@ -12,6 +12,9 @@ import { generateDailyBriefing } from './briefing-job';
 import { scheduleFollowUps } from './follow-up-scheduler';
 import { startEmailIdleMonitors } from './email-idle';
 import { parseInboundEmails } from './email-parser';
+import { generateHealthReport } from './health-report';
+import { deduplicateOpportunities } from './dedup';
+import { discoverAtsFromPipeline } from './ats-discovery';
 
 console.log('[workers] Starting MAX-DEPLOY background workers...');
 
@@ -63,10 +66,45 @@ cron.schedule('*/30 * * * *', async () => {
   catch (e) { console.error('[email-parser] Error:', e); }
 });
 
+// Daily health report — 8 AM Central (14:00 UTC)
+cron.schedule('0 14 * * *', async () => {
+  console.log('[health] Generating daily report...');
+  try { await generateHealthReport(); }
+  catch (e) { console.error('[health] Error:', e); }
+});
+
+// Dedup + stale cleanup — 9 AM Central (15:00 UTC)
+cron.schedule('0 15 * * *', async () => {
+  console.log('[dedup] Running pipeline cleanup...');
+  try { await deduplicateOpportunities(); }
+  catch (e) { console.error('[dedup] Error:', e); }
+});
+
 // Start IMAP IDLE monitors — persistent push, no polling
 setTimeout(async () => {
   try { await startEmailIdleMonitors(); }
   catch (e) { console.error('[idle] Startup error:', e); }
 }, 8000);
+
+// Run dedup on startup to clear existing backlog
+setTimeout(async () => {
+  console.log('[dedup] Startup cleanup...');
+  try { await deduplicateOpportunities(); }
+  catch (e) { console.error('[dedup] Startup error:', e); }
+}, 12000);
+
+// ATS auto-discovery — 4 AM Central (10:00 UTC)
+cron.schedule('0 10 * * *', async () => {
+  console.log('[discovery] Probing pipeline companies for ATS boards...');
+  try { await discoverAtsFromPipeline(); }
+  catch (e) { console.error('[discovery] Error:', e); }
+});
+
+// Run discovery on startup (probes recent pipeline companies immediately)
+setTimeout(async () => {
+  console.log('[discovery] Startup ATS probe...');
+  try { await discoverAtsFromPipeline(); }
+  catch (e) { console.error('[discovery] Startup error:', e); }
+}, 20000);
 
 console.log('[workers] All jobs scheduled. Running...');

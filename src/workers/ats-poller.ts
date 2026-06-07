@@ -2,23 +2,39 @@ import { prisma } from '../lib/prisma';
 
 interface AtsJob { id: string; title: string; absolute_url?: string; content?: string; }
 
-// Skip roles that are definitively out of scope — keep broad since salary floor is now $50K+
-// NOTE: CSM, Marketing Director, Solutions, Technical Account, Director ARE in scope — do NOT filter them
-const NON_ENG_KEYWORDS = [
-  'recruiter', 'sourcer', 'talent acquisition',
-  'accountant', 'accounts payable', 'accounts receivable', 'bookkeeper',
-  'legal counsel', 'paralegal', 'compliance officer',
-  ' sdr ', 'sales development rep', 'business development rep',
-  'executive assistant', 'office manager', 'administrative assistant',
-  'graphic designer', 'illustrator', 'motion designer',
-  'customer support representative', 'customer service rep', 'call center',
-  'people ops', 'people partner', ' hr ', 'human resources',
-  'janitor', 'facility', 'warehouse',
+// Allowlist: only ingest roles matching Will's target titles
+// Tier 1 — FDE / Applied AI / Solutions (score 75-100)
+// Tier 2 — CSM / Director / Staff / Engineering Manager (score 65-85)
+const TARGET_KEYWORDS = [
+  // FDE / Applied AI
+  'forward deployed', 'forward-deployed',
+  'applied ai', 'agentic ai', 'ai platform',
+  'ai engineer', 'ai/ml', 'ml engineer', 'mlops', 'machine learning engineer',
+  // Solutions / Implementation
+  'solutions engineer', 'solutions architect', 'solutions consultant',
+  'technical account', 'implementation engineer', 'implementation manager',
+  'pre-sales', 'presales',
+  // Customer success / enablement
+  'customer success', 'ai adoption', 'ai enablement', 'ai integration',
+  'technical success', 'technical customer',
+  // Leadership
+  'engineering manager', 'head of engineering', 'head of technology', 'head of ai',
+  'director of ai', 'director of engineering', 'director of technology',
+  'vp engineering', 'vp of engineering', 'vp of technology',
+  // Senior IC
+  'staff engineer', 'staff software', 'principal engineer', 'principal software',
+  // AI-adjacent
+  'developer relations', 'devrel', 'developer advocate',
+  'automation engineer', 'ai automation',
+  'platform engineer', 'ai product', 'ai researcher',
+  'data scientist', 'data science',
+  // Full stack only when AI-qualified
+  'full stack ai', 'fullstack ai', 'ai full stack', 'full-stack ai',
 ];
 
-function isEngineering(title: string): boolean {
+function isTargetRole(title: string): boolean {
   const t = ` ${title.toLowerCase()} `;
-  return !NON_ENG_KEYWORDS.some(kw => t.includes(kw));
+  return TARGET_KEYWORDS.some(kw => t.includes(kw));
 }
 
 async function fetchGreenhouseJD(slug: string, jobId: string): Promise<string | null> {
@@ -84,7 +100,7 @@ export async function pollAtsWatchlist() {
 
       for (const job of jobs) {
         if (!job.title || !job.absolute_url) continue;
-        if (!isEngineering(job.title)) { skipped++; continue; }
+        if (!isTargetRole(job.title)) { skipped++; continue; }
 
         const exists = await prisma.opportunity.findFirst({ where: { applyUrl: job.absolute_url } });
         if (exists) continue;
