@@ -1,10 +1,48 @@
-# MAX-DEPLOY — Autonomous FDE Agent
+# MAX-DEPLOY — Autonomous FDE Agent (Career OS)
+
+---
+
+## ⚠ SYSTEM BOUNDARY — TWO COMPLETELY SEPARATE CODEBASES
+
+| | This repo | The other system |
+|---|---|---|
+| **Name** | max-deploy (Career OS) | maxev-portfolio (Portfolio Site) |
+| **Domain** | `max-ev-holdings.com` | `maxevdigital.com` |
+| **Local path** | `D:\max-deploy` | `D:\maxev-portfolio` |
+| **VPS path** | `/var/www/max-deploy/` | `/var/www/maxev-holdings/` |
+| **Stack** | Next.js 15 + Prisma + PostgreSQL (port 5436) | React 19 + Vite SPA, NO server, NO DB |
+| **Purpose** | Autonomous job search / career OS admin panel | Public agency portfolio & service marketing |
+| **Deploy** | **Git** — `git push` → VPS `git pull` + `pm2 restart max-deploy` | SCP only — never use git on that repo |
+| **Auth** | Full DB auth system | localStorage-based password gate |
+| **PM2 names** | `max-deploy` (port 3200) + `max-deploy-workers` | None — nginx serves static files directly |
+| **Database** | `max_deploy` PostgreSQL on `localhost:5436` | No database |
+
+**This file is for max-deploy only. Never apply maxev-portfolio instructions here or vice versa.**
+
+The nginx config for `max-ev-holdings.com` proxies ALL traffic to `localhost:3200` (this Next.js app).
+The nginx config for `maxevdigital.com` serves static files from `/var/www/maxev-holdings/`.
+These are on the same VPS but are completely independent systems. Do not confuse them.
 
 ---
 
 ## THE VISION (align on this before every session)
 
-MAX-DEPLOY is not a job board dashboard. It is an **autonomous FDE agent** that runs Will Austin's entire career operation — job search, recruiter relationships, and freelance pipeline — in parallel, 24/7, with Will as the HITL at specific authorization checkpoints reachable from his phone via Telegram or Slack.
+MAX-DEPLOY is a **SaaS product** — an autonomous career OS for engineers who treat their career like a business. Will Austin is customer #1 and it runs his live job search daily. The goal is to launch it to other senior engineers, FDE consultants, and independent contractors at $29-79/month.
+
+It is NOT a job board. It is NOT a resume tool. It is the combination of Pipedrive + Apollo.io + QuickBooks + a job board, connected by Claude, in one dashboard — requiring 30-60 minutes of active attention per day while the system runs 24/7 in the background.
+
+**Current status: Single-user (Will) → Target: Multi-tenant SaaS product**
+Everything currently works for Will's personal use. Launch requires multi-tenancy, user registration, billing, and onboarding. See LAUNCH READINESS section below.
+
+### Target Market
+- Senior engineers managing active job searches with multiple concurrent opportunities
+- FDE / Applied AI engineers with contract + full-time hybrid setups
+- Independent consultants managing pipeline + clients + earnings simultaneously
+- Anyone who needs Pipedrive-level CRM applied to their career
+
+### Pricing Target
+- **Pro**: $49/month — full pipeline, all workers, Telegram HITL, AI scoring
+- **Team/Agency**: $99/month — multiple job seekers (recruiters, placement firms)
 
 ### The Agent Loop
 
@@ -56,7 +94,43 @@ DISCOVER → SCORE → NOTIFY → AUTHORIZE → ACT → LOG → MONITOR
 
 ---
 
-## CURRENT BUILD STATUS — Last Updated 2026-06-03
+## LAUNCH READINESS — Gap Assessment (June 2026)
+
+### What's Working (Will's single-user instance)
+All core features work for Will. The platform is live, processing emails, scoring opportunities, running workers 24/7.
+
+### Gaps to Launch as Multi-User Product
+
+| Gap | Priority | Effort |
+|---|---|---|
+| **Multi-tenancy** — all DB queries hardcoded to single user, no userId scoping | P0 BLOCKER | Large |
+| **User registration + sign-up flow** — currently hardcoded single admin login | P0 BLOCKER | Medium |
+| **Billing (Stripe subscriptions)** — no payment system | P0 BLOCKER | Medium |
+| **Public landing/marketing page** — no way for new users to discover or sign up | P0 BLOCKER | Medium |
+| **Per-user onboarding** — profile setup, email connect, resume upload, Telegram link | P0 BLOCKER | Medium |
+| **Per-user email (IMAP)** — currently tied to info@max-ev-holdings.com only | P1 | Large |
+| **Per-user Telegram** — notifications currently go to Will's Telegram only | P1 | Medium |
+| **Per-user resume storage** — currently hardcoded to Will's resume PDFs | P1 | Small |
+| **DB connection pool stability** — intermittent P1001 errors in workers | P1 BUG | Small |
+| **Email parser duplicate fix** — deployed but needs rebuild to take effect | P2 BUG | Small |
+| **Offer comparison engine** — spec exists, not built | P2 | Medium |
+| **Calendar integration** — interview scheduling not connected | P2 | Medium |
+| **Concurrent engagement monitor** — built but not polished for external users | P2 | Small |
+
+### Launch Order of Operations
+1. Fix DB pool + rebuild (1 day)
+2. Multi-tenancy data model + userId scoping (3-5 days) — biggest lift
+3. User registration + auth (1-2 days)
+4. Per-user onboarding flow (2 days)
+5. Stripe billing (1-2 days)
+6. Public landing page at max-ev-holdings.com (1 day)
+7. Beta — invite 3-5 engineers, gather feedback
+8. Per-user email/Telegram/resume (2-3 days)
+9. Public launch
+
+---
+
+## CURRENT BUILD STATUS — Last Updated 2026-06-04
 
 ### Infrastructure: LIVE
 - **URL:** max-ev-holdings.com (Nginx → PM2 id 32, port 3200)
@@ -162,6 +236,12 @@ Follow-up scheduler runs 7 AM Central. Sends Telegram `[Draft Follow-up] [Skip]`
 - Telegram alert fires on interview-signal emails
 - Offer comparison engine spec in place, not yet built
 - Calendar integration not started
+
+---
+
+## SCOPE BOUNDARY — READ BEFORE TOUCHING TASKS
+
+Tasks #46-50 (Remove Inventory & Ops, Demo Center, Prospects/DFW, Helpdesk, Finance modules) and Task #51 (Repurpose /jobs route) belong to the **production admin panel** at `D:\maxev-admin` — NOT this project. Do not attempt any of those tasks in max-deploy. They have nothing to do with the Career OS.
 
 ---
 
