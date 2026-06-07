@@ -43,7 +43,24 @@ export async function POST(
 
   const opp = await prisma.opportunity.findUnique({ where: { id } });
   if (!opp) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  if (!opp.jdText) return NextResponse.json({ error: 'No JD text — cannot draft cover letter' }, { status: 400 });
+
+  // If no jdText, try to scrape applyUrl
+  let jdText = opp.jdText;
+  if (!jdText && opp.applyUrl) {
+    try {
+      const r = await fetch(opp.applyUrl, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: AbortSignal.timeout(8000) });
+      if (r.ok) {
+        const html = await r.text();
+        jdText = html
+          .replace(/<script[\s\S]*?<\/script>/gi, '')
+          .replace(/<style[\s\S]*?<\/style>/gi, '')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .slice(0, 5000);
+      }
+    } catch { /* continue without JD */ }
+  }
 
   const isFde = [
     'FDE', 'Forward Deployed', 'Applied AI', 'Solutions Engineer', 'Solutions Architect',
@@ -73,7 +90,7 @@ Company: ${opp.company}
 Role: ${opp.role}
 ${opp.salaryMin ? `Salary: $${opp.salaryMin.toLocaleString()}${opp.salaryMax ? `–$${opp.salaryMax.toLocaleString()}` : '+'}` : ''}
 Job Description:
-${opp.jdText.slice(0, 4000)}
+${jdText ? jdText.slice(0, 4000) : 'No full job description available — write a strong general cover letter for this role type based on the company name and role title only. Be specific about Will\'s work that maps to this role classification.'}
 
 Generate cover letter content. Be specific to THIS job and THIS company — reference exact skills, tools, or priorities from the JD.
 Use <strong>bold</strong> tags for emphasis inside bullets. Keep bullets dense and specific, not generic.
