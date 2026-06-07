@@ -1,200 +1,137 @@
-# MAX-DEPLOY — AI-Native Career Operations Platform
+![Next.js](https://img.shields.io/badge/Next.js_15-black?style=flat&logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white) ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=prisma&logoColor=white) ![Anthropic](https://img.shields.io/badge/Anthropic_Claude-D97706?style=flat)
 
-> Treat your career like a business. Multiple revenue streams, concurrent engagements, always-on opportunity pipeline, Claude-powered intelligence running daily in the background.
+# MAX-DEPLOY
 
-MAX-DEPLOY is the combination of Pipedrive + Apollo.io + QuickBooks + a job board, connected by Claude, in one dashboard. It is not a job board aggregator, a resume tool, or a simple CRM. It requires 30–60 minutes of active attention per day. The system does the rest.
-
-**Live demo / personal use:** [max-ev-holdings.com](https://max-ev-holdings.com)
+MAX-DEPLOY is a production career management system built to run an active job search at scale. It handles opportunity ingestion from RSS feeds, ATS APIs, and email; AI scoring and ranking via Claude; pipeline stage tracking; cover letter generation; and market intelligence reporting. The system runs continuously on a VPS under PM2, processes background jobs via BullMQ, and serves both an authenticated admin interface and a public-facing market intelligence hub.
 
 ---
 
-## What It Does
+## Architecture
 
-### Five Systems, One Dashboard
+**Framework:** Next.js 15 App Router, TypeScript throughout. All pages under `src/app/`. API routes under `src/app/api/`.
 
-| System | Function |
-|---|---|
-| **Discovery** | Ingests opportunities from 15+ sources — RSS feeds, ATS APIs (Greenhouse, Lever, Ashby), email inbox parsing, bookmarklet scraping, manual paste |
-| **Evaluation** | Claude scores every opportunity on ingest against your stored profile — fit score, gaps, recommended action, salary assessment |
-| **Outreach** | Drafts cover letters, recruiter emails, follow-ups, thank-yous, and offer negotiations. Tracks opens, clicks, replies |
-| **Pipeline** | Kanban + table view across 10 stages. Concurrent engagement monitor. Offer comparison engine |
-| **Earnings** | Contract management, invoicing with Stripe/Plaid, outstanding receivables, tax reserve, capacity utilization |
+**Database:** PostgreSQL accessed via Prisma ORM. Schema at `prisma/schema.prisma`. Direct TCP connection to a local Postgres instance (port 5436 on the VPS).
 
-### The Daily Routine (30–60 min)
+**Background workers:** BullMQ queues backed by Redis. Workers live in `src/workers/` and run as a separate PM2 process (`max-deploy-workers`). Workers interact with the main app only through the shared database and Redis — no direct IPC.
 
-The system runs automatically at 6 AM — ingesting, scoring, calculating follow-up urgency, generating a briefing. You spend 30–60 minutes acting on what it surfaces. You do not hunt for opportunities manually. The system hunts. You decide.
-
-| Task | Time |
-|---|---|
-| Inbox review — Claude-ranked new opportunities | 10 min |
-| Follow-up queue — system drafts, you review and send | 10 min |
-| Pipeline scan — urgency by color on Monitor page | 5 min |
-| Intelligence brief — Claude narrative on patterns | 5 min |
-| Earnings check — receivables, payments, capacity | 5 min |
-| Active work — calls, cover letters, negotiations | 20–25 min |
-
----
-
-## Pages
-
-```
-/                → Dashboard — briefing, alerts, KPIs, daily queue
-/inbox           → New opportunities queue — score, approve, skip
-/pipeline        → Kanban + table, application detail drawer
-/companies       → Target company CRM + ATS watchlist
-/contacts        → Recruiter and hiring manager relationship tracker
-/intelligence    → AI hub — health score, patterns, JD scorer, outreach optimizer
-/monitor         → Application status grid — urgency by color
-/outreach        → Email sequences, drafts, send history
-/contracts       → Active freelance contracts + milestones
-/invoices        → Invoice creation, tracking, payment status
-/earnings        → Earnings dashboard, tax reserve, capacity
-/settings        → Profile, API keys, data streams, watchlist
-```
-
----
-
-## Tech Stack
-
-- **Framework** — Next.js 15 App Router, TypeScript throughout
-- **Database** — PostgreSQL + Prisma ORM (standalone, no shared DB)
-- **AI** — Anthropic Claude API (`claude-sonnet-4-6` for scoring/briefing, `claude-haiku-4-5` for fast ops)
-- **Background Jobs** — BullMQ + Redis (RSS polling, ATS polling, email parsing, scoring, briefings)
-- **Email** — Nodemailer (SMTP outbound) + imapflow (IMAP inbound parsing)
-- **Payments** — Stripe (invoice links + webhooks) + Plaid (bank monitoring, optional)
-- **Auth** — NextAuth v5 credentials (single user)
-- **Styling** — Inline styles, no CSS framework, no external component library
-- **Deploy** — SCP/SSH → VPS → PM2 + Nginx, port 3200
-
----
-
-## Background Jobs
-
-| Queue | Schedule | Function |
+| Worker | Schedule | Function |
 |---|---|---|
-| `rss-poller` | Every 6 hours | Polls all active RSS feeds |
-| `ats-poller` | Every 24 hours | Checks Greenhouse/Lever/Ashby watchlist |
-| `email-parser` | Every 30 minutes | Parses opportunities inbox via IMAP |
-| `opportunity-scorer` | On ingest | Claude scores every new opportunity |
+| `rss-poller` | Every 6 hours | Polls active RSS feed sources |
+| `ats-poller` | Daily 3 AM | Polls Greenhouse, Lever, Ashby company watchlist |
+| `email-parser` | Every 30 minutes | Parses inbound IMAP inbox for opportunities |
+| `opportunity-scorer` | On ingest | Scores each new opportunity via Claude against stored profile |
 | `briefing-generator` | Daily 6 AM | Generates morning intelligence briefing |
-| `follow-up-scheduler` | Daily 7 AM | Calculates and creates follow-up tasks |
-| `payment-monitor` | Every 4 hours | Checks Plaid for incoming payments |
+| `follow-up-scheduler` | Daily 7 AM | Calculates follow-up urgency and creates tasks |
+
+**Auth:** Custom session auth using bcryptjs. Single-user — credentials stored in environment variables. No multi-tenant support in the current build.
+
+**Notifications:** Telegram bot for operational alerts and HITL authorization (inline buttons for apply/skip/later per opportunity). Slack webhooks for high-priority alerts.
+
+**PDF generation:** Puppeteer, invoked from `smart-apply.js` outside the main Next.js process. Cover letters are generated per opportunity on demand.
 
 ---
 
-## Setup
+## Features
+
+- Opportunity inbox with AI-scored inbound listings — fit score, gap analysis, recommended action, salary assessment — from RSS feeds, ATS APIs, email parsing, and manual entry
+- Pipeline with kanban and table views across application stages (inbox, target, applied, screening, interview, final round, offer, closed)
+- Cover letter generation per opportunity via Claude, with per-config resume targeting
+- Public market intelligence hub (unauthenticated) — sector heat map, salary ranges, build type demand, filterable job index
+- Company CRM with ATS watchlist management (Greenhouse, Lever, Ashby)
+- Recruiter and hiring manager contact tracking
+- AI prep studio — interview coaching scoped to each opportunity's JD
+- Calendar for interview scheduling
+- Application task tracker
+- Earnings dashboard: active contracts, invoicing, Stripe payment links, outstanding receivables, tax reserve estimate
+- Daily system health reporting via Telegram
+
+---
+
+## Local Development
 
 ### Prerequisites
 
 - Node.js 20+
-- PostgreSQL database
-- Redis instance
+- PostgreSQL instance
+- Redis instance (required for BullMQ workers)
 - Anthropic API key
-- SMTP + IMAP email credentials
+- SMTP credentials (outbound email)
+- IMAP credentials (inbound email parsing) — optional for local dev
 
 ### Install
 
 ```bash
-git clone https://github.com/maxev-digital/Max-Deployed.git
-cd Max-Deployed
+git clone https://github.com/maxev-digital/max-deploy.git
+cd max-deploy
 npm install
 ```
 
 ### Environment
 
-Copy `.env.example` to `.env` and fill in all values:
-
-```bash
-cp .env.example .env
-```
-
-Key variables:
+Create a `.env` file in the project root. Required variables:
 
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/max_deploy"
 ANTHROPIC_API_KEY="sk-ant-..."
-NEXTAUTH_SECRET="..."
-NEXTAUTH_URL="http://localhost:3200"
-ADMIN_EMAIL="your@email.com"
-ADMIN_PASSWORD_HASH="bcrypt-hash"   # generate with bcryptjs
+ADMIN_EMAIL="you@example.com"
+ADMIN_PASSWORD="your-plaintext-password"
 REDIS_URL="redis://localhost:6379"
-SMTP_HOST / SMTP_USER / SMTP_PASS
-IMAP_HOST / IMAP_USER / IMAP_PASS
-STRIPE_SECRET_KEY                   # optional, for invoicing
-PLAID_CLIENT_ID / PLAID_SECRET      # optional, for bank monitoring
+SMTP_HOST=""
+SMTP_PORT=""
+SMTP_USER=""
+SMTP_PASS=""
+IMAP_HOST=""
+IMAP_USER=""
+IMAP_PASS=""
+TELEGRAM_BOT_TOKEN=""
+TELEGRAM_CHAT_ID=""
+SLACK_WEBHOOK_URL=""
 ```
 
-Generate a bcrypt password hash:
-```bash
-node -e "const b=require('bcryptjs'); console.log(b.hashSync('yourpassword', 10))"
+Optional (invoicing and bank monitoring):
+
+```env
+STRIPE_SECRET_KEY=""
+PLAID_CLIENT_ID=""
+PLAID_SECRET=""
 ```
 
 ### Database
 
 ```bash
-npm run db:generate   # generate Prisma client
-npm run db:push       # push schema to database
+npm run db:generate   # generates Prisma client from schema
+npm run db:push       # pushes schema to the database
 ```
 
 ### Run
 
 ```bash
-npm run dev    # development on port 3200
-npm run build
-npm start      # production on port 3200
+npm run dev    # starts Next.js on port 3200
 ```
+
+Workers run as a separate process. In production this is a second PM2 entry (`max-deploy-workers`). Locally you can invoke individual workers directly via scripts in `src/workers/` as needed.
 
 ---
 
-## Deploy (VPS)
+## Deployment
+
+No CD pipeline. Deployment is manual via SCP to the VPS followed by a PM2 restart.
 
 ```bash
 # Build locally
 npm run build
 
-# Push to VPS
-scp -r .next/ user@72.60.43.168:/var/www/max-deploy/
-scp package.json user@72.60.43.168:/var/www/max-deploy/
+# Copy build artifacts to VPS
+scp -r .next package.json package-lock.json root@<vps-ip>:/var/www/max-deploy/
 
-# SSH and restart
-ssh user@72.60.43.168
-cd /var/www/max-deploy && npm install --production
+# On the VPS
+cd /var/www/max-deploy
+npm install --omit=dev
 pm2 restart max-deploy
+pm2 restart max-deploy-workers
 ```
 
-First-time setup on VPS:
-```bash
-pm2 start npm --name "max-deploy" -- start
-pm2 save
-```
-
-Nginx config:
-```nginx
-server {
-    listen 80;
-    server_name max-ev-holdings.com;
-    location / {
-        proxy_pass http://localhost:3200;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-SSL: `certbot --nginx -d max-ev-holdings.com`
-
----
-
-## The Strategic Value
-
-**For the job search** — You are running your own job search on a platform you built. The system is the proof-of-work.
-
-**For product credibility** — A complete SaaS: data ingestion, AI analysis, email automation, invoicing, payment monitoring — built solo. That is the FDE profile in action.
-
-**As a sellable product** — Senior engineers, FDE consultants, and contractors need exactly this and have no tool built for them. Post-personal validation, this becomes a real product at $29–79/month.
+The VPS runs nginx as a reverse proxy to port 3200. Both PM2 processes (`max-deploy` and `max-deploy-workers`) are persisted via `pm2 save` and start on boot via `pm2 startup`.
 
 ---
 
